@@ -11,6 +11,9 @@
 	type="text/css"/>
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"
 	type="text/css" />
+<link rel="icon" 
+      type="image/ico" 
+      href="<c:url value="/resources/img/favicon.ico" />">
 </head>
 <body>
 

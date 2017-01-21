@@ -1,4 +1,4 @@
-package com.javaweb.dao;
+package com.javaweb.model.dao;
 
 import java.util.List;
 
