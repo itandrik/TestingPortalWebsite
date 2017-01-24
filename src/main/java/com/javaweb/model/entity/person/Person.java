@@ -65,8 +65,6 @@ public class Person {
 		this.role = role;
 	}
 	
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -136,7 +134,7 @@ public class Person {
 			return this;
 		}
 
-		public Builder setGender(String login) {
+		public Builder setLogin(String login) {
 			person.setLogin(login);
 			return this;
 		}

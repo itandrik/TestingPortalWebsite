@@ -1,5 +1,6 @@
 package com.javaweb.model.dao.jdbc;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.naming.InitialContext;
@@ -21,14 +22,14 @@ public class JdbcDaoFactory extends DaoFactory{
 	public JdbcDaoFactory() {
 		try {
 			InitialContext initialContext = new InitialContext();
-			dataSource = (DataSource) initialContext.lookup("java:comp/env/jdbc/training_portal");
+			dataSource = (DataSource) initialContext.lookup("java:comp/env/jdbc/testing_portal");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public DaoConnection getConnecion() {
+	public DaoConnection getConnection() {
 		try {
 			return new JdbcDaoConnection(dataSource.getConnection());
 		} catch (SQLException e) {
@@ -36,34 +37,40 @@ public class JdbcDaoFactory extends DaoFactory{
 		}
 	}
 
+	private Connection getCastedSqlConnection(DaoConnection connection) {
+		JdbcDaoConnection jdbcDaoConnection = (JdbcDaoConnection) connection;
+		Connection sqlConnection = jdbcDaoConnection.getConnection();
+		return sqlConnection;
+	}
+	
 	@Override
 	public PersonDao createPersonDao(DaoConnection connection) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection sqlConnection = getCastedSqlConnection(connection);
+		return new JdbcPersonDao(sqlConnection);
 	}
 
 	@Override
 	public SubjectDao createSubjectDao(DaoConnection connection) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection sqlConnection = getCastedSqlConnection(connection);
+		return new JdbcSubjectDao(sqlConnection);
 	}
 
 	@Override
 	public TestDao createTestDao(DaoConnection connection) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection sqlConnection = getCastedSqlConnection(connection);
+		return new JdbcTestDao(sqlConnection);
 	}
 
 	@Override
 	public TaskDao createTaskDao(DaoConnection connection) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection sqlConnection = getCastedSqlConnection(connection);
+		return new JdbcTaskDao(sqlConnection);
 	}
 
 	@Override
 	public AnswerDao createAnswerDao(DaoConnection connection) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection sqlConnection = getCastedSqlConnection(connection);
+		return new JdbcAnswerDao(sqlConnection);
 	}
 
 }

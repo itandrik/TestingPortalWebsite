@@ -1,5 +1,10 @@
 package com.javaweb.model.dao;
 
-public interface PersonDao extends GenericDao<PersonDao> {
+import java.util.Optional;
 
+import com.javaweb.model.entity.person.Person;
+
+
+public interface PersonDao extends GenericDao<Person> {
+	Optional<Person> getPersonByLogin(String login);
 }

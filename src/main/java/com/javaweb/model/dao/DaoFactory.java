@@ -9,7 +9,7 @@ public abstract class DaoFactory {
 	private static final String DB_FACTORY_CLASS = "factory.class";
 	private static DaoFactory instance;
 	
-	public abstract DaoConnection getConnecion();
+	public abstract DaoConnection getConnection();
 	
 	public abstract PersonDao createPersonDao(DaoConnection connection);
 	public abstract SubjectDao createSubjectDao(DaoConnection connection);

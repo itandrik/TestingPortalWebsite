@@ -7,6 +7,8 @@ tmp/
 *~.nib
 local.properties
 .settings/
+.idea/
+*.iml
 .loadpath
 .recommenders
 
