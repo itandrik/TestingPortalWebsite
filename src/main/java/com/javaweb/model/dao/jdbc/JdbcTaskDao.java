@@ -1,11 +1,12 @@
 package com.javaweb.model.dao.jdbc;
 
+import com.javaweb.model.dao.TaskDao;
+import com.javaweb.model.entity.Answer;
+import com.javaweb.model.entity.Task;
+
 import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
-
-import com.javaweb.model.dao.TaskDao;
-import com.javaweb.model.entity.Answer;
 
 public class JdbcTaskDao implements TaskDao{
 	private Connection connection;
@@ -15,25 +16,25 @@ public class JdbcTaskDao implements TaskDao{
 	}
 
 	@Override
-	public Optional<TaskDao> getById(int id) {
+	public Optional<Task> getById(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<TaskDao> getAll() {
+	public List<Task> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void create(TaskDao e) {
+	public void insert(Task e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(TaskDao e) {
+	public void update(Task e) {
 		// TODO Auto-generated method stub
 		
 	}

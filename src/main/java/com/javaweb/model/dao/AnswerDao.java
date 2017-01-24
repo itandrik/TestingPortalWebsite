@@ -1,5 +1,7 @@
 package com.javaweb.model.dao;
 
-public interface AnswerDao extends GenericDao<AnswerDao> {
+import com.javaweb.model.entity.Answer;
+
+public interface AnswerDao extends GenericDao<Answer> {
 	
 }

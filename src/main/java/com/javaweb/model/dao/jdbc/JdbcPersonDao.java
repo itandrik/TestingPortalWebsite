@@ -15,10 +15,10 @@ import java.util.Optional;
 import static com.javaweb.model.dao.DatabaseContract.*;
 
 public class JdbcPersonDao implements PersonDao {
-    public static final String SELECT_BY_ID = "SELECT person_id,"
+    private static final String SELECT_BY_ID = "SELECT person_id,"
             + "first_name, second_name, gender, login, password,"
             + " role FROM Person WHERE person_id = ?";
-    public static final String SELECT_BY_LOGIN = "SELECT person_id,"
+    private static final String SELECT_BY_LOGIN = "SELECT person_id,"
             + "first_name, second_name, gender, login, password,"
             + " role FROM Person WHERE login = ?";
 
@@ -66,13 +66,13 @@ public class JdbcPersonDao implements PersonDao {
     }
 
     @Override
-    public void create(Person e) {
+    public void insert(Person person) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public void update(Person e) {
+    public void update(Person person) {
         // TODO Auto-generated method stub
 
     }

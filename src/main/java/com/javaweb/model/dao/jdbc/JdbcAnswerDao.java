@@ -1,10 +1,11 @@
 package com.javaweb.model.dao.jdbc;
 
+import com.javaweb.model.dao.AnswerDao;
+import com.javaweb.model.entity.Answer;
+
 import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
-
-import com.javaweb.model.dao.AnswerDao;
 
 public class JdbcAnswerDao implements AnswerDao{
 	private Connection connection;
@@ -14,25 +15,26 @@ public class JdbcAnswerDao implements AnswerDao{
 	}
 
 	@Override
-	public Optional<AnswerDao> getById(int id) {
+	public Optional<Answer> getById(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<AnswerDao> getAll() {
+	public List<Answer> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void create(AnswerDao e) {
+	public void insert(Answer e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(AnswerDao e) {
+	public void update(Answer
+								   e) {
 		// TODO Auto-generated method stub
 		
 	}

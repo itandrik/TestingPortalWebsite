@@ -1,11 +1,12 @@
 package com.javaweb.model.dao.jdbc;
 
+import com.javaweb.model.dao.TestDao;
+import com.javaweb.model.entity.Task;
+import com.javaweb.model.entity.Test;
+
 import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
-
-import com.javaweb.model.dao.TestDao;
-import com.javaweb.model.entity.Task;
 
 public class JdbcTestDao implements TestDao{
 	private Connection connection;
@@ -15,25 +16,25 @@ public class JdbcTestDao implements TestDao{
 	}
 
 	@Override
-	public Optional<TestDao> getById(int id) {
+	public Optional<Test> getById(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<TestDao> getAll() {
+	public List<Test> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void create(TestDao e) {
+	public void insert(Test e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(TestDao e) {
+	public void update(Test e) {
 		// TODO Auto-generated method stub
 		
 	}

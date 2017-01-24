@@ -1,8 +1,10 @@
 package com.javaweb.model.dao;
 
-import java.util.List;
 import com.javaweb.model.entity.Answer;
+import com.javaweb.model.entity.Task;
 
-public interface TaskDao extends GenericDao<TaskDao> {
+import java.util.List;
+
+public interface TaskDao extends GenericDao<Task> {
 	List<Answer> getListOfAnswersForTask(long id);
 }
