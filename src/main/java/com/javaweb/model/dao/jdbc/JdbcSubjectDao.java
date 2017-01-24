@@ -18,7 +18,7 @@ public class JdbcSubjectDao implements SubjectDao{
 	private Connection connection;
 
 	private static final String SELECT_ALL_SUBJECTS =
-			"SELECT subject_id, name FROM Subjects";
+			"SELECT subject_id, name FROM Subject";
 	private static final String SELECT_SUBJECT_BY_ID =
 			"SELECT subject_id, name FROM Subject WHERE subject_id = ?";
 	private static final String INSERT_SUBJECT =
@@ -103,7 +103,7 @@ public class JdbcSubjectDao implements SubjectDao{
 
 	@Override
 	public void delete(int id) {
-		try(PreparedStatement statement = connection.prepareStatement(UPDATE_SUBJECT)){
+		try(PreparedStatement statement = connection.prepareStatement(DELETE_SUBJECT)){
 			statement.setLong(1, id);
 			statement.executeUpdate();
 				/* TODO Check for null*/
@@ -115,14 +115,15 @@ public class JdbcSubjectDao implements SubjectDao{
 	}
 
 	@Override
-	public List<Test> getListOfTestsForSubject(long id) {
+	public List<Test> getListOfTestsForSubject(Subject subject) {
 		List<Test> tests = new ArrayList<>();
 
 		try(PreparedStatement statement = connection.prepareStatement(SELECT_LIST_OF_TEST_FOR_SUBJECT)){
+			statement.setLong(1,subject.getId());
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()){
-				Test subject = getTestFromResultSet(resultSet);
-				tests.add(subject);
+				Test test = getTestFromResultSet(resultSet);
+				tests.add(test);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

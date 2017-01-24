@@ -6,5 +6,5 @@ import com.javaweb.model.entity.Test;
 import java.util.List;
 
 public interface SubjectDao extends GenericDao<Subject> {
-	List<Test> getListOfTestsForSubject(long id);
+	List<Test> getListOfTestsForSubject(Subject subject);
 }

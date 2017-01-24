@@ -22,12 +22,16 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public Optional<Person> login(String login, String password) {
+		Optional<Person> result;
+
 		try (DaoConnection connection = daoFactory.getConnection()) {
 			connection.begin();
 			PersonDao dao = daoFactory.createPersonDao(connection);
-			return dao.getPersonByLogin(login)
+			result = dao.getPersonByLogin(login)
 					.filter(person -> password.equals(person.getPassword()));
+			connection.commit();
 		}
+		return result;
 	}
 
 }

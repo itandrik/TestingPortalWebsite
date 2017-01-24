@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class MainController extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    public static final String DELIMITER = ":";
+    private static final String DELIMITER = ":";
 
     private CommandHolder commands;
 
@@ -35,7 +35,7 @@ public class MainController extends HttpServlet {
         processRequest(request, response);
     }
 
-    void processRequest(HttpServletRequest request, HttpServletResponse response)
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Command command = getCommandFromRequest(request);
         String viewPage = command.execute(request, response);
@@ -51,7 +51,7 @@ public class MainController extends HttpServlet {
     private String getKeyForCommand(HttpServletRequest request) {
         String method = request.getMethod().toUpperCase();
         String path = request.getRequestURI();
-        path = path.replaceAll(".*/rest", "");
+        //path = path.replaceAll(".*/rest", "");
         return method + DELIMITER + path;
     }
 

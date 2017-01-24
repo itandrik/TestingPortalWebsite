@@ -25,7 +25,8 @@ public class CommandHolder {
         commands.put(GET + LOGIN, new GetAuthenticationCommand());
         commands.put(GET + LOGOUT, null);
         commands.put(GET + REGISTER, null);
-        commands.put(GET + HOME, null);
+        commands.put(GET + HOME, new GetHomeCommand());
+        commands.put(GET + SUBJECTS, new GetSubjectsCommand());
     }
 
     public Command getCommandByKey(String commandKey){

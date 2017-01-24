@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import static com.javaweb.jsp.Pages.HOME_PAGE;
 /**
- * @author Andrii Chernysh on 24-Jan-17. E-Mail : itcherry97@gmail.com
+ * @author Andrii Chernysh on 24-Jan-17.
+ *         E-Mail : itcherry97@gmail.com
  */
 public class UnsupportedOperationCommand implements Command{
     @Override

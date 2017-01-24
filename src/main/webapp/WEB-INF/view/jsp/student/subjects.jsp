@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.javaweb.jsp.Parameters" %>
 <%@ page import="com.javaweb.jsp.Paths" %>
-<%@ page import="com.javaweb.jsp.Pages" %>
+<%@ page import="com.javaweb.jsp.Attributes" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -40,7 +39,15 @@
     </ul>
 </nav>
 <div class="container">
-
+    <h1>sadfsdgfsdfgsdfg</h1>
+    <c:forEach var="subject" items="${requestScope[Attributes.SUBJECTS]}">
+        <%--<a href="${pageContext.request.contextPath}/${subject.id}">
+            <c:out value="${subject.nameOfSubject}"/>
+        </a>--%>
+        <c:out value="${subject.id}" />
+        <c:out value="${subject.nameOfSubject}" />
+        <br/>
+    </c:forEach>
 </div>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.javaweb.controller.filter;
 
 import com.javaweb.controller.commands.Command;
 import com.javaweb.controller.commands.GetAuthenticationCommand;
+import com.javaweb.jsp.Paths;
 import com.javaweb.model.entity.person.Person;
 import com.javaweb.model.entity.person.PersonRole;
 
@@ -12,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static com.javaweb.jsp.Attributes.USER;
-import static com.javaweb.jsp.Pages.*;
 
 public class AuthenticationFilter implements Filter {
 
@@ -36,9 +36,8 @@ public class AuthenticationFilter implements Filter {
 		Person person = (Person) session.getAttribute(USER);
 
 		if (person.getRole().equals(PersonRole.STUDENT)) {
-			request.getRequestDispatcher(STUDENT_SUBJECTS_PAGE_WITH_PATH)
-					.forward(request,response);
-			//httpResponse.sendRedirect(STUDENT);
+			//httpResponse.sendRedirect(Paths.SUBJECTS);
+			request.getRequestDispatcher(Paths.SUBJECTS).forward(request,response);
 		} else if (person.getRole().equals(PersonRole.TUTOR)) {
 			//httpResponse.sendRedirect(TUTOR);
 		}
