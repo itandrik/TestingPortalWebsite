@@ -1,28 +1,28 @@
 package com.javaweb.model.entity;
 
 public class Test {
-    private long id;
-    private String name;
+    private int id;
+    private String nameOfTest;
     private int durationTimeInMinutes;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getNameOfTest() {
+        return nameOfTest;
     }
 
     public int getDurationTimeInMinutes() {
         return durationTimeInMinutes;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameOfTest(String nameOfTest) {
+        this.nameOfTest = nameOfTest;
     }
 
     public void setDurationTimeInMinutes(int durationTimeInMinutes) {
@@ -32,13 +32,13 @@ public class Test {
     public static class Builder {
         private Test test = new Test();
 
-        public Builder setId(long id) {
+        public Builder setId(int id) {
             test.setId(id);
             return this;
         }
 
         public Builder setName(String name) {
-            test.setName(name);
+            test.setNameOfTest(name);
             return this;
         }
 

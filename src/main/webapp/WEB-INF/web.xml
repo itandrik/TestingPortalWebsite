@@ -4,40 +4,40 @@
          					 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
 
-	<display-name>Archetype Created Web Application</display-name>
+	<display-nameOfTest>Archetype Created Web Application</display-nameOfTest>
 
 	<welcome-file-list>
 		<welcome-file>/WEB-INF/view/jsp/home.jsp</welcome-file>
 	</welcome-file-list>
 
 	<servlet>
-		<servlet-name>MainController</servlet-name>
+		<servlet-nameOfTest>MainController</servlet-nameOfTest>
 		<servlet-class>com.javaweb.controller.MainController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>MainController</servlet-name>
+		<servlet-nameOfTest>MainController</servlet-nameOfTest>
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
 
 	<resource-ref>
 		<description>Testing Portal Pool</description>
-		<res-ref-name>jdbc/testing_portal</res-ref-name>
+		<res-ref-nameOfTest>jdbc/testing_portal</res-ref-nameOfTest>
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 	</resource-ref>
 
 	<!--<filter>
-		<display-name>AuthenticationFilter</display-name>
-		<filter-name>AuthenticationFilter</filter-name>
+		<display-nameOfTest>AuthenticationFilter</display-nameOfTest>
+		<filter-nameOfTest>AuthenticationFilter</filter-nameOfTest>
 		<filter-class>com.javaweb.controller.filter.AuthenticationFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>AuthenticationFilter</filter-name>
+		<filter-nameOfTest>AuthenticationFilter</filter-nameOfTest>
 		<url-pattern>/rest/login</url-pattern>
 	</filter-mapping>-->
 
 	<context-param>
-		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+		<param-nameOfTest>javax.servlet.jsp.jstl.fmt.localizationContext</param-nameOfTest>
 		<param-value>i18n.messages</param-value>
 	</context-param>
 

@@ -32,14 +32,14 @@
       			<label class="control-label col-sm-2" for="email">Login:</label>
       			<div class="col-sm-8">
         			<input type="text" class="form-control" id="email" placeholder="Enter login"
-        				   name="${Parameters.LOGIN_PARAMETER}">
+        				   nameOfTest="${Parameters.LOGIN_PARAMETER}">
       			</div>
     		</div>
 		    <div class="form-group">
 		      	<label class="control-label col-sm-2" for="pwd">Password:</label>
 		      	<div class="col-sm-8">          
 		        	<input type="password" class="form-control" id="pwd" 
-		        		   name="${Parameters.PASSWORD_PARAMETER}" 
+		        		   nameOfTest="${Parameters.PASSWORD_PARAMETER}"
 		        		   placeholder="Enter password">
 		      	</div>
 		    </div>
@@ -47,7 +47,7 @@
 		      	<div class="col-sm-offset-2 col-sm-10">
 		        	<div class="checkbox">
 		          		<label>
-		          			<input type="checkbox" name="${Parameters.REMEMBER_ME_PARAMETER}"/>
+		          			<input type="checkbox" nameOfTest="${Parameters.REMEMBER_ME_PARAMETER}"/>
 		          			Remember me
 		          		</label>
 		        	</div>

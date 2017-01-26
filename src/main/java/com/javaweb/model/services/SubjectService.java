@@ -1,7 +1,6 @@
 package com.javaweb.model.services;
 
 import com.javaweb.model.entity.Subject;
-import com.javaweb.model.entity.Test;
 
 import java.util.List;
 
@@ -12,5 +11,4 @@ import java.util.List;
 public interface SubjectService {
     List<Subject> getAll();
     Subject getSubjectById(long id);
-    List<Test> getAllTestsForSubject(Subject subject);
 }

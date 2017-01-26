@@ -31,7 +31,7 @@
 </div>
 
 <div class="container home-description">
-    <p id="home-text"><fmt:message key="home.description"/></p>
+    <p class="home-text"><fmt:message key="home.description"/></p>
 </div>
 
 </body>

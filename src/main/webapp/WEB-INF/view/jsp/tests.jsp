@@ -52,7 +52,7 @@
             <tr>
                 <td>
                     <a class="identified" href="${Paths.TESTS}/${test.id}">
-                        <c:out value="${test.name}"/>
+                        <c:out value="${test.nameOfTest}"/>
                     </a>
                 </td>
                 <td>

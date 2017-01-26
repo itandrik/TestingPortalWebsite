@@ -25,7 +25,8 @@ div.jumbotron {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background-color: #EDEEF0;
 }
-#home-text {
+
+.home-text {
     font-family: 'Times New Roman', Times, serif;
     font-size: 58px;
     color: #212121;

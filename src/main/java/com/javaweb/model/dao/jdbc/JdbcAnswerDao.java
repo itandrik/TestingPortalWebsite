@@ -2,6 +2,7 @@ package com.javaweb.model.dao.jdbc;
 
 import com.javaweb.model.dao.AnswerDao;
 import com.javaweb.model.entity.Answer;
+import com.javaweb.model.entity.task.Task;
 
 import java.sql.Connection;
 import java.util.List;
@@ -43,6 +44,12 @@ public class JdbcAnswerDao implements AnswerDao{
 	public void delete(int id) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Answer> getListOfAnswersForTask(Task task) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

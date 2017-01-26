@@ -4,7 +4,10 @@ import com.javaweb.jsp.Attributes;
 import com.javaweb.jsp.Pages;
 import com.javaweb.model.entity.Subject;
 import com.javaweb.model.entity.Test;
+import com.javaweb.model.services.SubjectService;
+import com.javaweb.model.services.TestService;
 import com.javaweb.model.services.impl.SubjectServiceImpl;
+import com.javaweb.model.services.impl.TestServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +20,8 @@ import java.util.List;
  */
 public class GetTestsCommand implements Command {
     private static final String LETTERS_BEFORE_INDEX_REGEX = "\\D+";
-    private SubjectServiceImpl subjectService = SubjectServiceImpl.getInstance();
+    private SubjectService subjectService = SubjectServiceImpl.getInstance();
+    private TestService testService = TestServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -32,7 +36,7 @@ public class GetTestsCommand implements Command {
     }
 
     private void setAttributeListOfTests(Subject subject, HttpServletRequest request) {
-        List<Test> testsList = subjectService.getAllTestsForSubject(subject);
+        List<Test> testsList = testService.getAllTestsForSubject(subject);
         request.setAttribute(Attributes.TESTS, testsList);
     }
 }

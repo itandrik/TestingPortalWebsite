@@ -4,7 +4,6 @@ import com.javaweb.model.dao.DaoConnection;
 import com.javaweb.model.dao.DaoFactory;
 import com.javaweb.model.dao.SubjectDao;
 import com.javaweb.model.entity.Subject;
-import com.javaweb.model.entity.Test;
 import com.javaweb.model.services.SubjectService;
 
 import java.util.List;
@@ -49,13 +48,4 @@ public class SubjectServiceImpl implements SubjectService{
         return result;
     }
 
-    @Override
-    public List<Test> getAllTestsForSubject(Subject subject) {
-        List<Test> result;
-        try(DaoConnection connection = daoFactory.getConnection()){
-            SubjectDao subjectDao = daoFactory.createSubjectDao(connection);
-            result = subjectDao.getListOfTestsForSubject(subject);
-        }
-        return result;
-    }
 }

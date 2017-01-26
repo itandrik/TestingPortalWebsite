@@ -1,23 +1,23 @@
 package com.javaweb.model.entity;
 
 public class Subject {
-	private long id;
+	private int id;
 	private String nameOfSubject;
 
 	public Subject() {
 	}
 
-	public Subject(long id, String nameOfSubject) {
+	public Subject(int id, String nameOfSubject) {
 		super();
 		this.id = id;
 		this.nameOfSubject = nameOfSubject;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -32,7 +32,7 @@ public class Subject {
 	public static class Builder{
 		private Subject subject = new Subject();
 
-		public Builder setId(long id) {
+		public Builder setId(int id) {
 			subject.setId(id);
 			return this;
 		}

@@ -16,6 +16,8 @@ import java.util.List;
  *         E-Mail : itcherry97@gmail.com
  */
 public class GetSubjectsCommand implements Command {
+    private SubjectServiceImpl subjectService = SubjectServiceImpl.getInstance();
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -25,9 +27,7 @@ public class GetSubjectsCommand implements Command {
     }
 
     private void setAttributeListOfSubjects(HttpServletRequest request) {
-        SubjectServiceImpl subjectService = SubjectServiceImpl.getInstance();
         List<Subject> subjectsList = subjectService.getAll();
-
         request.setAttribute(Attributes.SUBJECTS, subjectsList);
     }
 }

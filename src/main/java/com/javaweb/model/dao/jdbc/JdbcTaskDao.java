@@ -1,8 +1,8 @@
 package com.javaweb.model.dao.jdbc;
 
 import com.javaweb.model.dao.TaskDao;
-import com.javaweb.model.entity.Answer;
-import com.javaweb.model.entity.Task;
+import com.javaweb.model.entity.task.Task;
+import com.javaweb.model.entity.Test;
 
 import java.sql.Connection;
 import java.util.List;
@@ -46,7 +46,7 @@ public class JdbcTaskDao implements TaskDao{
 	}
 
 	@Override
-	public List<Answer> getListOfAnswersForTask(long id) {
+	public List<Task> getListOfTasksForTest(Test test) {
 		// TODO Auto-generated method stub
 		return null;
 	}

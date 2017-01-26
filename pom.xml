@@ -5,7 +5,7 @@
 	<artifactId>TestingPortal</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>TestingPortal Maven Webapp</name>
+	<nameOfTest>TestingPortal Maven Webapp</nameOfTest>
 	<url>http://maven.apache.org</url>
 	
 	<properties>
@@ -75,7 +75,7 @@
 					<port>8080</port>
 					<server>TomcatServer</server>
 					<update>true</update>
-					<path>/rest/home</path>
+					<path>/</path>
 					<username>admin</username>
 					<password>password</password>
 				</configuration>
