@@ -15,6 +15,10 @@ public class JdbcAnswerDao implements AnswerDao{
 		this.connection = connection;
 	}
 
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
 	@Override
 	public Optional<Answer> getById(int id) {
 		// TODO Auto-generated method stub

@@ -33,6 +33,10 @@ public class JdbcSubjectDao implements SubjectDao{
 		this.connection = connection;
 	}
 
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
 	@Override
 	public Optional<Subject> getById(int id) {
 		Optional<Subject> result = Optional.empty();
@@ -66,16 +70,10 @@ public class JdbcSubjectDao implements SubjectDao{
 		return subjects;
 	}
 
-	private Subject getSubjectFromResultSet(ResultSet resultSet) throws SQLException{
-		return new Subject.Builder()
-				.setId(resultSet.getInt(SUBJECT_ID_COLUMN_NAME))
-				.setName(resultSet.getString(SUBJECT_NAME_COLUMN_NAME))
-				.build();
-	}
-
 	@Override
 	public void insert(Subject subject) {
 		try(PreparedStatement statement = connection.prepareStatement(INSERT_SUBJECT)){
+
 			statement.setString(1,subject.getNameOfSubject());
 			statement.executeUpdate();
 				/* TODO Check for null*/
@@ -89,7 +87,7 @@ public class JdbcSubjectDao implements SubjectDao{
 	public void update(Subject subject) {
 		try(PreparedStatement statement = connection.prepareStatement(UPDATE_SUBJECT)){
 			statement.setString(1,subject.getNameOfSubject());
-			statement.setLong(2, subject.getId());
+			statement.setInt(2, subject.getId());
 			statement.executeUpdate();
 				/* TODO Check for null*/
 				/* TODO Check is already saved in database */
@@ -102,7 +100,7 @@ public class JdbcSubjectDao implements SubjectDao{
 	@Override
 	public void delete(int id) {
 		try(PreparedStatement statement = connection.prepareStatement(DELETE_SUBJECT)){
-			statement.setLong(1, id);
+			statement.setInt(1, id);
 			statement.executeUpdate();
 				/* TODO Check for null*/
 				/* TODO Check is already saved in database */
@@ -110,5 +108,12 @@ public class JdbcSubjectDao implements SubjectDao{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private Subject getSubjectFromResultSet(ResultSet resultSet) throws SQLException{
+		return new Subject.Builder()
+				.setId(resultSet.getInt(SUBJECT_ID_COLUMN_NAME))
+				.setName(resultSet.getString(SUBJECT_NAME_COLUMN_NAME))
+				.build();
 	}
 }

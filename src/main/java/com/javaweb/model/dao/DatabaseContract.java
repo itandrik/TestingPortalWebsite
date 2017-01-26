@@ -1,7 +1,7 @@
 package com.javaweb.model.dao;
 
 public interface DatabaseContract {
-	String DB_NAME = "testiing_portal_javaweb";
+	String DB_NAME = "testing_portal_javaweb";
 	
 	/* Table name and names of columns for Answer table */
 	String ANSWER_TABLE_NAME = "answer";

@@ -28,6 +28,10 @@ public class JdbcPersonDao implements PersonDao {
         this.connection = connection;
     }
 
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public Optional<Person> getById(int id) {
         Optional<Person> result = Optional.empty();
@@ -51,11 +55,11 @@ public class JdbcPersonDao implements PersonDao {
                 .setFirstName(resultSet.getString(PERSON_FIRST_NAME_COLUMN_NAME))
                 .setSecondName(resultSet.getString(PERSON_SECOND_NAME_COLUMN_NAME))
                 .setGender(Gender.getGenderFromString(
-                        resultSet.getString(PERSON_GENDER_COLUMN_NAME)).get())
+                        resultSet.getString(PERSON_GENDER_COLUMN_NAME)).orElseThrow(RuntimeException::new))
                 .setLogin(resultSet.getString(PERSON_LOGIN_COLUMN_NAME))
                 .setPassword(resultSet.getString(PERSON_PASSWORD_COLUMN_NAME))
                 .setRole(PersonRole.getRoleFromString(
-                        resultSet.getString(PERSON_ROLE_COLUMN_NAME)).get())
+                        resultSet.getString(PERSON_ROLE_COLUMN_NAME)).orElseThrow(RuntimeException::new))
                 .build();
     }
 

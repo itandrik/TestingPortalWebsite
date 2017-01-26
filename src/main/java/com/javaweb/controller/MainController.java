@@ -10,12 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.javaweb.controller.CommandRegex.INDEX_ENDING_URI_REGEX;
+
 
 public class MainController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final String DELIMITER = ":";
     private static final String ID = "id";
-    private static final String INDEX_ENDING_URI_REGEX = "\\d+$";
 
     private CommandHolder commands;
 

@@ -1,6 +1,6 @@
 package com.javaweb.jsp;
 
-public class Paths {
+public final class Paths {
 	private static final String REST = "/rest";
 
 	public static final String LOGIN = REST + "/login";
@@ -12,6 +12,8 @@ public class Paths {
 	public static final String CONCRETE_SUBJECT = REST + "/subject/id";
 	public static final String TESTS = REST + "/test";
 	public static final String CONCRETE_TEST = REST + "/test/id";
+	public static final String TASKS = REST + "/task";
+	public static final String CONCRETE_TASK = REST + "task/id";
 
 	public static final String REDIRECTED = "redirected";
 

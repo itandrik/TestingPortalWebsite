@@ -15,11 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static com.javaweb.controller.CommandRegex.LETTERS_BEFORE_INDEX_REGEX;
+
 /**
  * @author Andrii Chernysh on 25-Jan-17. E-Mail : itcherry97@gmail.com
  */
 public class GetTestsCommand implements Command {
-    private static final String LETTERS_BEFORE_INDEX_REGEX = "\\D+";
     private SubjectService subjectService = SubjectServiceImpl.getInstance();
     private TestService testService = TestServiceImpl.getInstance();
 

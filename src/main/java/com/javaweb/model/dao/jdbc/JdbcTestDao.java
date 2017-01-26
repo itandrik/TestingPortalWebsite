@@ -34,6 +34,10 @@ public class JdbcTestDao implements TestDao{
 		this.connection = connection;
 	}
 
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
 	@Override
 	public Optional<Test> getById(int id) {
 		Optional<Test> result = Optional.empty();
@@ -131,5 +135,4 @@ public class JdbcTestDao implements TestDao{
 						resultSet.getInt(TEST_DURATION_TIME_COLUMN_NAME))
 				.build();
 	}
-
 }
