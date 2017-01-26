@@ -11,5 +11,6 @@ import java.util.List;
  */
 public interface SubjectService {
     List<Subject> getAll();
+    Subject getSubjectById(long id);
     List<Test> getAllTestsForSubject(Subject subject);
 }

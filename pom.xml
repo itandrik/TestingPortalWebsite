@@ -75,7 +75,7 @@
 					<port>8080</port>
 					<server>TomcatServer</server>
 					<update>true</update>
-					<path>/TestingPortal</path>
+					<path>/rest/home</path>
 					<username>admin</username>
 					<password>password</password>
 				</configuration>

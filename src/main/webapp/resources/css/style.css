@@ -12,6 +12,25 @@ div.jumbotron {
     color: #FFFFFF;
 }
 
+.centered-text {
+    text-align: center;
+}
+
+#home {
+    padding-top:5%;
+    padding-bottom: 5%;
+}
+
+.home-description {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #EDEEF0;
+}
+#home-text {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 58px;
+    color: #212121;
+}
+
 .form-group p {
     padding-top: 12px;
 }
@@ -36,19 +55,48 @@ div.jumbotron {
     background: #FF5722;
     box-shadow: 0 4px 8px 0 #BDBDBD, 0 6px 20px 0 #BDBDBD;
 }
-.navbar{
+
+.navbar {
     background-color: #2196F3;
-    position: fixed;
-    width:100%;
+    width: 100%;
 }
-.navbar-brand{
-    color : #FFFFFF;
+
+.navbar-brand {
+    color: #FFFFFF;
     font-size: 20px;
 }
 
-.navbar-brand:hover{
+.navbar-brand:hover {
     color: #FF5722;
 }
-.navbar-right{
+
+.navbar-right {
     padding-right: 30px;
+}
+
+.data {
+    padding-top: 80px;
+}
+
+.tree-header {
+    color: #212121;
+    text-align: center;
+}
+
+.identified {
+    padding-left: 75px;
+    text-align: center;
+    color: #FF5722;
+    font-family: Avantgarde, sans-serif;
+    font-size: 18px;
+}
+
+.thead-changed-style {
+    background: #BBDEFB;
+    font-size: 22px;
+    color: #212121;
+}
+
+.table-shadow {
+    box-shadow: 0 4px 8px 0 #BDBDBD, 0 6px 20px 0 #BDBDBD;
 }

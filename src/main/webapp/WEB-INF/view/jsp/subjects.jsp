@@ -2,10 +2,11 @@
 <%@ page import="com.javaweb.jsp.Paths" %>
 <%@ page import="com.javaweb.jsp.Attributes" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html">
     <title>Testing portal</title>
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"
           type="text/css"/>
@@ -16,8 +17,7 @@
           href="<c:url value="/resources/img/favicon.ico" />">
 </head>
 <body>
-
-<nav class="navbar">
+<nav class="navbar navbar-fixed-top">
     <div class="navbar-header">
         <a class="navbar-brand" href="${Paths.HOME}">Testing Portal</a>
         <img src="<c:url value="/resources/img/testing-icon.png" />"
@@ -25,9 +25,7 @@
              width="50" height="50"/>
     </div>
     <ul class="nav navbar-nav">
-        <%--<li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Page 1</a></li>
-        <li><a href="#">Page 2</a></li>--%>
+
     </ul>
     <ul class="nav navbar-nav navbar-right">
         <li>
@@ -38,16 +36,23 @@
         </li>
     </ul>
 </nav>
-<div class="container">
-    <h1>sadfsdgfsdfgsdfg</h1>
-    <c:forEach var="subject" items="${requestScope[Attributes.SUBJECTS]}">
-        <%--<a href="${pageContext.request.contextPath}/${subject.id}">
-            <c:out value="${subject.nameOfSubject}"/>
-        </a>--%>
-        <c:out value="${subject.id}" />
-        <c:out value="${subject.nameOfSubject}" />
-        <br/>
-    </c:forEach>
+<div class="data col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-8">
+    <table class="table table-hover table-bordered table-shadow">
+        <thead class="thead-changed-style">
+        <tr>
+            <th>Choose subject :</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="subject" items="${requestScope[Attributes.SUBJECTS]}">
+            <tr><td>
+                <a class="identified" href="${Paths.SUBJECTS}/${subject.id}">
+                    <c:out value="${subject.nameOfSubject}"/>
+                </a>
+            </td></tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

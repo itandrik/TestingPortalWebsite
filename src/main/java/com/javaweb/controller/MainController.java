@@ -2,6 +2,7 @@ package com.javaweb.controller;
 
 import com.javaweb.controller.commands.Command;
 import com.javaweb.controller.commands.CommandHolder;
+import com.javaweb.jsp.Paths;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +14,8 @@ import java.io.IOException;
 public class MainController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final String DELIMITER = ":";
+    private static final String ID = "id";
+    private static final String INDEX_ENDING_URI_REGEX = "\\d+$";
 
     private CommandHolder commands;
 
@@ -39,8 +42,10 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         Command command = getCommandFromRequest(request);
         String viewPage = command.execute(request, response);
-        request.getRequestDispatcher(viewPage)
-                .forward(request, response);
+        if(!isRedirected(viewPage)) {
+            request.getRequestDispatcher(viewPage)
+                    .forward(request, response);
+        }
     }
 
     private Command getCommandFromRequest(HttpServletRequest request) {
@@ -51,8 +56,11 @@ public class MainController extends HttpServlet {
     private String getKeyForCommand(HttpServletRequest request) {
         String method = request.getMethod().toUpperCase();
         String path = request.getRequestURI();
-        //path = path.replaceAll(".*/rest", "");
+        path = path.replaceAll(INDEX_ENDING_URI_REGEX, ID);
         return method + DELIMITER + path;
     }
 
+    private boolean isRedirected(String viewPage){
+        return viewPage.equals(Paths.REDIRECTED);
+    }
 }

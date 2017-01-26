@@ -25,11 +25,9 @@ public class PersonServiceImpl implements PersonService {
 		Optional<Person> result;
 
 		try (DaoConnection connection = daoFactory.getConnection()) {
-			connection.begin();
 			PersonDao dao = daoFactory.createPersonDao(connection);
 			result = dao.getPersonByLogin(login)
 					.filter(person -> password.equals(person.getPassword()));
-			connection.commit();
 		}
 		return result;
 	}

@@ -2,6 +2,7 @@ package com.javaweb.controller.commands;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import static com.javaweb.jsp.Paths.*;
 
 /**
@@ -22,11 +23,13 @@ public class CommandHolder {
     }
 
     private void initCommands(){
-        commands.put(GET + LOGIN, new GetAuthenticationCommand());
+        commands.put(GET + AUTHENTICATE, new GetAuthenticationCommand());
+        commands.put(GET + LOGIN, new LoginCommand());
         commands.put(GET + LOGOUT, null);
         commands.put(GET + REGISTER, null);
         commands.put(GET + HOME, new GetHomeCommand());
         commands.put(GET + SUBJECTS, new GetSubjectsCommand());
+        commands.put(GET + CONCRETE_SUBJECT, new GetTestsCommand());
     }
 
     public Command getCommandByKey(String commandKey){

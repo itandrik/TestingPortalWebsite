@@ -1,5 +1,6 @@
 package com.javaweb.controller.commands;
 
+import com.javaweb.jsp.Attributes;
 import com.javaweb.jsp.Pages;
 import com.javaweb.model.entity.Subject;
 import com.javaweb.model.services.impl.SubjectServiceImpl;
@@ -20,13 +21,13 @@ public class GetSubjectsCommand implements Command {
             throws ServletException, IOException {
         setAttributeListOfSubjects(request);
 
-        return Pages.STUDENT_SUBJECTS_PAGE_WITH_PATH;
+        return Pages.SUBJECTS_PAGE_WITH_PATH;
     }
 
     private void setAttributeListOfSubjects(HttpServletRequest request) {
         SubjectServiceImpl subjectService = SubjectServiceImpl.getInstance();
         List<Subject> subjectsList = subjectService.getAll();
 
-        request.setAttribute("subjects", subjectsList);
+        request.setAttribute(Attributes.SUBJECTS, subjectsList);
     }
 }

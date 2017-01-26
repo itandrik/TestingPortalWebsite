@@ -8,6 +8,7 @@ import com.javaweb.model.entity.Test;
 import com.javaweb.model.services.SubjectService;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Andrii Chernysh on 24-Jan-17.
@@ -28,10 +29,22 @@ public class SubjectServiceImpl implements SubjectService{
     public List<Subject> getAll() {
         List<Subject> result;
         try(DaoConnection connection = daoFactory.getConnection()){
-            connection.begin();
             SubjectDao subjectDao = daoFactory.createSubjectDao(connection);
             result = subjectDao.getAll();
-            connection.commit();
+        }
+        return result;
+    }
+
+    @Override
+    public Subject getSubjectById(long id) {
+        Subject result;
+        try(DaoConnection connection = daoFactory.getConnection()){
+            SubjectDao subjectDao = daoFactory.createSubjectDao(connection);
+            Optional<Subject> optionalSubject = subjectDao.getById((int)id);
+            result = optionalSubject.map(subject -> new Subject.Builder()
+                    .setId(subject.getId())
+                    .setName(subject.getNameOfSubject())
+                    .build()).orElseThrow(RuntimeException::new);
         }
         return result;
     }
@@ -40,10 +53,8 @@ public class SubjectServiceImpl implements SubjectService{
     public List<Test> getAllTestsForSubject(Subject subject) {
         List<Test> result;
         try(DaoConnection connection = daoFactory.getConnection()){
-            connection.begin();
             SubjectDao subjectDao = daoFactory.createSubjectDao(connection);
             result = subjectDao.getListOfTestsForSubject(subject);
-            connection.commit();
         }
         return result;
     }

@@ -27,7 +27,7 @@
 	</div>
 	
 	<div class="container">
-  		<form class="form-horizontal" method="get" action="${Paths.LOGIN}">
+  		<form class="form-horizontal" method="get" action="${Paths.AUTHENTICATE}">
     		<div class="form-group">
       			<label class="control-label col-sm-2" for="email">Login:</label>
       			<div class="col-sm-8">
