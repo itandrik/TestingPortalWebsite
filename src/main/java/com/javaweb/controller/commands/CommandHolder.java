@@ -25,11 +25,12 @@ public class CommandHolder {
     private void initCommands(){
         commands.put(GET + AUTHENTICATE, new GetAuthenticationCommand());
         commands.put(GET + LOGIN, new LoginCommand());
-        commands.put(GET + LOGOUT, null);
-        commands.put(GET + REGISTER, null);
+        commands.put(GET + LOGOUT, null);//TODO
+        commands.put(GET + REGISTER, null);//TODO
         commands.put(GET + HOME, new GetHomeCommand());
         commands.put(GET + SUBJECTS, new GetSubjectsCommand());
         commands.put(GET + CONCRETE_SUBJECT, new GetTestsCommand());
+        commands.put(GET + CONCRETE_TEST, new GetConcreteTestCommand());
     }
 
     public Command getCommandByKey(String commandKey){

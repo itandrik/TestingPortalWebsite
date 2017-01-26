@@ -101,3 +101,13 @@ div.jumbotron {
 .table-shadow {
     box-shadow: 0 4px 8px 0 #BDBDBD, 0 6px 20px 0 #BDBDBD;
 }
+
+.time-and-submit {
+    position: fixed;
+    width : 10%;
+    height : 10%;
+    left : 5%;
+    top : 30%;
+    box-shadow: 0 5px 5px 0 #212121, 0 5px 5px 0 #212121;
+    background-color: #FF5722;
+}

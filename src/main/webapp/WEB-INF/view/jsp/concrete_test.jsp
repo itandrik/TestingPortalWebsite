@@ -37,6 +37,11 @@
         </li>
     </ul>
 </nav>
+<div class="col-lg-2 time-and-submit">
+    <div class="container">
+        <button class="btn btn-default">Finish the test</button>
+    </div>
+</div>
 <div class="data col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-8">
     <c:forEach var="task" items="${requestScope[Attributes.TASKS]}">
         <table class="table table-bordered table-shadow">
@@ -52,16 +57,24 @@
                         <td>
                             <c:choose>
                                 <c:when test="${task.answerType == AnswerType.ONE_ANSWER}">
-                                    <input type="radio" name="answer${answer.id}">${answer.answerText}<br/>
+                                    <div class="radio">
+                                        <label><input type="radio" name="answer${task.id}">${answer.answerText}</label>
+                                    </div>
                                 </c:when>
                                 <c:otherwise>
-                                    <input type="checkbox" name="answer${answer.id}">${answer.answerText}<br/>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="answer${answer.id}">${answer.answerText}</label>
+                                    </div>
                                 </c:otherwise>
                             </c:choose>
                         </td>
                     </tr>
                 </c:forEach>
-                <button type="submit" class="btn btn-lg btn-info">Accept and write to database</button>
+                <tr>
+                    <td>
+                        <button type="submit" class="btn btn-lg btn-primary">Accept and write to database</button>
+                    </td>
+                </tr>
             </form>
             </tbody>
         </table>

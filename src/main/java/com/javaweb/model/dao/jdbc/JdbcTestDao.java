@@ -43,6 +43,7 @@ public class JdbcTestDao implements TestDao{
 		Optional<Test> result = Optional.empty();
 
 		try(PreparedStatement statement = connection.prepareStatement(SELECT_TEST_BY_ID)){
+			statement.setInt(1,id);
 			ResultSet resultSet = statement.executeQuery();
 			if(resultSet.next()) {
 				Test test = getTestFromResultSet(resultSet);

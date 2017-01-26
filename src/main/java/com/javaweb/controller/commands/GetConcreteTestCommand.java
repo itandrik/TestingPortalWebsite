@@ -46,7 +46,7 @@ public class GetConcreteTestCommand implements Command {
             pageToGo = CONCRETE_TEST_PAGE_WITH_PATH;
         });
 
-        return null;
+        return pageToGo;
     }
 
     private List<Task> getTasksWithAnswersForTest(Test test) {
