@@ -2,6 +2,7 @@ package com.javaweb.controller.commands.login;
 
 import com.javaweb.controller.commands.Command;
 import com.javaweb.jsp.Pages;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

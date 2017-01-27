@@ -104,12 +104,12 @@ div.jumbotron {
 
 .time-and-submit {
     position: fixed;
-    width: 10%;
-    height: 10%;
-    left: 5%;
-    top: 30%;
+    height: auto;
+    left: 5px;
+    top: 10%;
     box-shadow: 0 5px 5px 0 #212121, 0 5px 5px 0 #212121;
     background-color: #FF5722;
+    padding-bottom: 40px;
 }
 
 .bottom-footer {
@@ -126,3 +126,13 @@ div.jumbotron {
 .add-subject-form{
     display: inline;
 }
+
+.btn-bottom {
+    bottom : 0;
+}
+
+.timer{
+    font-size: 18px;
+    color : #ffffff;
+}
+

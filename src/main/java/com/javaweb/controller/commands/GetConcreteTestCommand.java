@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import static com.javaweb.controller.CommandRegex.LETTERS_BEFORE_INDEX_REGEX;
 import static com.javaweb.jsp.Attributes.TASKS;
+import static com.javaweb.jsp.Attributes.TEST_TIME_DURATION;
 import static com.javaweb.jsp.Pages.CONCRETE_TEST_PAGE_WITH_PATH;
 import static com.javaweb.jsp.Pages.HOME_PAGE_WITH_PATH;
 
@@ -43,6 +44,7 @@ public class GetConcreteTestCommand implements Command {
         optionalTest.ifPresent((test) -> {
             List<Task> tasks = getTasksWithAnswersForTest(test);
             request.setAttribute(TASKS,tasks);
+            request.setAttribute(TEST_TIME_DURATION,test.getDurationTimeInMinutes());
             pageToGo = CONCRETE_TEST_PAGE_WITH_PATH;
         });
 

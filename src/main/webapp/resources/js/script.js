@@ -31,3 +31,39 @@ function addSubject(pathToGo, inputName){
     tableRow.appendChild(tableCol);
     table.appendChild(tableRow);
 }
+
+function getTimeRemaining(endtime) {
+    var t = Date.parse(endtime) - Date.parse(new Date());
+    var seconds = Math.floor((t / 1000) % 60);
+    var minutes = Math.floor((t / 1000 / 60) % 60);
+
+    return {
+        'total': t,
+        'minutes': minutes,
+        'seconds': seconds
+    };
+}
+
+function initializeClock(endtime) {
+    var minutesParagraph = document.getElementById('minutes');
+    var secondsParagraph = document.getElementById('seconds');
+
+    function updateClock() {
+        var t = getTimeRemaining(endtime);
+
+        minutesParagraph.innerHTML = ('0' + t.minutes).slice(-2);
+        secondsParagraph.innerHTML = ('0' + t.seconds).slice(-2);
+
+        if (t.total <= 0) {
+            clearInterval(timeinterval);
+        }
+    }
+
+    updateClock();
+    var timeinterval = setInterval(updateClock, 1000);
+}
+
+function startTimer(minutes) {
+    var deadline = new Date(Date.parse(new Date()) + minutes * 60 * 1000);
+    initializeClock(deadline);
+}
