@@ -3,20 +3,7 @@
 <%@ page import="com.javaweb.jsp.Attributes" %>
 <%@ page import="com.javaweb.model.entity.task.AnswerType" %>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html">
-    <title>Testing portal</title>
-    <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"
-          type="text/css"/>
-    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"
-          type="text/css"/>
-    <link rel="icon"
-          type="image/ico"
-          href="<c:url value="/resources/img/favicon.ico" />">
-</head>
+<%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
 <body>
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-header">
@@ -72,7 +59,9 @@
                 </c:forEach>
                 <tr>
                     <td>
-                        <button type="submit" class="btn btn-lg btn-primary">Accept and write to database</button>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-lg btn-primary">Accept and write to database</button>
+                        </div>
                     </td>
                 </tr>
             </form>
@@ -80,5 +69,6 @@
         </table>
     </c:forEach>
 </div>
+
 </body>
 </html>

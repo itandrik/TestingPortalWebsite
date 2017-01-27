@@ -17,7 +17,7 @@ div.jumbotron {
 }
 
 #home {
-    padding-top:5%;
+    padding-top: 5%;
     padding-bottom: 5%;
 }
 
@@ -28,7 +28,7 @@ div.jumbotron {
 
 .home-text {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 58px;
+    font-size: 30px;
     color: #212121;
 }
 
@@ -104,10 +104,25 @@ div.jumbotron {
 
 .time-and-submit {
     position: fixed;
-    width : 10%;
-    height : 10%;
-    left : 5%;
-    top : 30%;
+    width: 10%;
+    height: 10%;
+    left: 5%;
+    top: 30%;
     box-shadow: 0 5px 5px 0 #212121, 0 5px 5px 0 #212121;
     background-color: #FF5722;
+}
+
+.bottom-footer {
+    position: fixed;
+    background-color: #1976D2;
+    min-height: 30px;
+    color: #FFFFFF;
+    text-align: center;
+    width: 100%;
+    bottom: 0;
+    font-size: 20px;
+}
+
+.add-subject-form{
+    display: inline;
 }

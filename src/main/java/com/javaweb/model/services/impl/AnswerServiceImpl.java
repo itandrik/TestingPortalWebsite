@@ -19,6 +19,9 @@ public class AnswerServiceImpl implements AnswerService {
         static final AnswerServiceImpl INSTANCE = new AnswerServiceImpl();
     }
 
+    private AnswerServiceImpl() {
+    }
+
     public static AnswerServiceImpl getInstance(){
         return Holder.INSTANCE;
     }

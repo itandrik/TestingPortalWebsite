@@ -2,20 +2,8 @@
 <%@ page import="com.javaweb.jsp.Paths" %>
 <%@ page import="com.javaweb.jsp.Attributes" %>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html">
-    <title>Testing portal</title>
-    <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"
-          type="text/css"/>
-    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"
-          type="text/css"/>
-    <link rel="icon"
-          type="image/ico"
-          href="<c:url value="/resources/img/favicon.ico" />">
-</head>
+<%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
+
 <body>
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-header">
@@ -63,5 +51,5 @@
         </tbody>
     </table>
 </div>
-</body>
-</html>
+<%@ include file="/WEB-INF/view/jsp/template/footer.jsp" %>
+

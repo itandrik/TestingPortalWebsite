@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,18 @@ public class JdbcPersonDao implements PersonDao {
     private static final String SELECT_BY_LOGIN = "SELECT person_id,"
             + "first_name, second_name, gender, login, password,"
             + " role FROM Person WHERE login = ?";
+    public static final String SELECT_ALL = "SELECT person_id,"
+            + "first_name, second_name, gender, login, password,"
+            + " role FROM Person";
+    private static final String INSERT_PERSON =
+            "INSERT INTO Person (first_name, second_name, gender," +
+                    " login, password, role) VALUES (?,?,?,?,?,?)";
+    private static final String UPDATE_PERSON =
+            "UPDATE Person SET first_name = ?, second_name = ?," +
+                    " gender = ?, login = ?, password = ?, role = ?" +
+                    " WHERE person_id = ?";
+    private static final String DELETE_PERSON =
+            "DELETE FROM Person WHERE person_id = ?";
 
     private Connection connection;
 
@@ -65,26 +78,70 @@ public class JdbcPersonDao implements PersonDao {
 
     @Override
     public List<Person> getAll() {
-        // TODO Auto-generated method stub
-        return null;
+        List<Person> persons = new ArrayList<>();
+
+        try(PreparedStatement statement = connection.prepareStatement(SELECT_ALL)){
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                Person person = getPersonFromResultSet(rs);
+                persons.add(person);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return persons;
     }
 
     @Override
     public void insert(Person person) {
-        // TODO Auto-generated method stub
+        try(PreparedStatement statement = connection.prepareStatement(
+                INSERT_PERSON,PreparedStatement.RETURN_GENERATED_KEYS)){
 
+            statement.setString(1,person.getFirstName());
+            statement.setString(2,person.getSecondName());
+            statement.setString(3,person.getGender().toString());
+            statement.setString(4,person.getLogin());
+            statement.setString(5,person.getPassword());
+            statement.setString(6,person.getRole().toString());
+
+            statement.executeUpdate();
+				/* TODO Check for null*/
+				/* TODO Check is already saved in database */
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void update(Person person) {
-        // TODO Auto-generated method stub
+        try(PreparedStatement statement = connection.prepareStatement(UPDATE_PERSON)){
+            statement.setString(1,person.getFirstName());
+            statement.setString(2,person.getSecondName());
+            statement.setString(3,person.getGender().toString());
+            statement.setString(4,person.getLogin());
+            statement.setString(5,person.getPassword());
+            statement.setString(6,person.getRole().toString());
+            statement.setInt(7,person.getId());
 
+            statement.executeUpdate();
+				/* TODO Check for null*/
+				/* TODO Check is already saved in database */
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void delete(int id) {
-        // TODO Auto-generated method stub
+        try(PreparedStatement statement = connection.prepareStatement(DELETE_PERSON)){
+            statement.setInt(1, id);
+            statement.executeUpdate();
+				/* TODO Check for null*/
+				/* TODO Check is already saved in database */
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

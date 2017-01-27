@@ -24,6 +24,9 @@ public class SubjectServiceImpl implements SubjectService{
         return Holder.INSTANCE;
     }
 
+    private SubjectServiceImpl() {
+    }
+
     @Override
     public List<Subject> getAll() {
         List<Subject> result;
@@ -46,6 +49,16 @@ public class SubjectServiceImpl implements SubjectService{
                     .build()).orElseThrow(RuntimeException::new);
         }
         return result;
+    }
+
+    @Override
+    public void addNewSubject(Subject subject) {
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            SubjectDao subjectDao = daoFactory.createSubjectDao(connection);
+            connection.begin();
+            subjectDao.insert(subject);
+            connection.commit();
+        }
     }
 
 }

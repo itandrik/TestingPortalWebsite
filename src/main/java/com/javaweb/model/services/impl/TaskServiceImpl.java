@@ -24,6 +24,9 @@ public class TaskServiceImpl implements TaskService {
         return TaskServiceImpl.Holder.INSTANCE;
     }
 
+    private TaskServiceImpl() {
+    }
+
     @Override
     public List<Task> getAllTasksForTest(Test test) {
         List<Task> result;

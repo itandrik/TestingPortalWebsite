@@ -25,6 +25,9 @@ public class TestServiceImpl implements TestService {
         return TestServiceImpl.Holder.INSTANCE;
     }
 
+    private TestServiceImpl() {
+    }
+
     @Override
     public List<Test> getAllTestsForSubject(Subject subject) {
         List<Test> result;

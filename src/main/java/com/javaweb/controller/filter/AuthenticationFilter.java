@@ -1,7 +1,7 @@
 package com.javaweb.controller.filter;
 
 import com.javaweb.controller.commands.Command;
-import com.javaweb.controller.commands.GetAuthenticationCommand;
+import com.javaweb.controller.commands.login.GetAuthenticationCommand;
 import com.javaweb.jsp.Paths;
 import com.javaweb.model.entity.person.Person;
 import com.javaweb.model.entity.person.PersonRole;

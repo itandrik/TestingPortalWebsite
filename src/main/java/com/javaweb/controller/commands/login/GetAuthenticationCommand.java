@@ -1,5 +1,6 @@
-package com.javaweb.controller.commands;
+package com.javaweb.controller.commands.login;
 
+import com.javaweb.controller.commands.Command;
 import com.javaweb.model.entity.person.Person;
 import com.javaweb.model.services.impl.PersonServiceImpl;
 

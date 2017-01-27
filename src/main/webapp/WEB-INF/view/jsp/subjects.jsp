@@ -1,21 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <%@ page import="com.javaweb.jsp.Paths" %>
 <%@ page import="com.javaweb.jsp.Attributes" %>
+<%@ page import="com.javaweb.jsp.Parameters" %>
+<%@ page import="com.javaweb.model.entity.person.PersonRole" %>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html">
-    <title>Testing portal</title>
-    <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"
-          type="text/css"/>
-    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"
-          type="text/css"/>
-    <link rel="icon"
-          type="image/ico"
-          href="<c:url value="/resources/img/favicon.ico" />">
-</head>
+<%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
+
 <body>
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-header">
@@ -28,6 +20,12 @@
 
     </ul>
     <ul class="nav navbar-nav navbar-right">
+        <l1>
+            <a class="navbar-brand" href="${Paths.USER_INFO}">
+                <span class="glyphicon glyphicon-user"></span>
+                Account info
+            </a>
+        </l1>
         <li>
             <a class="navbar-brand" href="${Paths.LOGOUT}">
                 <span class="glyphicon glyphicon-log-out"></span>
@@ -36,6 +34,12 @@
         </li>
     </ul>
 </nav>
+
+<%--<c:choose>
+    <c:when test="${fn:length(requestScope[Attributes.SUBJECTS] == 0)}">
+     <h1 class="text-center">No subjects in the database</h1>
+    </c:when>
+<c:otherwise>--%>
 <div class="data col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-8">
     <table class="table table-hover table-bordered table-shadow">
         <thead class="thead-changed-style">
@@ -43,16 +47,34 @@
             <th>Choose subject :</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="table-with-subjects">
         <c:forEach var="subject" items="${requestScope[Attributes.SUBJECTS]}">
-            <tr><td>
-                <a class="identified" href="${Paths.SUBJECTS}/${subject.id}">
-                    <c:out value="${subject.nameOfSubject}"/>
-                </a>
-            </td></tr>
+            <tr>
+                <td>
+                    <a class="identified" href="${Paths.SUBJECTS}/${subject.id}">
+                        <c:out value="${subject.nameOfSubject}"/>
+                    </a>
+                </td>
+            </tr>
         </c:forEach>
+        <c:if test="${sessionScope[Attributes.USER].role == PersonRole.TUTOR}">
+            <tr>
+                <td>
+                    <div class="text-center">
+                        <button id="add-button"
+                                onclick="createFormToAddSubject('${Paths.ADD_SUBJECT}','${Parameters.NAME_OF_SUBJECT_PARAMETER}')"
+                                class="btn btn-lg btn-primary">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Add new subject
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </c:if>
+
         </tbody>
     </table>
 </div>
-</body>
-</html>
+<%--</c:otherwise>
+</c:choose>--%>
+<%@ include file="/WEB-INF/view/jsp/template/footer.jsp" %>

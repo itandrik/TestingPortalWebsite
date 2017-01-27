@@ -2,19 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.javaweb.jsp.Paths" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Testing portal</title>
-    <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"
-          type="text/css"/>
-    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"
-          type="text/css"/>
-    <link rel="icon"
-          type="image/ico"
-          href="<c:url value="/resources/img/favicon.ico" />">
-</head>
+
+<%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
+
 <body style="background-color:#BBDEFB;">
 
 <div id="home" class="jumbotron">
@@ -23,8 +13,8 @@
     </div>
     <div class="row">
         <form action="${Paths.LOGIN}" method="get">
-            <div class="col-lg-offset-5 col-lg-1 col-md-offset-5 col-md-1 col-sm-offset-5 col-sm-1">
-                <button type="submit" class="btn btn-lg btn-success">Get started </button>
+            <div class="col-md-12 col-lg-12 col-sm-12 text-center">
+                <button type="submit" class="btn btn-lg btn-default">Get started </button>
             </div>
         </form>
     </div>
@@ -34,5 +24,4 @@
     <p class="home-text"><fmt:message key="home.description"/></p>
 </div>
 
-</body>
-</html>
+<%@ include file="/WEB-INF/view/jsp/template/footer.jsp" %>

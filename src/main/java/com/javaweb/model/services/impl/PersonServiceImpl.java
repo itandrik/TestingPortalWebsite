@@ -20,16 +20,29 @@ public class PersonServiceImpl implements PersonService {
 		return Holder.INSTANCE;
 	}
 
+	private PersonServiceImpl() {
+	}
+
 	@Override
 	public Optional<Person> login(String login, String password) {
 		Optional<Person> result;
 
 		try (DaoConnection connection = daoFactory.getConnection()) {
-			PersonDao dao = daoFactory.createPersonDao(connection);
-			result = dao.getPersonByLogin(login)
+			PersonDao personDao = daoFactory.createPersonDao(connection);
+			result = personDao.getPersonByLogin(login)
 					.filter(person -> password.equals(person.getPassword()));
 		}
 		return result;
+	}
+
+	@Override
+	public void register(Person person) {
+		try(DaoConnection connection = daoFactory.getConnection()){
+			connection.begin();
+			PersonDao personDao = daoFactory.createPersonDao(connection);
+			personDao.insert(person);
+			connection.commit();
+		}
 	}
 
 }
