@@ -1,4 +1,4 @@
-package com.javaweb.jsp;
+package com.javaweb.util;
 
 public final class Pages {
 

@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.javaweb.jsp.Parameters" %>
-<%@ page import="com.javaweb.jsp.Paths" %>
+<%@ page import="com.javaweb.util.Parameters" %>
+<%@ page import="com.javaweb.util.Paths" %>
 <%@ page import="com.javaweb.model.entity.person.Gender" %>
 <%@ page import="com.javaweb.model.entity.person.PersonRole" %>
 

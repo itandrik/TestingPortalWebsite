@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
-import static com.javaweb.jsp.Parameters.NAME_OF_SUBJECT_PARAMETER;
-import static com.javaweb.jsp.Paths.REDIRECTED;
-import static com.javaweb.jsp.Paths.SUBJECTS;
+import static com.javaweb.util.Parameters.NAME_OF_SUBJECT_PARAMETER;
+import static com.javaweb.util.Paths.REDIRECTED;
+import static com.javaweb.util.Paths.SUBJECTS;
 
 /**
  * @author Andrii Chernysh on 27-Jan-17. E-Mail : itcherry97@gmail.com

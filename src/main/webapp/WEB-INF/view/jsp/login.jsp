@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.javaweb.jsp.Parameters" %>
-<%@ page import="com.javaweb.jsp.Paths" %>
+<%@ page import="com.javaweb.util.Parameters" %>
+<%@ page import="com.javaweb.util.Paths" %>
 
 <%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
 <%@ include file="/WEB-INF/view/jsp/template/header_jumbotron.jsp" %>
@@ -42,5 +42,8 @@
             </p>
         </div>
     </form>
+    <div class="container">
+        <%@ include file="/WEB-INF/view/jsp/template/error_messages.jsp" %>
+    </div>
 </div>
 <%@ include file="/WEB-INF/view/jsp/template/footer.jsp" %>

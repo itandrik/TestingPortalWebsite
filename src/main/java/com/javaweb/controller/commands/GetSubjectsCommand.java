@@ -1,7 +1,7 @@
 package com.javaweb.controller.commands;
 
-import com.javaweb.jsp.Attributes;
-import com.javaweb.jsp.Pages;
+import com.javaweb.util.Attributes;
+import com.javaweb.util.Pages;
 import com.javaweb.model.entity.Subject;
 import com.javaweb.model.services.impl.SubjectServiceImpl;
 

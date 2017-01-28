@@ -1,6 +1,6 @@
 package com.javaweb.controller.commands;
 
-import com.javaweb.controller.commands.login.GetAuthenticationCommand;
+import com.javaweb.controller.commands.login.LoginSubmitCommand;
 import com.javaweb.controller.commands.login.LoginCommand;
 import com.javaweb.controller.commands.register.RegisterCommand;
 import com.javaweb.controller.commands.register.RegisterSubmitCommand;
@@ -8,7 +8,7 @@ import com.javaweb.controller.commands.register.RegisterSubmitCommand;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.javaweb.jsp.Paths.*;
+import static com.javaweb.util.Paths.*;
 
 /**
  * @author Andrii Chernysh on 24-Jan-17.
@@ -28,7 +28,7 @@ public class CommandHolder {
     }
 
     private void initCommands(){
-        commands.put(GET + AUTHENTICATE, new GetAuthenticationCommand());
+        commands.put(GET + AUTHENTICATE, new LoginSubmitCommand());
         commands.put(GET + LOGIN, new LoginCommand());
         commands.put(GET + LOGOUT, null);//TODO
         commands.put(GET + HOME, new GetHomeCommand());

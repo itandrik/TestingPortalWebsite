@@ -1,10 +1,9 @@
 package com.javaweb.model.services;
 
 import com.javaweb.model.entity.person.Person;
-
-import java.util.Optional;
+import com.javaweb.model.entity.util.LoginData;
 
 public interface PersonService {
-	Optional<Person> login(String login , String password);
+	Person authenticate(LoginData loginData);
 	void register(Person person);
 }

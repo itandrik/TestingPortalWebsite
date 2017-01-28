@@ -1,7 +1,7 @@
 package com.javaweb.controller.commands.register;
 
 import com.javaweb.controller.commands.Command;
-import com.javaweb.jsp.Paths;
+import com.javaweb.util.Paths;
 import com.javaweb.model.entity.person.Gender;
 import com.javaweb.model.entity.person.Person;
 import com.javaweb.model.entity.person.PersonRole;
@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.javaweb.jsp.Parameters.*;
-import static com.javaweb.jsp.Paths.LOGIN;
+import static com.javaweb.util.Parameters.*;
+import static com.javaweb.util.Paths.LOGIN;
 
 /**
  * @author Andrii Chernysh on 27-Jan-17. E-Mail : itcherry97@gmail.com

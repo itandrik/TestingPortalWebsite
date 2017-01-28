@@ -1,7 +1,7 @@
 package com.javaweb.controller.commands;
 
-import com.javaweb.jsp.Attributes;
-import com.javaweb.jsp.Pages;
+import com.javaweb.util.Attributes;
+import com.javaweb.util.Pages;
 import com.javaweb.model.entity.Subject;
 import com.javaweb.model.entity.Test;
 import com.javaweb.model.services.SubjectService;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static com.javaweb.controller.CommandRegex.LETTERS_BEFORE_INDEX_REGEX;
+import static com.javaweb.controller.CommandRegexAndPatterns.LETTERS_BEFORE_INDEX_REGEX;
 
 /**
  * @author Andrii Chernysh on 25-Jan-17. E-Mail : itcherry97@gmail.com

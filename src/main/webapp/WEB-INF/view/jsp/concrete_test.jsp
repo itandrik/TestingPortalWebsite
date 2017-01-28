@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.javaweb.jsp.Paths" %>
-<%@ page import="com.javaweb.jsp.Attributes" %>
+<%@ page import="com.javaweb.util.Paths" %>
+<%@ page import="com.javaweb.util.Attributes" %>
 <%@ page import="com.javaweb.model.entity.task.AnswerType" %>
 
 <%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>

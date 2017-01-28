@@ -17,11 +17,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import static com.javaweb.controller.CommandRegex.LETTERS_BEFORE_INDEX_REGEX;
-import static com.javaweb.jsp.Attributes.TASKS;
-import static com.javaweb.jsp.Attributes.TEST_TIME_DURATION;
-import static com.javaweb.jsp.Pages.CONCRETE_TEST_PAGE_WITH_PATH;
-import static com.javaweb.jsp.Pages.HOME_PAGE_WITH_PATH;
+import static com.javaweb.controller.CommandRegexAndPatterns.LETTERS_BEFORE_INDEX_REGEX;
+import static com.javaweb.util.Attributes.TASKS;
+import static com.javaweb.util.Attributes.TEST_TIME_DURATION;
+import static com.javaweb.util.Pages.CONCRETE_TEST_PAGE_WITH_PATH;
+import static com.javaweb.util.Pages.HOME_PAGE_WITH_PATH;
 
 /**
  * @author Andrii Chernysh on 26-Jan-17. E-Mail : itcherry97@gmail.com

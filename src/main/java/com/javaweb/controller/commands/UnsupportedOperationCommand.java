@@ -4,7 +4,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import static com.javaweb.jsp.Pages.HOME_PAGE;
+import static com.javaweb.util.Pages.HOME_PAGE;
 /**
  * @author Andrii Chernysh on 24-Jan-17.
  *         E-Mail : itcherry97@gmail.com

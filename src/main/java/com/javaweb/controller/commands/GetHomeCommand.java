@@ -1,6 +1,6 @@
 package com.javaweb.controller.commands;
 
-import com.javaweb.jsp.Pages;
+import com.javaweb.util.Pages;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

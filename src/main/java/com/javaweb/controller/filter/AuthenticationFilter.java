@@ -1,8 +1,8 @@
 package com.javaweb.controller.filter;
 
 import com.javaweb.controller.commands.Command;
-import com.javaweb.controller.commands.login.GetAuthenticationCommand;
-import com.javaweb.jsp.Paths;
+import com.javaweb.controller.commands.login.LoginSubmitCommand;
+import com.javaweb.util.Paths;
 import com.javaweb.model.entity.person.Person;
 import com.javaweb.model.entity.person.PersonRole;
 
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static com.javaweb.jsp.Attributes.USER;
+import static com.javaweb.util.Attributes.USER;
 
 public class AuthenticationFilter implements Filter {
 
@@ -30,7 +30,7 @@ public class AuthenticationFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		HttpSession session = httpRequest.getSession();
 
-		Command command = new GetAuthenticationCommand();
+		Command command = new LoginSubmitCommand();
 		command.execute(httpRequest, httpResponse);
 
 		Person person = (Person) session.getAttribute(USER);
