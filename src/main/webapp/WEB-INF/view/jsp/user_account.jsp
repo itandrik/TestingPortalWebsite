@@ -1,13 +1,29 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.javaweb.util.Parameters" %>
-<%@ page import="com.javaweb.util.Paths" %>
-<%@ page import="com.javaweb.model.entity.person.Gender" %>
-<%@ page import="com.javaweb.model.entity.person.PersonRole" %>
+
 
 <%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
-<%@ include file="/WEB-INF/view/jsp/template/header_jumbotron.jsp" %>
 
 <body>
+<nav class="navbar navbar-fixed-top">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="${Paths.HOME}">Testing Portal</a>
+        <img src="<c:url value="/resources/img/testing-icon.png" />"
+             class="img-circle img-resposive" alt="Test your skill"
+             width="50" height="50"/>
+    </div>
+    <ul class="nav navbar-nav">
+        <!-- TODO insert menu here-->
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a class="navbar-brand" href="${Paths.LOGOUT}">
+                <span class="glyphicon glyphicon-log-out"></span>
+                Logout
+            </a>
+        </li>
+    </ul>
+</nav>
+
 <div class="container">
     <form class="form-horizontal" method="post" action="${Paths.REGISTER}">
         <div class="form-group">

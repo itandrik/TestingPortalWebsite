@@ -1,16 +1,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="com.javaweb.util.Parameters" %>
 <%@ page import="com.javaweb.util.Paths" %>
+<%@ page import="com.javaweb.util.Attributes" %>
 
 <%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
 <%@ include file="/WEB-INF/view/jsp/template/header_jumbotron.jsp" %>
+<c:set var="saved_login" value="${requestScope[Attributes.LOGIN_DATA].login}"/>
 <body>
 <div class="container">
-    <form class="form-horizontal" method="get" action="${Paths.AUTHENTICATE}">
+    <form class="form-horizontal" method="post" action="${Paths.LOGIN}">
         <div class="form-group">
             <label class="control-label col-sm-2" for="email">Login:</label>
             <div class="col-sm-8">
                 <input type="text" class="form-control" id="email" placeholder="Enter login"
+                <c:if test="${saved_login != null}"> value="${saved_login}" </c:if>
                        name="${Parameters.LOGIN_PARAMETER}">
             </div>
         </div>

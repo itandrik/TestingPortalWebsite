@@ -15,14 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static com.javaweb.util.Attributes.ERROR_MESSAGE;
-import static com.javaweb.util.Attributes.ERROR_VALIDATION_MESSAGE;
-import static com.javaweb.util.Attributes.USER;
+import static com.javaweb.util.Attributes.*;
 import static com.javaweb.util.Pages.HOME_PAGE_WITH_PATH;
 import static com.javaweb.util.Pages.LOGIN_PAGE_WITH_PATH;
 import static com.javaweb.util.Parameters.LOGIN_PARAMETER;
 import static com.javaweb.util.Parameters.PASSWORD_PARAMETER;
-import static com.javaweb.util.Paths.REDIRECTED;
+import static com.javaweb.util.Paths.*;
 import static com.javaweb.util.Paths.SUBJECTS;
 
 public class LoginSubmitCommand implements Command {
@@ -43,6 +41,7 @@ public class LoginSubmitCommand implements Command {
 
         if (!authValidator.isValid(loginData)) {
             extractAndWriteErrorMessages();
+            attributeWriter.writeToRequest(LOGIN_DATA,loginData);
             return LOGIN_PAGE_WITH_PATH;
         }
 

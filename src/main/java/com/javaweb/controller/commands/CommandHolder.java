@@ -28,15 +28,16 @@ public class CommandHolder {
     }
 
     private void initCommands(){
-        commands.put(GET + AUTHENTICATE, new LoginSubmitCommand());
+        commands.put(POST + LOGIN, new LoginSubmitCommand());
         commands.put(GET + LOGIN, new LoginCommand());
         commands.put(GET + LOGOUT, null);//TODO
+        commands.put(GET + USER_INFO, new GetUserInfo());
         commands.put(GET + HOME, new GetHomeCommand());
         commands.put(GET + SUBJECTS, new GetSubjectsCommand());
         commands.put(GET + CONCRETE_SUBJECT, new GetTestsCommand());
         commands.put(GET + CONCRETE_TEST, new GetConcreteTestCommand());
         commands.put(POST + ADD_SUBJECT, new PostAddSubjectCommand());
-        commands.put(POST + REGISTER_SUBMIT, new RegisterSubmitCommand());
+        commands.put(POST + REGISTER, new RegisterSubmitCommand());
         commands.put(GET + REGISTER, new RegisterCommand());
     }
 
