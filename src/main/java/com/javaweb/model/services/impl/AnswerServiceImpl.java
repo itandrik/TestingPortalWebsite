@@ -10,7 +10,8 @@ import com.javaweb.model.services.AnswerService;
 import java.util.List;
 
 /**
- * @author Andrii Chernysh on 26-Jan-17. E-Mail : itcherry97@gmail.com
+ * @author Andrii Chernysh on 26-Jan-17.
+ *         E-Mail : itcherry97@gmail.com
  */
 public class AnswerServiceImpl implements AnswerService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
@@ -34,5 +35,14 @@ public class AnswerServiceImpl implements AnswerService {
             result = answerDao.getListOfAnswersForTask(task);
         }
         return result;
+    }
+
+    @Override
+    public void insertAnswerForPersonHistory(int answerId, int personId) {
+
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            AnswerDao answerDao = daoFactory.createAnswerDao(connection);
+            answerDao.insertAnswerForPersonHistory(answerId,personId);
+        }
     }
 }

@@ -25,6 +25,6 @@ public class LoginCommand implements Command {
             response.sendRedirect(Paths.SUBJECTS);
             return REDIRECTED;
         }
-        return Pages.LOGIN_PAGE_WITH_PATH;
+        return Pages.LOGIN_PAGE;
     }
 }

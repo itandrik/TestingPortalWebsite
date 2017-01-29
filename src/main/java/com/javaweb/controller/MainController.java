@@ -11,12 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.javaweb.controller.CommandRegexAndPatterns.INDEX_ENDING_URI_REGEX;
+import static com.javaweb.controller.CommandRegexAndPatterns.USER_ACCOUNT_PAGE_REGEX;
+import static com.javaweb.util.Paths.USER_INFO_USERNAME;
 
 
 public class MainController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final String DELIMITER = ":";
     private static final String ID = "id";
+    private static final String USERNAME = "username";
 
     private CommandHolder commands;
 
@@ -58,6 +61,7 @@ public class MainController extends HttpServlet {
         String method = request.getMethod().toUpperCase();
         String path = request.getRequestURI();
         path = path.replaceAll(INDEX_ENDING_URI_REGEX, ID);
+        path = path.replaceAll(USER_ACCOUNT_PAGE_REGEX,USER_INFO_USERNAME);
         return method + DELIMITER + path;
     }
 

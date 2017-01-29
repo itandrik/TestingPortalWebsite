@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AnswerDao extends GenericDao<Answer> {
 	List<Answer> getListOfAnswersForTask(Task task);
+	void insertAnswerForPersonHistory(int answerId, int personId);
 }

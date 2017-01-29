@@ -9,8 +9,8 @@ public interface DatabaseContract {
 	String ANSWER_TEXT_COLUMN_NAME = "text";
 	String ANSWER_IS_CORRECT_COLUMN_NAME = "is_correct";
 	
-	/* Table name and names of columns for M2m_tasks_answers table */
-	String M2M_TASKS_ANSWERS_TABLE_NAME = "M2m_tasks_answers";
+	/* Table name and names of columns for Person_has_answer table */
+	String PERSON_HAS_ANSWER_TABLE_NAME = "Person_has_answer";
 	
 	/* Table name and names of columns for M2m_tests_tasks table */
 	String M2M_TESTS_TASKS_TABLE_NAME = "M2m_tests_tasks";
@@ -45,4 +45,10 @@ public interface DatabaseContract {
 	String TEST_ID_COLUMN_NAME = "test_id";
 	String TEST_NAME_COLUMN_NAME = "name";
 	String TEST_DURATION_TIME_COLUMN_NAME = "duration_time_in_minutes";
+
+	/* Table name and names of columns for Person_test_history table */
+	String PERSON_HISTORY_TABLE_NAME = "Person_test_history";
+	String END_TIME_COLUMN_NAME = "end_time";
+	String GRADE_COLUMN_NAME = "grade";
+
 }

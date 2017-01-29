@@ -30,8 +30,8 @@ public class CommandHolder {
     private void initCommands(){
         commands.put(POST + LOGIN, new LoginSubmitCommand());
         commands.put(GET + LOGIN, new LoginCommand());
-        commands.put(GET + LOGOUT, null);//TODO
-        commands.put(GET + USER_INFO, new GetUserInfo());
+        commands.put(GET + LOGOUT, new LogoutCommand());
+        commands.put(GET + USER_INFO_USERNAME, new GetUserInfo());
         commands.put(GET + HOME, new GetHomeCommand());
         commands.put(GET + SUBJECTS, new GetSubjectsCommand());
         commands.put(GET + CONCRETE_SUBJECT, new GetTestsCommand());
@@ -39,6 +39,8 @@ public class CommandHolder {
         commands.put(POST + ADD_SUBJECT, new PostAddSubjectCommand());
         commands.put(POST + REGISTER, new RegisterSubmitCommand());
         commands.put(GET + REGISTER, new RegisterCommand());
+        commands.put(POST + SAVE_TEST_RECORD, new PostSavePersonTestRecord());
+        commands.put(POST + ADD_ANSWER_TO_HISTORY, new PostAddAnswerCommand());
     }
 
     public Command getCommandByKey(String commandKey){

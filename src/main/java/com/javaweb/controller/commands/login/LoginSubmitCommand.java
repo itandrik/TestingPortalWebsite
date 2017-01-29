@@ -16,15 +16,14 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.javaweb.util.Attributes.*;
-import static com.javaweb.util.Pages.HOME_PAGE_WITH_PATH;
-import static com.javaweb.util.Pages.LOGIN_PAGE_WITH_PATH;
+import static com.javaweb.util.Pages.*;
 import static com.javaweb.util.Parameters.LOGIN_PARAMETER;
 import static com.javaweb.util.Parameters.PASSWORD_PARAMETER;
 import static com.javaweb.util.Paths.*;
 import static com.javaweb.util.Paths.SUBJECTS;
 
 public class LoginSubmitCommand implements Command {
-    private String pageToGo = HOME_PAGE_WITH_PATH;
+    private String pageToGo = HOME_PAGE;
 
     private Logger logger = Logger.getLogger(LoginSubmitCommand.class);
     private static final String USER_LOGGED_IN = "User %s logged in!";
@@ -39,19 +38,23 @@ public class LoginSubmitCommand implements Command {
         attributeWriter = new RequestAttributeWriter(request);
         LoginData loginData = getLoginDataFromRequest(request);
 
-        if (!authValidator.isValid(loginData)) {
-            extractAndWriteErrorMessages();
-            attributeWriter.writeToRequest(LOGIN_DATA,loginData);
-            return LOGIN_PAGE_WITH_PATH;
-        }
+        if (isNotValidLoginData(loginData)) return LOGIN_PAGE;
 
         Person person = personService.authenticate(loginData);
-
         attributeWriter.writeToSession(USER, person);
         response.sendRedirect(SUBJECTS);
 
         logger.info(String.format(USER_LOGGED_IN, person.getLogin()));
         return REDIRECTED;
+    }
+
+    private boolean isNotValidLoginData(LoginData loginData) {
+        if (!authValidator.isValid(loginData)) {
+            extractAndWriteErrorMessages();
+            attributeWriter.writeToRequest(LOGIN_DATA,loginData);
+            return true;
+        }
+        return false;
     }
 
     private LoginData getLoginDataFromRequest(HttpServletRequest request) {

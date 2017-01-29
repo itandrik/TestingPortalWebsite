@@ -26,19 +26,23 @@
 		<res-auth>Container</res-auth>
 	</resource-ref>
 
-	<!--<filter>
-		<display-nameOfTest>AuthenticationFilter</display-nameOfTest>
-		<filter-nameOfTest>AuthenticationFilter</filter-nameOfTest>
-		<filter-class>com.javaweb.controller.filter.AuthenticationFilter</filter-class>
+	<filter>
+		<display-name>AuthFilter</display-name>
+		<filter-name>AuthFilter</filter-name>
+		<filter-class>com.javaweb.controller.filter.AuthFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-nameOfTest>AuthenticationFilter</filter-nameOfTest>
-		<url-pattern>/rest/login</url-pattern>
-	</filter-mapping>-->
+		<filter-name>AuthFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<context-param>
 		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
 		<param-value>i18n.messages</param-value>
 	</context-param>
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
 
 </web-app>

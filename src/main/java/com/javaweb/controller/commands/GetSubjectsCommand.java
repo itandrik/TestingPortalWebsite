@@ -23,7 +23,7 @@ public class GetSubjectsCommand implements Command {
             throws ServletException, IOException {
         setAttributeListOfSubjects(request);
 
-        return Pages.SUBJECTS_PAGE_WITH_PATH;
+        return Pages.SUBJECTS_PAGE;
     }
 
     private void setAttributeListOfSubjects(HttpServletRequest request) {

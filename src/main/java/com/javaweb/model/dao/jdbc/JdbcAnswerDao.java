@@ -19,8 +19,7 @@ public class JdbcAnswerDao implements AnswerDao{
 
 	private static final String SELECT_LIST_OF_ANSWERS_FOR_TASK =
 			"SELECT answer_id, text, is_correct" +
-					" FROM Answer JOIN M2m_tasks_answers USING (answer_id)" +
-					" WHERE task_id = ?";
+					" FROM Answer WHERE task_id = ?";
 	private static final String SELECT_ANSWER_BY_ID =
 			"SELECT answer_id, text, is_correct FROM Answer WHERE answer_id = ?";
 	private static final String SELECT_ALL_ANSWERS =
@@ -31,6 +30,8 @@ public class JdbcAnswerDao implements AnswerDao{
 			"UPDATE Answer SET text = ?, is_correct = ? WHERE answer_id = ?";
 	private static final String DELETE_ANSWER_BY_ID =
 			"DELETE FROM Answer WHERE answer_id = ?";
+	private static final String INSERT_ANSWER_FOR_PERSON =
+			"INSERT INTO person_has_answer (person_id, answer_id) VALUES(?,?)";
 
 	public JdbcAnswerDao(Connection connection) {
 		this.connection = connection;
@@ -85,7 +86,6 @@ public class JdbcAnswerDao implements AnswerDao{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	@Override
@@ -134,6 +134,20 @@ public class JdbcAnswerDao implements AnswerDao{
 		return answers;
 	}
 
+	@Override
+	public void insertAnswerForPersonHistory(int answerId, int personId){
+		try(PreparedStatement statement = connection.prepareStatement(INSERT_ANSWER_FOR_PERSON)){
+			statement.setInt(1,personId);
+			statement.setInt(2,answerId);
+
+			statement.executeUpdate();
+				/* TODO Check for null*/
+				/* TODO Check is already saved in database */
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private Answer getAnswerFromResultSet(ResultSet resultSet) throws SQLException {
 		return new Answer.Builder()
 				.setId(resultSet.getInt(ANSWER_ID_COLUMN_NAME))
@@ -141,5 +155,4 @@ public class JdbcAnswerDao implements AnswerDao{
 				.setIsCorrect(resultSet.getBoolean(ANSWER_IS_CORRECT_COLUMN_NAME))
 				.build();
 	}
-
 }

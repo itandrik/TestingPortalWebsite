@@ -11,9 +11,13 @@ public final class Paths {
 	public static final String CONCRETE_SUBJECT = REST + "/subject/id";
 	public static final String TESTS = REST + "/test";
 	public static final String CONCRETE_TEST = REST + "/test/id";
-	public static final String USER_INFO = REST + "/user/username";
 
+	public static final String USER_INFO = REST + "/user";
+	public static final String USER_INFO_USERNAME = REST + "/user/username";
+
+	public static final String SAVE_TEST_RECORD = REST + "/save_test";
 	public static final String ADD_SUBJECT = SUBJECTS + "/add";
+	public static final String ADD_ANSWER_TO_HISTORY = REST + "/add_answer";
 	public static final String REDIRECTED = "redirected";
 
 }

@@ -20,8 +20,7 @@ import java.util.Optional;
 import static com.javaweb.controller.CommandRegexAndPatterns.LETTERS_BEFORE_INDEX_REGEX;
 import static com.javaweb.util.Attributes.TASKS;
 import static com.javaweb.util.Attributes.TEST_TIME_DURATION;
-import static com.javaweb.util.Pages.CONCRETE_TEST_PAGE_WITH_PATH;
-import static com.javaweb.util.Pages.HOME_PAGE_WITH_PATH;
+import static com.javaweb.util.Pages.*;
 
 /**
  * @author Andrii Chernysh on 26-Jan-17. E-Mail : itcherry97@gmail.com
@@ -31,7 +30,7 @@ public class GetConcreteTestCommand implements Command {
     private final TaskService taskService = TaskServiceImpl.getInstance();
     private final AnswerService answerService = AnswerServiceImpl.getInstance();
 
-    private String pageToGo = HOME_PAGE_WITH_PATH;
+    private String pageToGo = HOME_PAGE;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -45,7 +44,7 @@ public class GetConcreteTestCommand implements Command {
             List<Task> tasks = getTasksWithAnswersForTest(test);
             request.setAttribute(TASKS,tasks);
             request.setAttribute(TEST_TIME_DURATION,test.getDurationTimeInMinutes());
-            pageToGo = CONCRETE_TEST_PAGE_WITH_PATH;
+            pageToGo = CONCRETE_TEST_PAGE;
         });
 
         return pageToGo;

@@ -1,8 +1,8 @@
 package com.javaweb.model.dao;
 
-import java.util.Optional;
-
 import com.javaweb.model.entity.person.Person;
+
+import java.util.Optional;
 
 
 public interface PersonDao extends GenericDao<Person> {

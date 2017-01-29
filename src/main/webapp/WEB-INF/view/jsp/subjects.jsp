@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
 <%@ page import="com.javaweb.util.Paths" %>
 <%@ page import="com.javaweb.util.Attributes" %>
@@ -7,6 +8,7 @@
 <%@ page import="com.javaweb.model.entity.person.PersonRole" %>
 
 <%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
+<c:set var="user" value="${sessionScope[Attributes.USER]}"/>
 
 <body>
 <nav class="navbar navbar-fixed-top">
@@ -20,16 +22,16 @@
 
     </ul>
     <ul class="nav navbar-nav navbar-right">
-        <l1>
-            <a class="navbar-brand" href="${Paths.USER_INFO}">
-                <span class="glyphicon glyphicon-user"></span>
-                Account info
-            </a>
-        </l1>
         <li>
-            <a class="navbar-brand" href="${Paths.LOGOUT}">
+            <a class="navbar-brand" href="${Paths.USER_INFO}/${user.login}">
+                <span class="glyphicon glyphicon-user"></span>
+                <fmt:message key="account.info"/>
+            </a>
+        </li>
+        <li>
+            <a class="navbar-brand" data-toggle="modal" data-target="#modal_logout">
                 <span class="glyphicon glyphicon-log-out"></span>
-                Logout
+                <fmt:message key="logout"/>
             </a>
         </li>
     </ul>
@@ -62,7 +64,7 @@
                 <td>
                     <div class="text-center">
                         <button id="add-button"
-                                onclick="createFormToAddSubject('${Paths.ADD_SUBJECT}','${Parameters.NAME_OF_SUBJECT_PARAMETER}')"
+                                onclick="addSubject('${Paths.ADD_SUBJECT}','${Parameters.NAME_OF_SUBJECT_PARAMETER}')"
                                 class="btn btn-lg btn-primary">
                             <span class="glyphicon glyphicon-plus"></span>
                             Add new subject
@@ -78,3 +80,4 @@
 <%--</c:otherwise>
 </c:choose>--%>
 <%@ include file="/WEB-INF/view/jsp/template/footer.jsp" %>
+<c:import url="/WEB-INF/view/jsp/template/logout_modal.jsp"/>

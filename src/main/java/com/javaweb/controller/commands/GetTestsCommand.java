@@ -33,7 +33,7 @@ public class GetTestsCommand implements Command {
         Subject subject = subjectService.getSubjectById(subjectId);
 
         setAttributeListOfTests(subject, request);
-        return Pages.TESTS_PAGE_WITH_PATH;
+        return Pages.TESTS_PAGE;
     }
 
     private void setAttributeListOfTests(Subject subject, HttpServletRequest request) {

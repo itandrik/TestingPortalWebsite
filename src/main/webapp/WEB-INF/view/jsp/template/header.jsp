@@ -14,6 +14,6 @@
           type="image/ico"
           href="<c:url value="/resources/img/favicon.ico" />">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+    <script src="<c:url value="/resources/js/bootstrap.js" />"></script>
     <script src="<c:url value="/resources/js/script.js" />"></script>
 </head>

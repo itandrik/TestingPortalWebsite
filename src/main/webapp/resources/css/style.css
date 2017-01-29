@@ -135,4 +135,7 @@ div.jumbotron {
     font-size: 18px;
     color : #ffffff;
 }
+nav li:hover{
+    background: #2196F3 !important;
+}
 
