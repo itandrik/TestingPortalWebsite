@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.javaweb.controller.CommandRegexAndPatterns.LETTERS_BEFORE_INDEX_REGEX;
+import static com.javaweb.util.Attributes.CONCRETE_TEST_ID;
 import static com.javaweb.util.Attributes.TASKS;
 import static com.javaweb.util.Attributes.TEST_TIME_DURATION;
 import static com.javaweb.util.Pages.*;
@@ -42,8 +43,9 @@ public class GetConcreteTestCommand implements Command {
 
         optionalTest.ifPresent((test) -> {
             List<Task> tasks = getTasksWithAnswersForTest(test);
-            request.setAttribute(TASKS,tasks);
-            request.setAttribute(TEST_TIME_DURATION,test.getDurationTimeInMinutes());
+            request.getSession().setAttribute(TASKS,tasks);
+            request.getSession().setAttribute(TEST_TIME_DURATION, getTimeDurationInSeconds(test));
+            request.getSession().setAttribute(CONCRETE_TEST_ID,test.getId());
             pageToGo = CONCRETE_TEST_PAGE;
         });
 
@@ -57,5 +59,9 @@ public class GetConcreteTestCommand implements Command {
             task.setAnswers(answers);
         }
         return tasks;
+    }
+
+    private int getTimeDurationInSeconds(Test test) {
+        return test.getDurationTimeInMinutes() * 60;
     }
 }

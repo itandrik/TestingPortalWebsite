@@ -1,11 +1,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <%@ page import="com.javaweb.util.Paths" %>
 <%@ page import="com.javaweb.util.Attributes" %>
 <%@ page import="com.javaweb.model.entity.task.AnswerType" %>
+<%@ page import="com.javaweb.util.Parameters" %>
 
 <%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
-<body onload="startTimer(${requestScope[Attributes.TEST_TIME_DURATION]})">
+
+<body onunload="unloadP('UniquePageNameHereScroll')"
+      onload="startTimer(${sessionScope[Attributes.TEST_TIME_DURATION]});
+              makeAllTasksFromListDisabled(${sessionScope[Attributes.DISABLED_TASKS]});
+              loadP('UniquePageNameHereScroll')">
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-header">
         <a class="navbar-brand" href="${Paths.HOME}">Testing Portal</a>
@@ -42,39 +49,50 @@
     </div>
 </div>
 <div class="data col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-8">
-    <c:forEach var="task" items="${requestScope[Attributes.TASKS]}">
-        <table class="table table-bordered table-shadow">
+    <c:if test="${not empty requestScope[Attributes.ERROR_MESSAGE]}">
+        <tr>
+            <td>
+                <%@ include file="/WEB-INF/view/jsp/template/error_messages.jsp" %>
+            </td>
+        </tr>
+    </c:if>
+    <c:forEach var="task" items="${sessionScope[Attributes.TASKS]}">
+        <table class="table table-bordered table-shadow" id="task${task.id}">
             <thead class="thead-changed-style">
             <tr>
                 <th class="tree-header" colspan="2">${task.question}</th>
             </tr>
             </thead>
             <tbody>
-            <form method="post" action="${Paths.ADD_ANSWER_TO_HISTORY}">
+            <form method="post" action="${Paths.TESTS}/${sessionScope[Attributes.CONCRETE_TEST_ID]}">
                 <c:forEach var="answer" items="${task.answers}">
                     <tr>
                         <td>
                             <c:choose>
                                 <c:when test="${task.answerType == AnswerType.ONE_ANSWER}">
                                     <div class="radio">
-                                        <label><input type="radio" name="answer${answer.id}">${answer.answerText}
+                                        <label><input type="radio" name="${Parameters.ANSWER_PARAMETER}"
+                                                      value="answer${answer.id}">${answer.answerText}
                                         </label>
                                     </div>
                                 </c:when>
                                 <c:otherwise>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" name="answer${answer.id}">${answer.answerText}
+                                        <label><input type="checkbox" name="${Parameters.ANSWER_PARAMETER}"
+                                                      value="answer${answer.id}">${answer.answerText}
                                         </label>
                                     </div>
                                 </c:otherwise>
                             </c:choose>
                         </td>
                     </tr>
+                    <input type="number" hidden="true" name="${Parameters.TASK_PARAMETER}" value="${task.id}" />
                 </c:forEach>
                 <tr>
                     <td>
                         <div class="text-right">
-                            <button type="submit" class="btn btn-lg btn-primary">Accept and write to database
+                            <button type="submit" class="btn btn-lg btn-primary" onclick="javascript:myScroll('?param1=a&param2=b&param3=c')">
+                                <fmt:message key="test.button.save.answer"/>
                             </button>
                         </div>
                     </td>

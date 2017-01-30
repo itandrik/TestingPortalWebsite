@@ -40,7 +40,7 @@ public class CommandHolder {
         commands.put(POST + REGISTER, new RegisterSubmitCommand());
         commands.put(GET + REGISTER, new RegisterCommand());
         commands.put(POST + SAVE_TEST_RECORD, new PostSavePersonTestRecord());
-        commands.put(POST + ADD_ANSWER_TO_HISTORY, new PostAddAnswerCommand());
+        commands.put(POST + CONCRETE_TEST, new PostAddAnswerCommand());
     }
 
     public Command getCommandByKey(String commandKey){

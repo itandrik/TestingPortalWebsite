@@ -1,4 +1,4 @@
-function addSubject(pathToGo, inputName){
+function addSubject(pathToGo, inputName) {
     var table = document.getElementById('table-with-subjects');
     var addButton = document.getElementById('add-button');
     addButton.parentNode.removeChild(addButton);
@@ -7,21 +7,21 @@ function addSubject(pathToGo, inputName){
     var tableCol = document.createElement('td');
     var form = document.createElement('form');
 
-    form.method='post';
-    form.action=pathToGo;
-    form.className="add-subject-form";
+    form.method = 'post';
+    form.action = pathToGo;
+    form.className = "add-subject-form";
     var nameOfSubjectString = document.createElement('p');
-    nameOfSubjectString.innerHTML="Name : ";
-    nameOfSubjectString.className="col-lg-1";
+    nameOfSubjectString.innerHTML = "Name : ";
+    nameOfSubjectString.className = "col-lg-1";
     var nameInput = document.createElement('input');
-    nameInput.type="text";
+    nameInput.type = "text";
     nameInput.placeholder = "Name of subject";
-    nameInput.name=inputName;
-    nameInput.className="col-lg-5";
+    nameInput.name = inputName;
+    nameInput.className = "col-lg-5";
     var submitButton = document.createElement('button');
-    submitButton.type="submit";
-    submitButton.innerHTML="Accept";
-    submitButton.className="col-lg-1 btn btn-default btn-lg";
+    submitButton.type = "submit";
+    submitButton.innerHTML = "Accept";
+    submitButton.className = "col-lg-1 btn btn-default btn-lg";
 
     form.appendChild(nameOfSubjectString);
     form.appendChild(nameInput);
@@ -55,15 +55,27 @@ function initializeClock(endtime) {
         secondsParagraph.innerHTML = ('0' + t.seconds).slice(-2);
 
         if (t.total <= 0) {
-            clearInterval(timeinterval);
+            clearInterval(timeInterval);
         }
     }
 
     updateClock();
-    var timeinterval = setInterval(updateClock, 1000);
+    var timeInterval = setInterval(updateClock, 1000);
 }
 
-function startTimer(minutes) {
-    var deadline = new Date(Date.parse(new Date()) + minutes * 60 * 1000);
+function startTimer(seconds) {
+    var deadline = new Date(Date.parse(new Date()) + seconds * 1000);
     initializeClock(deadline);
+}
+
+function makeAllTasksFromListDisabled(tasks) {
+    if(!tasks.empty()) {
+        tasks.forEach(function (item, i, arr) {
+            var form = document.getElementById("task" + item);
+            var elements = form.elements;
+            for (var j = 0; j < elements.length; ++j) {
+                elements[j].readOnly = true;
+            }
+        });
+    }
 }

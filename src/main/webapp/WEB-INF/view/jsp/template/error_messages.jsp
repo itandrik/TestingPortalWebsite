@@ -11,7 +11,7 @@
         <c:forEach var="message" items="${error_messages}">
             <div class="alert alert-danger alert-dismissable fade in">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>ERROR!</strong>
+                <strong><fmt:message key="message.error"/></strong>
                 <fmt:message key="${message}"/>
             </div>
         </c:forEach>
@@ -21,7 +21,7 @@
             <c:forEach var="message" items="${error_validation_messages}">
                 <div class="alert alert-danger alert-dismissable fade in">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>ERROR!</strong>
+                    <strong><fmt:message key="message.error"/></strong>
                     <fmt:message key="${message}"/>
                 </div>
             </c:forEach>

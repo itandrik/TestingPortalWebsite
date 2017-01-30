@@ -10,4 +10,6 @@ public final class Parameters {
 	public static final String SECOND_NAME_PARAMETER = "second_name";
 	public static final String GENDER_PARAMETER = "gender";
 	public static final String PERSON_ROLE_PARAMETER = "role";
+	public static final String ANSWER_PARAMETER = "answer";
+	public static final String TASK_PARAMETER = "task";
 }

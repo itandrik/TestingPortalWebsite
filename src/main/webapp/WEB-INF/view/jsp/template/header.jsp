@@ -4,7 +4,6 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html">
     <title>Testing portal</title>
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"
           type="text/css"/>
@@ -15,5 +14,6 @@
           href="<c:url value="/resources/img/favicon.ico" />">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="<c:url value="/resources/js/bootstrap.js" />"></script>
-    <script src="<c:url value="/resources/js/script.js" />"></script>
+    <script src="<c:url value="/resources/js/script_new.js" />"></script>
+    <script src="<c:url value="/resources/js/fixscroll.js" />" type="text/javascript"></script>
 </head>

@@ -23,11 +23,9 @@ import static com.javaweb.util.Paths.*;
 import static com.javaweb.util.Paths.SUBJECTS;
 
 public class LoginSubmitCommand implements Command {
-    private String pageToGo = HOME_PAGE;
-
     private Logger logger = Logger.getLogger(LoginSubmitCommand.class);
     private static final String USER_LOGGED_IN = "User %s logged in!";
-    PersonServiceImpl personService = PersonServiceImpl.getInstance();
+    private PersonServiceImpl personService = PersonServiceImpl.getInstance();
 
     private Validator<LoginData> authValidator = new AuthValidator();
     private RequestAttributeWriter attributeWriter;
@@ -48,6 +46,12 @@ public class LoginSubmitCommand implements Command {
         return REDIRECTED;
     }
 
+    private LoginData getLoginDataFromRequest(HttpServletRequest request) {
+        String login = request.getParameter(LOGIN_PARAMETER);
+        String password = request.getParameter(PASSWORD_PARAMETER);
+        return new LoginData(login, password);
+    }
+
     private boolean isNotValidLoginData(LoginData loginData) {
         if (!authValidator.isValid(loginData)) {
             extractAndWriteErrorMessages();
@@ -55,12 +59,6 @@ public class LoginSubmitCommand implements Command {
             return true;
         }
         return false;
-    }
-
-    private LoginData getLoginDataFromRequest(HttpServletRequest request) {
-        String login = request.getParameter(LOGIN_PARAMETER);
-        String password = request.getParameter(PASSWORD_PARAMETER);
-        return new LoginData(login, password);
     }
 
     private void extractAndWriteErrorMessages() {
