@@ -41,6 +41,7 @@ public class CommandHolder {
         commands.put(GET + REGISTER, new RegisterCommand());
         commands.put(POST + SAVE_TEST_RECORD, new PostSavePersonTestRecord());
         commands.put(POST + CONCRETE_TEST, new PostAddAnswerCommand());
+        commands.put(GET + TEST_RESULTS, new TestResultCommand());
     }
 
     public Command getCommandByKey(String commandKey){

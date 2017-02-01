@@ -3,8 +3,9 @@ package com.javaweb.model.dao.jdbc;
 import com.javaweb.model.dao.PersonTestHistoryDao;
 import com.javaweb.model.entity.Answer;
 import com.javaweb.model.entity.Test;
-import com.javaweb.model.entity.person.Person;
 import com.javaweb.model.entity.history.PersonHistory;
+import com.javaweb.model.entity.person.Person;
+import com.javaweb.model.entity.task.Task;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,6 +35,11 @@ public class JdbcPersonTestHistoryDao implements PersonTestHistoryDao {
                     "(SELECT task_id FROM M2m_tests_tasks WHERE test_id = ?) t " +
                     "JOIN Answer USING(task_id) " +
                     "JOIN Person_has_answer USING(answer_id) WHERE person_id = ?";
+    private static final String SELECT_ALL_PASSED_ANSWERS_BY_PERSON_FOR_TASK =
+            "SELECT answer_id, text, is_correct FROM " +
+                    "(SELECT answer_id FROM Person_has_answer WHERE person_id = ?) t " +
+                    "JOIN Answer USING(answer_id) " +
+                    "JOIN Person_has_answer USING(answer_id) WHERE task_id = ?";
     private static final String INSERT_ANSWER_FOR_PERSON =
             "INSERT INTO person_has_answer (person_id, answer_id) VALUES(?,?)";
 
@@ -124,6 +130,17 @@ public class JdbcPersonTestHistoryDao implements PersonTestHistoryDao {
             e.printStackTrace();
         }
         return answers;
+    }
+
+    @Override
+    public List<Answer> getListOfAnswersByPersonForTask(Task task, Person person) {
+        List<Answer> answers = new ArrayList<>();
+
+        try(PreparedStatement statement =
+                     connection.prepareStatement(SELECT_ALL_PASSED_ANSWERS_BY_PERSON_FOR_TEST)) {
+            //TODO
+        }
+        return null;
     }
 
     private Answer getAnswerFromResultSet(ResultSet resultSet) throws SQLException {

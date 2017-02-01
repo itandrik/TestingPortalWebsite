@@ -42,7 +42,7 @@ public class GetConcreteTestCommand implements Command {
         optionalTest.ifPresent((test) -> {
             List<Task> tasks = getTasksWithAnswersForTest(test);
             request.getSession().setAttribute(TASKS,tasks);
-            test.setDurationTimeInMinutes(test.getDurationTimeInMinutes() * 60);
+            test.setDurationTimeInMinutes(getTimeDurationInSeconds(test));
             request.getSession().setAttribute(CONCRETE_TEST,test);
             pageToGo = CONCRETE_TEST_PAGE;
         });

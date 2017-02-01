@@ -14,7 +14,6 @@ import com.javaweb.model.services.PersonTestHistoryService;
 import com.javaweb.model.services.exception.ServiceException;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -24,7 +23,6 @@ public class PersonTestHistoryServiceImpl implements PersonTestHistoryService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
     private static final int MAX_GRADE = 100;
     private static final String NO_SUCH_GRADE_ERROR_LOG = "No such grade :%f";
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
 
     private static final class Holder {
         static final PersonTestHistoryServiceImpl INSTANCE = new PersonTestHistoryServiceImpl();
@@ -47,8 +45,7 @@ public class PersonTestHistoryServiceImpl implements PersonTestHistoryService {
         }
     }
 
-    @Override
-    public Grade calculateGradeOfTestPassedByPerson(Test test, Person person) {
+    private Grade calculateGradeOfTestPassedByPerson(Test test, Person person) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             AnswerDao answerDao = daoFactory.createAnswerDao(connection);
             PersonTestHistoryDao historyDao =

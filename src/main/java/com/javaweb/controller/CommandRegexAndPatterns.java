@@ -13,6 +13,8 @@ public final class CommandRegexAndPatterns {
     public static final String ANSWER_BEGINNING_REGEX = "^answer";
     public static final String PATH_BEFORE_REST_REGEX = ".*(?=\\/rest)";
 
+    public static final String INDEX_INSIDE_URI_REGEX = "(?=.*\\/)\\d";
+
     public static final String LOGIN_REGEX = "^[a-zA-Z0-9_-]{3,15}$";
     public static final String PASSWORD_REGEX = "\\S{4,14}";
 
@@ -20,4 +22,6 @@ public final class CommandRegexAndPatterns {
             Pattern.compile(LOGIN_REGEX);
     public static final Pattern PASSWORD_PATTERN =
             Pattern.compile(PASSWORD_REGEX);
+    public static final Pattern INDEX_INSIDE_URI_PATTERN =
+            Pattern.compile(INDEX_INSIDE_URI_REGEX);
 }

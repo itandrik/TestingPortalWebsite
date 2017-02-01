@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.javaweb.controller.CommandRegexAndPatterns.INDEX_ENDING_URI_REGEX;
+import static com.javaweb.controller.CommandRegexAndPatterns.INDEX_INSIDE_URI_REGEX;
 import static com.javaweb.controller.CommandRegexAndPatterns.USER_ACCOUNT_PAGE_REGEX;
 import static com.javaweb.util.Paths.USER_INFO_USERNAME;
 
@@ -62,6 +63,7 @@ public class MainController extends HttpServlet {
         String path = request.getRequestURI();
         path = path.replaceAll(INDEX_ENDING_URI_REGEX, ID);
         path = path.replaceAll(USER_ACCOUNT_PAGE_REGEX,USER_INFO_USERNAME);
+        path = path.replaceAll(INDEX_INSIDE_URI_REGEX,ID);
         return method + DELIMITER + path;
     }
 
