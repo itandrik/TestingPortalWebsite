@@ -29,6 +29,26 @@ public class Test {
         this.durationTimeInMinutes = durationTimeInMinutes;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Test)) return false;
+
+        Test test = (Test) o;
+
+        if (id != test.id) return false;
+        if (durationTimeInMinutes != test.durationTimeInMinutes) return false;
+        return nameOfTest != null ? nameOfTest.equals(test.nameOfTest) : test.nameOfTest == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (nameOfTest != null ? nameOfTest.hashCode() : 0);
+        result = 31 * result + durationTimeInMinutes;
+        return result;
+    }
+
     public static class Builder {
         private Test test = new Test();
 

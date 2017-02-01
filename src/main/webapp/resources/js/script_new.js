@@ -47,12 +47,16 @@ function getTimeRemaining(endtime) {
 function initializeClock(endtime) {
     var minutesParagraph = document.getElementById('minutes');
     var secondsParagraph = document.getElementById('seconds');
+    var secondsRemaining = document.getElementsByName('time_remaining');
 
     function updateClock() {
         var t = getTimeRemaining(endtime);
 
         minutesParagraph.innerHTML = ('0' + t.minutes).slice(-2);
         secondsParagraph.innerHTML = ('0' + t.seconds).slice(-2);
+        for (var i = 0; i < secondsRemaining.length; i++) {
+            secondsRemaining[i].value = t.minutes * 60 + t.seconds;
+        }
 
         if (t.total <= 0) {
             clearInterval(timeInterval);
@@ -67,7 +71,18 @@ function startTimer(seconds) {
     var deadline = new Date(Date.parse(new Date()) + seconds * 1000);
     initializeClock(deadline);
 }
+/*function getTimeRemainingInSeconds() {
+    var minutesParagraph = document.getElementById('minutes');
+    var secondsParagraph = document.getElementById('seconds');
 
+    var minutes = parseInt(minutesParagraph.innerHTML);
+    var seconds = parseInt(secondsParagraph.innerHTML);
+
+    var secondsRemaining = document.getElementById('seconds-remaining');
+    secondsRemaining.value = minutes * 60 + seconds;
+
+    return minutes * 60 + seconds;
+}*/
 function makeAllTasksFromListDisabled(tasks) {
     if (tasks != null) {
         tasks.forEach(function (item, i, arr) {
@@ -91,67 +106,3 @@ function makeAllTasksFromListDisabled(tasks) {
         });
     }
 }
-
-/*
-// define functions
-var setScroll,
-    myScroll;
-
-
-// if query string in URL contains scroll=nnn, then scroll position will be restored
-setScroll = function () {
-    // get query string parameter with "?"
-    var search = window.location.search,
-        matches;
-    // if query string exists
-    if (search) {
-        // find scroll parameter in query string
-        matches = /scroll=(\d+)/.exec(search);
-        // jump to the scroll position if scroll parameter exists
-        if (matches) {
-            window.scrollTo(0, matches[1]);
-        }
-    }
-};
-
-
-// function appends scroll parameter to the URL or returns scroll value
-myScroll = function (url) {
-    var scroll, q;
-    // Netscape compliant
-    if (typeof(window.pageYOffset) === 'number') {
-        scroll = window.pageYOffset;
-    }
-    // DOM compliant
-    else if (document.body && document.body.scrollTop) {
-        scroll = document.body.scrollTop;
-    }
-    // IE6 standards compliant mode
-    else if (document.documentElement && document.documentElement.scrollTop) {
-        scroll = document.documentElement.scrollTop;
-    }
-    // needed for IE6 (when vertical scroll bar is on the top)
-    else {
-        scroll = 0;
-    }
-    // if input parameter does not exist then return scroll value
-    if (url === undefined) {
-        return scroll;
-    }
-    // else append scroll parameter to the URL
-    else {
-        // set "?" or "&" before scroll parameter
-        q = url.indexOf('?') === -1 ? '?' : '&';
-        // refresh page with scroll position parameter
-        window.location.href = url + q + 'scroll=' + scroll;
-    }
-};
-
-
-// add onload event listener
-if (window.addEventListener) {
-    window.addEventListener('load', setScroll, false);
-}
-else if (window.attachEvent) {
-    window.attachEvent('onload', setScroll);
-}*/

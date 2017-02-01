@@ -8,9 +8,10 @@
 <%@ page import="com.javaweb.util.Parameters" %>
 
 <%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
+<c:set var="test" value="${sessionScope[Attributes.CONCRETE_TEST]}"/>
 
 <body onunload="unloadP('UniquePageNameHereScroll')"
-      onload="startTimer(${sessionScope[Attributes.TEST_TIME_DURATION]});
+      onload="startTimer(${test.durationTimeInMinutes});
               makeAllTasksFromListDisabled(${sessionScope[Attributes.DISABLED_TASKS]});
               loadP('UniquePageNameHereScroll')">
 <nav class="navbar navbar-fixed-top">
@@ -48,14 +49,12 @@
         </button>
     </div>
 </div>
+<c:if test="${not empty requestScope[Attributes.ERROR_MESSAGE]}">
+    <div class="col-lg-12 floating-error">
+        <%@ include file="/WEB-INF/view/jsp/template/error_messages.jsp" %>
+    </div>
+</c:if>
 <div class="data col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-8">
-    <c:if test="${not empty requestScope[Attributes.ERROR_MESSAGE]}">
-        <tr>
-            <td>
-                <%@ include file="/WEB-INF/view/jsp/template/error_messages.jsp" %>
-            </td>
-        </tr>
-    </c:if>
     <c:forEach var="task" items="${sessionScope[Attributes.TASKS]}">
         <table class="table table-bordered table-shadow" id="task${task.id}">
             <thead class="thead-changed-style">
@@ -64,7 +63,7 @@
             </tr>
             </thead>
             <tbody>
-            <form method="post" action="${Paths.TESTS}/${sessionScope[Attributes.CONCRETE_TEST_ID]}">
+            <form method="post" action="${Paths.TESTS}/${test.id}">
                 <c:forEach var="answer" items="${task.answers}">
                     <tr>
                         <td>
@@ -86,12 +85,13 @@
                             </c:choose>
                         </td>
                     </tr>
-                    <input type="number" hidden="true" name="${Parameters.TASK_PARAMETER}" value="${task.id}" />
+                    <input type="number" hidden="true" name="${Parameters.TASK_PARAMETER}" value="${task.id}"/>
                 </c:forEach>
+                <input id="seconds-remaining" type="number" hidden="true" name="${Parameters.TIME_REMAINING}" />
                 <tr>
                     <td>
                         <div class="text-right">
-                            <button type="submit" class="btn btn-lg btn-primary" onclick="javascript:myScroll('?param1=a&param2=b&param3=c')">
+                            <button type="submit" class="btn btn-lg btn-primary">
                                 <fmt:message key="test.button.save.answer"/>
                             </button>
                         </div>
@@ -102,7 +102,6 @@
         </table>
     </c:forEach>
 </div>
-
 <!-- MODAL -->
 <div class="modal fade" id="modal_finish_test" role="dialog">
     <div class="modal-dialog">

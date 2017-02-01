@@ -36,13 +36,4 @@ public class AnswerServiceImpl implements AnswerService {
         }
         return result;
     }
-
-    @Override
-    public void insertAnswerForPersonHistory(int answerId, int personId) {
-
-        try(DaoConnection connection = daoFactory.getConnection()) {
-            AnswerDao answerDao = daoFactory.createAnswerDao(connection);
-            answerDao.insertAnswerForPersonHistory(answerId,personId);
-        }
-    }
 }

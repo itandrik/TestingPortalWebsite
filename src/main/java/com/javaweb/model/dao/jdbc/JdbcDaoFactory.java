@@ -1,19 +1,12 @@
 package com.javaweb.model.dao.jdbc;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import com.javaweb.model.dao.*;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
-import com.javaweb.model.dao.AnswerDao;
-import com.javaweb.model.dao.DaoConnection;
-import com.javaweb.model.dao.DaoFactory;
-import com.javaweb.model.dao.PersonDao;
-import com.javaweb.model.dao.SubjectDao;
-import com.javaweb.model.dao.TaskDao;
-import com.javaweb.model.dao.TestDao;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class JdbcDaoFactory extends DaoFactory{
 	
@@ -71,6 +64,12 @@ public class JdbcDaoFactory extends DaoFactory{
 	public AnswerDao createAnswerDao(DaoConnection connection) {
 		Connection sqlConnection = getCastedSqlConnection(connection);
 		return new JdbcAnswerDao(sqlConnection);
+	}
+
+	@Override
+	public PersonTestHistoryDao createPersonTestHistoryDao(DaoConnection connection) {
+		Connection sqlConnection = getCastedSqlConnection(connection);
+		return new JdbcPersonTestHistoryDao(sqlConnection);
 	}
 
 }

@@ -28,6 +28,7 @@ public class PostAddSubjectCommand implements Command {
         Objects.requireNonNull(nameOfSubject);
         Subject subject = new Subject(0,nameOfSubject);
         subjectService.addNewSubject(subject);
+
         response.sendRedirect(SUBJECTS);
         return REDIRECTED;
     }

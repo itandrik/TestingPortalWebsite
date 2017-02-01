@@ -9,6 +9,8 @@ public class ApplicationException extends RuntimeException {
     private StringBuffer logMessage;
 
     public ApplicationException() {
+        this.message = new StringBuffer();
+        this.logMessage = new StringBuffer();
     }
 
     public ApplicationException(String message) {

@@ -22,9 +22,12 @@ public class JdbcPersonDao implements PersonDao {
     private static final String SELECT_BY_LOGIN = "SELECT person_id,"
             + "first_name, second_name, gender, login, password,"
             + " role FROM Person WHERE login = ?";
-    public static final String SELECT_ALL = "SELECT person_id,"
+    private static final String SELECT_ALL = "SELECT person_id,"
             + "first_name, second_name, gender, login, password,"
             + " role FROM Person";
+    private static final String SELECT_ALL_STUDENTS =
+            "SELECT person_id,first_name, second_name, gender," +
+                    " login, password FROM Person WHERE role = ?";
     private static final String INSERT_PERSON =
             "INSERT INTO Person (first_name, second_name, gender," +
                     " login, password, role) VALUES (?,?,?,?,?,?)";
@@ -80,9 +83,9 @@ public class JdbcPersonDao implements PersonDao {
     public List<Person> getAll() {
         List<Person> persons = new ArrayList<>();
 
-        try(PreparedStatement statement = connection.prepareStatement(SELECT_ALL)){
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL)) {
             ResultSet rs = statement.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Person person = getPersonFromResultSet(rs);
                 persons.add(person);
             }
@@ -94,18 +97,18 @@ public class JdbcPersonDao implements PersonDao {
 
     @Override
     public void insert(Person person) {
-        try(PreparedStatement statement = connection.prepareStatement(
-                INSERT_PERSON,PreparedStatement.RETURN_GENERATED_KEYS)){
+        try (PreparedStatement statement = connection.prepareStatement(
+                INSERT_PERSON, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-            statement.setString(1,person.getFirstName());
-            statement.setString(2,person.getSecondName());
-            statement.setString(3,person.getGender().toString());
-            statement.setString(4,person.getLogin());
-            statement.setString(5,person.getPassword());
-            statement.setString(6,person.getRole().toString());
+            statement.setString(1, person.getFirstName());
+            statement.setString(2, person.getSecondName());
+            statement.setString(3, person.getGender().toString());
+            statement.setString(4, person.getLogin());
+            statement.setString(5, person.getPassword());
+            statement.setString(6, person.getRole().toString());
 
             statement.executeUpdate();
-				/* TODO Check for null*/
+                /* TODO Check for null*/
 				/* TODO Check is already saved in database */
         } catch (SQLException e) {
             e.printStackTrace();
@@ -114,14 +117,14 @@ public class JdbcPersonDao implements PersonDao {
 
     @Override
     public void update(Person person) {
-        try(PreparedStatement statement = connection.prepareStatement(UPDATE_PERSON)){
-            statement.setString(1,person.getFirstName());
-            statement.setString(2,person.getSecondName());
-            statement.setString(3,person.getGender().toString());
-            statement.setString(4,person.getLogin());
-            statement.setString(5,person.getPassword());
-            statement.setString(6,person.getRole().toString());
-            statement.setInt(7,person.getId());
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE_PERSON)) {
+            statement.setString(1, person.getFirstName());
+            statement.setString(2, person.getSecondName());
+            statement.setString(3, person.getGender().toString());
+            statement.setString(4, person.getLogin());
+            statement.setString(5, person.getPassword());
+            statement.setString(6, person.getRole().toString());
+            statement.setInt(7, person.getId());
 
             statement.executeUpdate();
 				/* TODO Check for null*/
@@ -133,7 +136,7 @@ public class JdbcPersonDao implements PersonDao {
 
     @Override
     public void delete(int id) {
-        try(PreparedStatement statement = connection.prepareStatement(DELETE_PERSON)){
+        try (PreparedStatement statement = connection.prepareStatement(DELETE_PERSON)) {
             statement.setInt(1, id);
             statement.executeUpdate();
 				/* TODO Check for null*/
@@ -159,5 +162,22 @@ public class JdbcPersonDao implements PersonDao {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public List<Person> getAllStudents() {
+        List<Person> students = new ArrayList<>();
+
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_STUDENTS)) {
+            statement.setString(1, PersonRole.STUDENT.toString());
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Person student = getPersonFromResultSet(resultSet);
+                students.add(student);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return students;
     }
 }

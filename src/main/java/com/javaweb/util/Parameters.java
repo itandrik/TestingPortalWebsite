@@ -12,4 +12,5 @@ public final class Parameters {
 	public static final String PERSON_ROLE_PARAMETER = "role";
 	public static final String ANSWER_PARAMETER = "answer";
 	public static final String TASK_PARAMETER = "task";
+	public static final String TIME_REMAINING = "time_remaining";
 }

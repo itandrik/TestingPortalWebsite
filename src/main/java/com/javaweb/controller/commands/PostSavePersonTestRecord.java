@@ -1,27 +1,37 @@
 package com.javaweb.controller.commands;
 
+import com.javaweb.model.entity.Test;
+import com.javaweb.model.entity.person.Person;
+import com.javaweb.model.services.PersonTestHistoryService;
+import com.javaweb.model.services.impl.PersonTestHistoryServiceImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Enumeration;
 
-import static com.javaweb.util.Attributes.DISABLED_TASKS;
+import static com.javaweb.util.Attributes.CONCRETE_TEST;
 import static com.javaweb.util.Attributes.USER;
 import static com.javaweb.util.Paths.REDIRECTED;
-import static com.javaweb.util.Paths.TESTS;
+import static com.javaweb.util.Paths.SUBJECTS;
 
 /**
  * @author Andrii Chernysh on 29-Jan-17. E-Mail : itcherry97@gmail.com
  */
 public class PostSavePersonTestRecord implements Command {
+    private PersonTestHistoryService personTestHistoryService =
+            PersonTestHistoryServiceImpl.getInstance();
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //TODO create command for inserting User history data
-        request.getSession().setAttribute(DISABLED_TASKS,null);
+        Person person = (Person) request.getSession().getAttribute(USER);
+        Test test = (Test) request.getSession().getAttribute(CONCRETE_TEST);
+        personTestHistoryService.insertTestHistoryPassedByPerson(test,person);
 
-        response.sendRedirect(TESTS);
+        response.sendRedirect(SUBJECTS);
+        setAllAttributesInSessionNull(request);
         return REDIRECTED;
     }
 

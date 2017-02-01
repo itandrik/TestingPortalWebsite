@@ -10,5 +10,4 @@ import java.util.List;
  */
 public interface AnswerService {
     List<Answer> getListOfAnswersForTask(Task task);
-    void insertAnswerForPersonHistory(int answerId, int personId);
 }

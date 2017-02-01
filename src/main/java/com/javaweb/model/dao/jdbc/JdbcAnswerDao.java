@@ -2,6 +2,7 @@ package com.javaweb.model.dao.jdbc;
 
 import com.javaweb.model.dao.AnswerDao;
 import com.javaweb.model.entity.Answer;
+import com.javaweb.model.entity.Test;
 import com.javaweb.model.entity.task.Task;
 
 import java.sql.Connection;
@@ -20,6 +21,11 @@ public class JdbcAnswerDao implements AnswerDao{
 	private static final String SELECT_LIST_OF_ANSWERS_FOR_TASK =
 			"SELECT answer_id, text, is_correct" +
 					" FROM Answer WHERE task_id = ?";
+	private static final String SELECT_LIST_OF_ANSWERS_FOR_TEST =
+			"SELECT answer_id, text, is_correct" +
+					" FROM (SELECT task_id FROM M2m_tests_tasks JOIN" +
+					" Task USING(task_id) WHERE test_id = ?) t" +
+					" JOIN Answer USING(task_id)";
 	private static final String SELECT_ANSWER_BY_ID =
 			"SELECT answer_id, text, is_correct FROM Answer WHERE answer_id = ?";
 	private static final String SELECT_ALL_ANSWERS =
@@ -30,8 +36,6 @@ public class JdbcAnswerDao implements AnswerDao{
 			"UPDATE Answer SET text = ?, is_correct = ? WHERE answer_id = ?";
 	private static final String DELETE_ANSWER_BY_ID =
 			"DELETE FROM Answer WHERE answer_id = ?";
-	private static final String INSERT_ANSWER_FOR_PERSON =
-			"INSERT INTO person_has_answer (person_id, answer_id) VALUES(?,?)";
 
 	public JdbcAnswerDao(Connection connection) {
 		this.connection = connection;
@@ -135,18 +139,23 @@ public class JdbcAnswerDao implements AnswerDao{
 	}
 
 	@Override
-	public void insertAnswerForPersonHistory(int answerId, int personId){
-		try(PreparedStatement statement = connection.prepareStatement(INSERT_ANSWER_FOR_PERSON)){
-			statement.setInt(1,personId);
-			statement.setInt(2,answerId);
+	public List<Answer> getListOfAnswersForTest(Test test) {
+		List<Answer> answers = new ArrayList<>();
 
-			statement.executeUpdate();
-				/* TODO Check for null*/
-				/* TODO Check is already saved in database */
+		try(PreparedStatement statement = connection.prepareStatement(SELECT_LIST_OF_ANSWERS_FOR_TEST)){
+			statement.setInt(1,test.getId());
+			ResultSet resultSet = statement.executeQuery();
+			while(resultSet.next()){
+				Answer answer = getAnswerFromResultSet(resultSet);
+				answers.add(answer);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return answers;
 	}
+
+
 
 	private Answer getAnswerFromResultSet(ResultSet resultSet) throws SQLException {
 		return new Answer.Builder()

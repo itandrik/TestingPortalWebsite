@@ -29,6 +29,24 @@ public class Subject {
 		this.nameOfSubject = nameOfSubject;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Subject)) return false;
+
+		Subject subject = (Subject) o;
+
+		if (id != subject.id) return false;
+		return nameOfSubject != null ? nameOfSubject.equals(subject.nameOfSubject) : subject.nameOfSubject == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id;
+		result = 31 * result + (nameOfSubject != null ? nameOfSubject.hashCode() : 0);
+		return result;
+	}
+
 	public static class Builder{
 		private Subject subject = new Subject();
 

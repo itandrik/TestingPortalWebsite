@@ -16,6 +16,7 @@ public abstract class DaoFactory {
 	public abstract TestDao createTestDao(DaoConnection connection);
 	public abstract TaskDao createTaskDao(DaoConnection connection);
 	public abstract AnswerDao createAnswerDao(DaoConnection connection);
+	public abstract PersonTestHistoryDao createPersonTestHistoryDao(DaoConnection connection);
 
 	public static DaoFactory getInstance() {
 		if (instance == null) {
