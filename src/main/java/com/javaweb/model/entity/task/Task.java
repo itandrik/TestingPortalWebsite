@@ -16,6 +16,10 @@ public class Task {
         answers = new ArrayList<>();
     }
 
+    public long getCountOfCorrectAnswers(){
+        return answers.stream().filter(Answer::getIsCorrect).count();
+    }
+
     public int getId() {
         return id;
     }
@@ -71,7 +75,11 @@ public class Task {
         if (!question.equals(task.question)) return false;
         if (answerType != task.answerType) return false;
         if (explanation != null ? !explanation.equals(task.explanation) : task.explanation != null) return false;
-        return answers.equals(task.answers);
+        if (answers == null || task.answers == null || answers.size() != task.answers.size()) return false;
+        for (int i = 0; i < answers.size(); i++) {
+            if (!answers.get(i).equals(task.answers.get(i))) return false;
+        }
+        return true;
     }
 
     @Override
@@ -104,6 +112,11 @@ public class Task {
 
         public Builder setExplanation(String explanation) {
             task.setExplanation(explanation);
+            return this;
+        }
+
+        public Builder setAnswers(List<Answer> answers) {
+            task.setAnswers(answers);
             return this;
         }
 

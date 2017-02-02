@@ -21,13 +21,9 @@ public class GetSubjectsCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        setAttributeListOfSubjects(request);
-
-        return Pages.SUBJECTS_PAGE;
-    }
-
-    private void setAttributeListOfSubjects(HttpServletRequest request) {
         List<Subject> subjectsList = subjectService.getAll();
         request.setAttribute(Attributes.SUBJECTS, subjectsList);
+
+        return Pages.SUBJECTS_PAGE;
     }
 }

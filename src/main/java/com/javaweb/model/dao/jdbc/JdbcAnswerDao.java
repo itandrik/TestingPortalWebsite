@@ -82,7 +82,7 @@ public class JdbcAnswerDao implements AnswerDao{
 	public void insert(Answer answer) {
 		try(PreparedStatement statement = connection.prepareStatement(INSERT_ANSWER)){
 			statement.setString(1,answer.getAnswerText());
-			statement.setBoolean(2,answer.isCorrect());
+			statement.setBoolean(2,answer.getIsCorrect());
 
 			statement.executeUpdate();
 				/* TODO Check for null*/
@@ -96,7 +96,7 @@ public class JdbcAnswerDao implements AnswerDao{
 	public void update(Answer answer) {
 		try(PreparedStatement statement = connection.prepareStatement(UPDATE_ANSWER_BY_ID)){
 			statement.setString(1,answer.getAnswerText());
-			statement.setBoolean(2, answer.isCorrect());
+			statement.setBoolean(2, answer.getIsCorrect());
 			statement.setInt(3, answer.getId());
 
 			statement.executeUpdate();

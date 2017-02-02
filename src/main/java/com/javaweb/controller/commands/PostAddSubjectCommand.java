@@ -15,7 +15,8 @@ import static com.javaweb.util.Paths.REDIRECTED;
 import static com.javaweb.util.Paths.SUBJECTS;
 
 /**
- * @author Andrii Chernysh on 27-Jan-17. E-Mail : itcherry97@gmail.com
+ * @author Andrii Chernysh on 27-Jan-17.
+ *         E-Mail : itcherry97@gmail.com
  */
 public class PostAddSubjectCommand implements Command {
     private SubjectService subjectService = SubjectServiceImpl.getInstance();

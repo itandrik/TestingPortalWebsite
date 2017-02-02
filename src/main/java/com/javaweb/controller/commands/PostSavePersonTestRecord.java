@@ -4,6 +4,7 @@ import com.javaweb.model.entity.Test;
 import com.javaweb.model.entity.person.Person;
 import com.javaweb.model.services.PersonTestHistoryService;
 import com.javaweb.model.services.impl.PersonTestHistoryServiceImpl;
+import com.javaweb.util.Paths;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +15,10 @@ import java.util.Enumeration;
 import static com.javaweb.util.Attributes.CONCRETE_TEST;
 import static com.javaweb.util.Attributes.USER;
 import static com.javaweb.util.Paths.REDIRECTED;
-import static com.javaweb.util.Paths.SUBJECTS;
 
 /**
- * @author Andrii Chernysh on 29-Jan-17. E-Mail : itcherry97@gmail.com
+ * @author Andrii Chernysh on 29-Jan-17.
+ *         E-Mail : itcherry97@gmail.com
  */
 public class PostSavePersonTestRecord implements Command {
     private PersonTestHistoryService personTestHistoryService =
@@ -30,7 +31,7 @@ public class PostSavePersonTestRecord implements Command {
         Test test = (Test) request.getSession().getAttribute(CONCRETE_TEST);
         personTestHistoryService.insertTestHistoryPassedByPerson(test,person);
 
-        response.sendRedirect(SUBJECTS);
+        response.sendRedirect(Paths.TESTS + "/" + test.getId() + Paths.RESULTS);
         setAllAttributesInSessionNull(request);
         return REDIRECTED;
     }

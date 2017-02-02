@@ -4,8 +4,14 @@ import com.javaweb.model.entity.Answer;
 import com.javaweb.model.entity.Test;
 import com.javaweb.model.entity.person.Person;
 import com.javaweb.model.entity.task.Task;
-import com.javaweb.model.services.*;
-import com.javaweb.model.services.impl.*;
+import com.javaweb.model.services.AnswerService;
+import com.javaweb.model.services.PersonTestHistoryService;
+import com.javaweb.model.services.TaskService;
+import com.javaweb.model.services.TestService;
+import com.javaweb.model.services.impl.AnswerServiceImpl;
+import com.javaweb.model.services.impl.PersonTestHistoryServiceImpl;
+import com.javaweb.model.services.impl.TaskServiceImpl;
+import com.javaweb.model.services.impl.TestServiceImpl;
 import com.javaweb.util.Attributes;
 import com.javaweb.util.Pages;
 
@@ -14,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 
 import static com.javaweb.controller.CommandRegexAndPatterns.INDEX_INSIDE_URI_PATTERN;
@@ -34,19 +40,18 @@ public class TestResultCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int testId = getTestIdFromURI(request);
+        Test test = testService.getTestById(testId);
         Person person = (Person) request.getSession().getAttribute(USER);
 
-        Optional<Test> optionalTest = testService.getTestById(testId);
+        List<Task> tasksWithAllAnswers = getAllTasksWithAnswersForTest(
+                test, task -> answerService.getListOfAnswersForTask(task));
 
-        optionalTest.ifPresent(test -> {
-            List<Task> tasksWithAllAnswers = getTasksWithAnswersForTest(test);
-            List<Task> studentTaskAnswersForTest = getStudentTaskAnswersForTest(test);
+        List<Task> studentTaskAnswersForTest = getAllTasksWithAnswersForTest(
+                test, task -> personTestHistoryService.getListOfAnswersByPersonForTask(person, task));
 
-            request.setAttribute(Attributes.TASKS, tasksWithAllAnswers);
-            request.setAttribute(Attributes.STUDENT_TASKS, studentTaskAnswersForTest);
+        request.setAttribute(Attributes.TASKS, tasksWithAllAnswers);
+        request.setAttribute(Attributes.STUDENT_TASKS, studentTaskAnswersForTest);
 
-
-        });
         return Pages.TEST_RESULTS_PAGE;
     }
 
@@ -54,23 +59,21 @@ public class TestResultCommand implements Command {
         int testId = 0;
         String requestURI = request.getRequestURI();
         Matcher idMatcher = INDEX_INSIDE_URI_PATTERN.matcher(requestURI);
-        while (idMatcher.find()) {
-            testId = Integer.parseInt(idMatcher.group(1));
+        if(idMatcher.find()) {
+            testId = Integer.parseInt(idMatcher.group(0));
         }
         return testId;
     }
 
-    private List<Task> getTasksWithAnswersForTest(Test test) {
+    private List<Task> getAllTasksWithAnswersForTest(
+            Test test, Function<Task, List<Answer>> getAnswersFunction) {
         List<Task> tasks = taskService.getAllTasksForTest(test);
+
         for (Task task : tasks) {
-            List<Answer> answers = answerService.getListOfAnswersForTask(task);
+            List<Answer> answers = getAnswersFunction.apply(task);
             task.setAnswers(answers);
         }
         return tasks;
     }
 
-    private List<Task> getStudentTaskAnswersForTest(Test test) {
-        //TODO
-        return null;
-    }
 }

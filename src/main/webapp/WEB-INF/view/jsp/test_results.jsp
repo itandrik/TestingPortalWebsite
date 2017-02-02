@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="/WEB-INF/view/taglib/test_result_tag.tld" prefix="testResult" %>
 
 <%@ page import="com.javaweb.util.Paths" %>
 <%@ page import="com.javaweb.util.Attributes" %>
@@ -8,6 +9,8 @@
 <%@ page import="com.javaweb.util.Parameters" %>
 
 <%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
+<c:set var="tutor_tasks" value="${requestScope[Attributes.TASKS]}"/>
+<c:set var="student_tasks" value="${requestScope[Attributes.STUDENT_TASKS]}"/>
 
 <body>
 <nav class="navbar navbar-fixed-top">
@@ -30,40 +33,61 @@
     </ul>
 </nav>
 <div class="data col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-8">
-    <c:forEach var="task" items="${sessionScope[Attributes.TASKS]}">
+    <c:forEach var="task" items="${tutor_tasks}" varStatus="status">
+        <testResult:setCountOfCorrectAnswers var="count_of_all_correct_answers" value="${task}"/>
+        <testResult:setCountOfCorrectAnswers var="count_of_student_answers" value="${student_tasks[status.index]}"/>
+
+        <c:set var="is_correct_answer"
+               value="${count_of_all_correct_answers == count_of_student_answers}"/>
         <table class="table table-bordered table-shadow" id="task${task.id}">
+
             <thead class="thead-changed-style">
             <tr>
                 <th class="tree-header" colspan="2">${task.question}</th>
             </tr>
             </thead>
+
             <tbody>
-                <c:forEach var="answer" items="${task.answers}">
-                    <tr>
-                        <td>
-                            <c:choose>
-                                <c:when test="${task.answerType == AnswerType.ONE_ANSWER}">
-                                    <div class="radio">
-                                        <label><input type="radio" name="${Parameters.ANSWER_PARAMETER}"
-                                                      value="answer${answer.id}">${answer.answerText}
-                                        </label>
-                                    </div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" name="${Parameters.ANSWER_PARAMETER}"
-                                                      value="answer${answer.id}">${answer.answerText}
-                                        </label>
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                    </tr>
-                    <input type="number" hidden="true" name="${Parameters.TASK_PARAMETER}" value="${task.id}"/>
-                </c:forEach>
-                <input id="seconds-remaining" type="number" hidden="true" name="${Parameters.TIME_REMAINING}" />
+            <c:forEach var="answer" items="${task.answers}">
+                <tr>
+                    <td>
+                        <c:choose>
+                            <c:when test="${task.answerType == AnswerType.ONE_ANSWER}">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="${Parameters.ANSWER_PARAMETER}"
+                                               value="answer${answer.id}"
+                                               <c:if test="${answer.isCorrect}"> checked="checked"</c:if>>
+                                               ${answer.answerText}
+                                    </label>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="${Parameters.ANSWER_PARAMETER}"
+                                                  value="answer${answer.id}"
+                                                  <c:if test="${answer.isCorrect}"> checked="checked"</c:if>>
+                                            ${answer.answerText}
+                                    </label>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                </tr>
+            </c:forEach>
+            <tr>
+                <td>
+                    <c:out value="${task.explanation}"/>
+                </td>
+            </tr>
             </tbody>
         </table>
+
+        <script type="text/javascript" src="<c:url value="/resources/js/test_result.js" />"></script>
+        <script type="text/javascript">
+            makeTableHeaderColor(${is_correct_answer}, ${task.id});
+        </script>
     </c:forEach>
 </div>
 

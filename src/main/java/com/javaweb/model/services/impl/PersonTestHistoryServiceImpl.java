@@ -10,6 +10,7 @@ import com.javaweb.model.entity.Test;
 import com.javaweb.model.entity.history.Grade;
 import com.javaweb.model.entity.history.PersonHistory;
 import com.javaweb.model.entity.person.Person;
+import com.javaweb.model.entity.task.Task;
 import com.javaweb.model.services.PersonTestHistoryService;
 import com.javaweb.model.services.exception.ServiceException;
 
@@ -68,7 +69,7 @@ public class PersonTestHistoryServiceImpl implements PersonTestHistoryService {
     private int getCountOfCorrectAnswers(List<Answer> passedAnswersInTest) {
         int countOfCorrectAnswers = 0;
         for (Answer answer : passedAnswersInTest) {
-            if (answer.isCorrect()) {
+            if (answer.getIsCorrect()) {
                 countOfCorrectAnswers++;
             }
         }
@@ -91,6 +92,15 @@ public class PersonTestHistoryServiceImpl implements PersonTestHistoryService {
                     daoFactory.createPersonTestHistoryDao(connection);
             PersonHistory history = createPersonHistory(test, person);
             historyDao.insert(history);
+        }
+    }
+
+    @Override
+    public List<Answer> getListOfAnswersByPersonForTask(Person person, Task task) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            PersonTestHistoryDao historyDao =
+                    daoFactory.createPersonTestHistoryDao(connection);
+            return historyDao.getListOfAnswersByPersonForTask(task, person);
         }
     }
 

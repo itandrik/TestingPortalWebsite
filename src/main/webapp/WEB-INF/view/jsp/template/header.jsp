@@ -16,4 +16,5 @@
     <script src="<c:url value="/resources/js/bootstrap.js" />"></script>
     <script src="<c:url value="/resources/js/script_new.js" />"></script>
     <script src="<c:url value="/resources/js/fixscroll.js" />" type="text/javascript"></script>
+
 </head>

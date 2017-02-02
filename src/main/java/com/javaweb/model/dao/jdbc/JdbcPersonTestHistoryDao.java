@@ -38,8 +38,7 @@ public class JdbcPersonTestHistoryDao implements PersonTestHistoryDao {
     private static final String SELECT_ALL_PASSED_ANSWERS_BY_PERSON_FOR_TASK =
             "SELECT answer_id, text, is_correct FROM " +
                     "(SELECT answer_id FROM Person_has_answer WHERE person_id = ?) t " +
-                    "JOIN Answer USING(answer_id) " +
-                    "JOIN Person_has_answer USING(answer_id) WHERE task_id = ?";
+                    "JOIN Answer USING(answer_id) WHERE task_id = ?";
     private static final String INSERT_ANSWER_FOR_PERSON =
             "INSERT INTO person_has_answer (person_id, answer_id) VALUES(?,?)";
 
@@ -137,10 +136,18 @@ public class JdbcPersonTestHistoryDao implements PersonTestHistoryDao {
         List<Answer> answers = new ArrayList<>();
 
         try(PreparedStatement statement =
-                     connection.prepareStatement(SELECT_ALL_PASSED_ANSWERS_BY_PERSON_FOR_TEST)) {
-            //TODO
+                     connection.prepareStatement(SELECT_ALL_PASSED_ANSWERS_BY_PERSON_FOR_TASK)) {
+            statement.setInt(1,person.getId());
+            statement.setInt(2,task.getId());
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                Answer answer = getAnswerFromResultSet(resultSet);
+                answers.add(answer);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
+        return answers;
     }
 
     private Answer getAnswerFromResultSet(ResultSet resultSet) throws SQLException {

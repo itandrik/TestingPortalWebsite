@@ -15,11 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import static com.javaweb.controller.CommandRegexAndPatterns.LETTERS_BEFORE_INDEX_REGEX;
-import static com.javaweb.util.Attributes.*;
-import static com.javaweb.util.Pages.*;
+import static com.javaweb.util.Attributes.CONCRETE_TEST;
+import static com.javaweb.util.Attributes.TASKS;
+import static com.javaweb.util.Pages.CONCRETE_TEST_PAGE;
 
 /**
  * @author Andrii Chernysh on 26-Jan-17. E-Mail : itcherry97@gmail.com
@@ -29,25 +29,19 @@ public class GetConcreteTestCommand implements Command {
     private final TaskService taskService = TaskServiceImpl.getInstance();
     private final AnswerService answerService = AnswerServiceImpl.getInstance();
 
-    private String pageToGo = HOME_PAGE;
-
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String requestedURI = request.getRequestURI();
 
         int testId = Integer.parseInt(requestedURI.replaceAll(LETTERS_BEFORE_INDEX_REGEX, ""));
-        Optional<Test> optionalTest = testService.getTestById(testId);
+        Test test = testService.getTestById(testId);
+        List<Task> tasks = getTasksWithAnswersForTest(test);
 
-        optionalTest.ifPresent((test) -> {
-            List<Task> tasks = getTasksWithAnswersForTest(test);
-            request.getSession().setAttribute(TASKS,tasks);
-            test.setDurationTimeInMinutes(getTimeDurationInSeconds(test));
-            request.getSession().setAttribute(CONCRETE_TEST,test);
-            pageToGo = CONCRETE_TEST_PAGE;
-        });
-
-        return pageToGo;
+        request.getSession().setAttribute(TASKS, tasks);
+        test.setDurationTimeInMinutes(getTimeDurationInSeconds(test));
+        request.getSession().setAttribute(CONCRETE_TEST, test);
+        return CONCRETE_TEST_PAGE;
     }
 
     private List<Task> getTasksWithAnswersForTest(Test test) {

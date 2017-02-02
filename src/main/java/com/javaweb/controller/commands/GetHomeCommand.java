@@ -12,7 +12,8 @@ import java.io.IOException;
  */
 public class GetHomeCommand implements Command{
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         return Pages.HOME_PAGE;
     }
 }
