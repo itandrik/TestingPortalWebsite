@@ -150,3 +150,10 @@ nav li:hover {
     font-size: 20px;
     z-index: 10;
 }
+
+.false-answer {
+    background-color: #F2DEDE;
+}
+.correct-answer {
+    background-color: #AAFFAA;
+}

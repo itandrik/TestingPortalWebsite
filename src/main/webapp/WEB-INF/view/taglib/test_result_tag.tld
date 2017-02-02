@@ -22,4 +22,10 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+    <function>
+        <name>contains</name>
+        <function-class>com.javaweb.view.tags.ContainsInListFunction</function-class>
+        <function-signature>boolean contains(java.util.List,com.javaweb.model.entity.Answer)
+        </function-signature>
+    </function>
 </taglib>
