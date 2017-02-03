@@ -23,12 +23,14 @@ div.jumbotron {
 
 .home-description {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background-color: #EDEEF0;
+    background-color: rgba(255,255,255,.7);
+    border: 4px groove #2196F3;
+
 }
 
 .home-text {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 30px;
+    font-family: Georgia, Serif;
+    font-size: 20px;
     color: #212121;
 }
 

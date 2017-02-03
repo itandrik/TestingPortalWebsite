@@ -28,4 +28,10 @@
         <function-signature>boolean contains(java.util.List,com.javaweb.model.entity.Answer)
         </function-signature>
     </function>
+    <function>
+        <name>isTestPassed</name>
+        <function-class>com.javaweb.view.tags.IsTestPassedFunction</function-class>
+        <function-signature>boolean isTestPassed(com.javaweb.model.entity.Test,com.javaweb.model.entity.person.Person)
+        </function-signature>
+    </function>
 </taglib>

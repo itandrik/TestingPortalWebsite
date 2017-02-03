@@ -16,16 +16,17 @@ function makeTableHeaderColor(isCorrectAnswers, taskId) {
 
 function performColorForAnswer(answerId, isIncorrectStudentAnswer, isCorrectTutorAnswer){
     var tableRow = document.getElementById('td' + answerId);
+    tableRow.firstElementChild.style.display='inline';
     var glyphicon = document.createElement('span');
     if(isCorrectTutorAnswer){
         tableRow.className='correct-answer';
         glyphicon.className='glyphicon glyphicon-ok text-right';
-        tableRow.appendChild(glyphicon);
+        tableRow.firstElementChild.appendChild(glyphicon);
         return;
     }
     if(isIncorrectStudentAnswer){
         tableRow.className='false-answer';
         glyphicon.className='glyphicon glyphicon-remove text-right';
-        tableRow.appendChild(glyphicon);
+        tableRow.firstElementChild.appendChild(glyphicon);
     }
 }

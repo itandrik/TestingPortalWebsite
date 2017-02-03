@@ -7,7 +7,7 @@
     <title>Testing portal</title>
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"
           type="text/css"/>
-    <link href="<c:url value="/resources/css/style1.css" />" rel="stylesheet"
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"
           type="text/css"/>
     <link rel="icon"
           type="image/ico"

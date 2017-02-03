@@ -9,7 +9,7 @@
 <%@ page import="com.javaweb.util.Parameters" %>
 
 <%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
-<script type="text/javascript" src="<c:url value="/resources/js/test_result1.js" />"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/test_result.js" />"></script>
 
 <c:set var="tutor_tasks" value="${requestScope[Attributes.TASKS]}"/>
 <c:set var="student_tasks" value="${requestScope[Attributes.STUDENT_TASKS]}"/>

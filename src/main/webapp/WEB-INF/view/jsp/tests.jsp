@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="test" uri="/WEB-INF/view/taglib/test.tld" %>
+
 <%@ page import="com.javaweb.util.Paths" %>
 <%@ page import="com.javaweb.util.Attributes" %>
 
@@ -47,9 +49,14 @@
         <c:forEach var="test" items="${requestScope[Attributes.TESTS]}">
             <tr>
                 <td>
+                    <c:set var="is_test_passed" value="${test:isTestPassed(test,user)}"/>
                     <button type="button" class="identified btn btn-link btn-lg"
-                            data-toggle="modal" data-target="#modal_start_test">
+                            data-toggle="modal" data-target="#modal_start_test"
+                            <c:if test="${is_test_passed}">disabled</c:if>>
                         <c:out value="${test.nameOfTest}"/>
+                        <c:if test="${is_test_passed}">
+                            <fmt:message key="test.passed"/>
+                        </c:if>
                     </button>
                     <!-- Modal -->
                     <div class="modal fade" id="modal_start_test" role="dialog">
