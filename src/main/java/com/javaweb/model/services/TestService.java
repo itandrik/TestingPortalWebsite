@@ -11,4 +11,6 @@ import java.util.List;
 public interface TestService {
     List<Test> getAllTestsForSubject(Subject subject);
     Test getTestById(int id);
+    void addTestWithName(String name);
+    void changeTestWithId(int testId);
 }

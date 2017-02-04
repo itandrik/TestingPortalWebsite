@@ -1,10 +1,11 @@
-function addSubject(pathToGo, inputName) {
-    var table = document.getElementById('table-with-subjects');
+function addEntity(pathToGo, inputName) {
+    var table = document.getElementById('table-with-entities');
     var addButton = document.getElementById('add-button');
     addButton.parentNode.removeChild(addButton);
 
     var tableRow = document.createElement('tr');
     var tableCol = document.createElement('td');
+    tableCol.colSpan=2;
     var form = document.createElement('form');
 
     form.method = 'post';
@@ -15,7 +16,7 @@ function addSubject(pathToGo, inputName) {
     nameOfSubjectString.className = "col-lg-1";
     var nameInput = document.createElement('input');
     nameInput.type = "text";
-    nameInput.placeholder = "Name of subject";
+    nameInput.placeholder = "Enter name";
     nameInput.name = inputName;
     nameInput.className = "col-lg-5";
     var submitButton = document.createElement('button');

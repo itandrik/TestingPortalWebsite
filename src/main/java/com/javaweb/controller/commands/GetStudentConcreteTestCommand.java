@@ -24,7 +24,7 @@ import static com.javaweb.util.Pages.CONCRETE_TEST_PAGE;
 /**
  * @author Andrii Chernysh on 26-Jan-17. E-Mail : itcherry97@gmail.com
  */
-public class GetConcreteTestCommand implements Command {
+public class GetStudentConcreteTestCommand implements Command {
     private final TestService testService = TestServiceImpl.getInstance();
     private final TaskService taskService = TaskServiceImpl.getInstance();
     private final AnswerService answerService = AnswerServiceImpl.getInstance();

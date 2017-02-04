@@ -13,6 +13,7 @@ public final class Pages {
     public static final String TESTS_PAGE = PATH + "/tests" + JSP;
     public static final String CONCRETE_TEST_PAGE = PATH + "/concrete_test" + JSP;
     public static final String TEST_RESULTS_PAGE = PATH + "/test_results" + JSP;
+    public static final String ADD_TEST_PAGE = PATH + "/test_add" + JSP;
 
     /*public static final String LOGIN_PAGE_WITH_PATH = PATH + LOGIN_PAGE + JSP;
     public static final String REGISTER_PAGE_WITH_PATH = PATH + REGISTER_PAGE + JSP;

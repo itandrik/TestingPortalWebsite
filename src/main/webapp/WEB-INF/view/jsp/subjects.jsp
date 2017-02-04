@@ -37,11 +37,11 @@
     </ul>
 </nav>
 
-<%--<c:choose>
-    <c:when test="${fn:length(requestScope[Attributes.SUBJECTS] == 0)}">
-     <h1 class="text-center">No subjects in the database</h1>
-    </c:when>
-<c:otherwise>--%>
+<c:if test="${not empty requestScope[Attributes.ERROR_MESSAGE]}">
+<div class="col-lg-12 floating-error">
+    <%@ include file="/WEB-INF/view/jsp/template/error_messages.jsp" %>
+</div>
+</c:if>
 <div class="data col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-8">
     <table class="table table-hover table-bordered table-shadow">
         <thead class="thead-changed-style">
@@ -49,7 +49,7 @@
             <th>Choose subject :</th>
         </tr>
         </thead>
-        <tbody id="table-with-subjects">
+        <tbody id="table-with-entities">
         <c:forEach var="subject" items="${requestScope[Attributes.SUBJECTS]}">
             <tr>
                 <td>
@@ -64,7 +64,7 @@
                 <td>
                     <div class="text-center">
                         <button id="add-button"
-                                onclick="addSubject('${Paths.ADD_SUBJECT}','${Parameters.NAME_OF_SUBJECT_PARAMETER}')"
+                                onclick="addEntity('${Paths.ADD_SUBJECT}','${Parameters.NAME_OF_SUBJECT_PARAMETER}')"
                                 class="btn btn-lg btn-primary">
                             <span class="glyphicon glyphicon-plus"></span>
                             Add new subject

@@ -51,4 +51,19 @@ public class TestServiceImpl implements TestService {
 
         }
     }
+
+    @Override
+    public void addTestWithName(String name) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            TestDao testDao = daoFactory.createTestDao(connection);
+            Test test = new Test();
+            test.setNameOfTest(name);
+            testDao.insert(test);
+        }
+    }
+
+    @Override
+    public void changeTestWithId(int testId) {
+
+    }
 }

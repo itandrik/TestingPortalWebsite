@@ -35,13 +35,15 @@ public class CommandHolder {
         commands.put(GET + HOME, new GetHomeCommand());
         commands.put(GET + SUBJECTS, new GetSubjectsCommand());
         commands.put(GET + CONCRETE_SUBJECT, new GetTestsCommand());
-        commands.put(GET + CONCRETE_TEST, new GetConcreteTestCommand());
+        commands.put(GET + CONCRETE_STUDENT_TEST, new GetStudentConcreteTestCommand());
         commands.put(POST + ADD_SUBJECT, new PostAddSubjectCommand());
         commands.put(POST + REGISTER, new RegisterSubmitCommand());
         commands.put(GET + REGISTER, new RegisterCommand());
         commands.put(POST + SAVE_TEST_RECORD, new PostSavePersonTestRecord());
-        commands.put(POST + CONCRETE_TEST, new PostAddAnswerCommand());
+        commands.put(POST + CONCRETE_STUDENT_TEST, new PostAddAnswerCommand());
         commands.put(GET + TEST_RESULTS, new TestResultCommand());
+        commands.put(POST + CONCRETE_SUBJECT, new PostAddTestCommand());
+        commands.put(GET + CONCRETE_TUTOR_TEST, new GetTutorConcreteTestCommand());
     }
 
     public Command getCommandByKey(String commandKey){
