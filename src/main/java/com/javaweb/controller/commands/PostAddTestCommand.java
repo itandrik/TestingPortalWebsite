@@ -1,8 +1,10 @@
 package com.javaweb.controller.commands;
 
 import com.javaweb.controller.validator.NullChecker;
+import com.javaweb.model.entity.Test;
 import com.javaweb.model.services.TestService;
 import com.javaweb.model.services.impl.TestServiceImpl;
+import com.javaweb.util.Attributes;
 import com.javaweb.util.Pages;
 import com.javaweb.util.Parameters;
 import org.apache.log4j.Logger;
@@ -11,7 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
+import static com.javaweb.controller.CommandRegexAndPatterns.LETTERS_BEFORE_INDEX_REGEX;
 import static com.javaweb.i18n.ErrorMessageKeys.ERROR_EMPTY_NAME_FIELD;
 import static com.javaweb.util.Attributes.ERROR_VALIDATION_MESSAGE;
 import static com.javaweb.util.Paths.REDIRECTED;
@@ -31,15 +35,27 @@ public class PostAddTestCommand implements Command{
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String testName = request.getParameter(Parameters.NAME_OF_TEST_PARAMETER);
+        String requestedURI = request.getRequestURI();
+        int subjectId = Integer.parseInt(requestedURI.replaceAll(LETTERS_BEFORE_INDEX_REGEX, ""));
 
         if(!isValidNameField(request, testName)){
-            //response.sendRedirect(request.getRequestURI());
+            setTestsToRequest(subjectId, request);
             return Pages.TESTS_PAGE;
         }
+        Test test = new Test.Builder()
+                .setName(testName)
+                .setSubjectId(subjectId)
+                .build();
+        //TODO додати введення часу, за який проходитиметься тест
 
-        testService.addTestWithName(testName);
+        testService.addTest(test);
         response.sendRedirect(request.getRequestURI());
         return REDIRECTED;
+    }
+
+    private void setTestsToRequest(int subjectId, HttpServletRequest request) {
+        List<Test> testsList = testService.getAllTestsForSubjectWithId(subjectId);
+        request.setAttribute(Attributes.TESTS, testsList);
     }
 
     private boolean isValidNameField(HttpServletRequest request, String testName) {

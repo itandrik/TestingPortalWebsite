@@ -2,6 +2,7 @@ package com.javaweb.controller.commands;
 
 import com.javaweb.model.services.TestService;
 import com.javaweb.model.services.impl.TestServiceImpl;
+import com.javaweb.util.Pages;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,6 @@ public class GetTutorConcreteTestCommand implements Command {
         String requestedURI = request.getRequestURI();
 
         int testId = Integer.parseInt(requestedURI.replaceAll(LETTERS_BEFORE_INDEX_REGEX, ""));
-        return null;
+        return Pages.CONCRETE_TUTOR_TEST_PAGE;
     }
 }

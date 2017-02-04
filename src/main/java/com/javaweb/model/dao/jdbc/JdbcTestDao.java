@@ -24,7 +24,7 @@ public class JdbcTestDao implements TestDao{
 	private static final String SELECT_ALL_TESTS =
 			"SELECT test_id, name, duration_time_in_minutes FROM Test";
 	private static final String INSERT_TEST =
-			"INSERT INTO Test (name, duration_time_in_minutes) VALUES (?,?)";
+			"INSERT INTO Test (name, duration_time_in_minutes, subject_id) VALUES (?,?,?)";
 	private static final String UPDATE_TEST_BY_ID =
 			"UPDATE Test SET name = ?, duration_time_in_minutes = ? WHERE test_id = ?";
 	private static final String DELETE_TEST_BY_ID =
@@ -76,6 +76,7 @@ public class JdbcTestDao implements TestDao{
 		try(PreparedStatement statement = connection.prepareStatement(INSERT_TEST)){
 			statement.setString(1,test.getNameOfTest());
 			statement.setInt(2,test.getDurationTimeInMinutes());
+			statement.setInt(3,test.getSubjectId());
 			statement.executeUpdate();
 				/* TODO Check for null*/
 				/* TODO Check is already saved in database */

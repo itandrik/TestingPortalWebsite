@@ -20,7 +20,7 @@ import static com.javaweb.i18n.ErrorMessageKeys.ERROR_EMPTY_ANSWER;
 import static com.javaweb.util.Attributes.CONCRETE_TEST;
 import static com.javaweb.util.Attributes.DISABLED_TASKS;
 import static com.javaweb.util.Attributes.USER;
-import static com.javaweb.util.Pages.CONCRETE_TEST_PAGE;
+import static com.javaweb.util.Pages.CONCRETE_STUDENT_TEST_PAGE;
 import static com.javaweb.util.Parameters.ANSWER_PARAMETER;
 import static com.javaweb.util.Parameters.TASK_PARAMETER;
 
@@ -46,7 +46,7 @@ public class PostAddAnswerCommand implements Command {
 
         if(nullCheckerStringArray.isEmpty(parameterValues)){
             request.setAttribute(Attributes.ERROR_MESSAGE,ERROR_EMPTY_ANSWER);
-            return CONCRETE_TEST_PAGE;
+            return CONCRETE_STUDENT_TEST_PAGE;
         }
 
         for(String value : parameterValues){
@@ -55,7 +55,7 @@ public class PostAddAnswerCommand implements Command {
         }
 
         makeTaskDisabled(request);
-        return CONCRETE_TEST_PAGE;
+        return CONCRETE_STUDENT_TEST_PAGE;
     }
 
     private int extractAnswerIdFromParameter(String answerParameter) {

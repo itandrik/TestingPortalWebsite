@@ -31,10 +31,13 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public List<Test> getAllTestsForSubject(Subject subject) {
+    public List<Test> getAllTestsForSubjectWithId(int subjectId) {
         List<Test> result;
         try (DaoConnection connection = daoFactory.getConnection()) {
             TestDao testDao = daoFactory.createTestDao(connection);
+            Subject subject = new Subject.Builder()
+                    .setId(subjectId)
+                    .build();
             result = testDao.getListOfTestsForSubject(subject);
         }
         return result;
@@ -53,11 +56,9 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public void addTestWithName(String name) {
+    public void addTest(Test test) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             TestDao testDao = daoFactory.createTestDao(connection);
-            Test test = new Test();
-            test.setNameOfTest(name);
             testDao.insert(test);
         }
     }

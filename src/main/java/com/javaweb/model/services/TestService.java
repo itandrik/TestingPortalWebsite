@@ -1,6 +1,5 @@
 package com.javaweb.model.services;
 
-import com.javaweb.model.entity.Subject;
 import com.javaweb.model.entity.Test;
 
 import java.util.List;
@@ -9,8 +8,8 @@ import java.util.List;
  * @author Andrii Chernysh on 26-Jan-17. E-Mail : itcherry97@gmail.com
  */
 public interface TestService {
-    List<Test> getAllTestsForSubject(Subject subject);
+    List<Test> getAllTestsForSubjectWithId(int subjectId);
     Test getTestById(int id);
-    void addTestWithName(String name);
+    void addTest(Test test);
     void changeTestWithId(int testId);
 }

@@ -1,13 +1,12 @@
 package com.javaweb.controller.commands;
 
-import com.javaweb.util.Attributes;
-import com.javaweb.util.Pages;
-import com.javaweb.model.entity.Subject;
 import com.javaweb.model.entity.Test;
 import com.javaweb.model.services.SubjectService;
 import com.javaweb.model.services.TestService;
 import com.javaweb.model.services.impl.SubjectServiceImpl;
 import com.javaweb.model.services.impl.TestServiceImpl;
+import com.javaweb.util.Attributes;
+import com.javaweb.util.Pages;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,16 +27,10 @@ public class GetTestsCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String requestedURI = request.getRequestURI();
-
         int subjectId = Integer.parseInt(requestedURI.replaceAll(LETTERS_BEFORE_INDEX_REGEX, ""));
-        Subject subject = subjectService.getSubjectById(subjectId);
 
-        setAttributeListOfTests(subject, request);
-        return Pages.TESTS_PAGE;
-    }
-
-    private void setAttributeListOfTests(Subject subject, HttpServletRequest request) {
-        List<Test> testsList = testService.getAllTestsForSubject(subject);
+        List<Test> testsList = testService.getAllTestsForSubjectWithId(subjectId);
         request.setAttribute(Attributes.TESTS, testsList);
+        return Pages.TESTS_PAGE;
     }
 }

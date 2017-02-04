@@ -10,7 +10,7 @@ function addEntity(pathToGo, inputName) {
 
     form.method = 'post';
     form.action = pathToGo;
-    form.className = "add-subject-form";
+    form.className = "add-entity-form";
     var nameOfSubjectString = document.createElement('p');
     nameOfSubjectString.innerHTML = "Name : ";
     nameOfSubjectString.className = "col-lg-1";
@@ -22,7 +22,7 @@ function addEntity(pathToGo, inputName) {
     var submitButton = document.createElement('button');
     submitButton.type = "submit";
     submitButton.innerHTML = "Accept";
-    submitButton.className = "col-lg-1 btn btn-default btn-lg";
+    submitButton.className = "col-offset-lg-1 col-lg-1 btn btn-default btn-md";
 
     form.appendChild(nameOfSubjectString);
     form.appendChild(nameInput);

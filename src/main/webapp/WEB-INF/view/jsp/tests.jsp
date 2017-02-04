@@ -58,7 +58,7 @@
                 <td>
                     <c:set var="is_test_passed" value="${test:isTestPassed(test,user)}"/>
                     <c:choose>
-                        <c:when test="${user.role == PersonRole.TUTOR}">
+                        <c:when test="${user.role == PersonRole.STUDENT}">
                             <button type="button" class="identified btn btn-link btn-lg"
                                     data-toggle="modal" data-target="#modal_start_test"
                                     <c:if test="${is_test_passed}">disabled</c:if>>
@@ -111,9 +111,6 @@
             <tr>
                 <td colspan="2">
                     <div class="text-center">
-                            <%--
-                                                    <input id="tests-param" type="hidden" name="${Parameters.TESTS}" value="${requestScope[Attributes.TESTS]}" />
-                            --%>
                         <button id="add-button"
                                 onclick="addEntity('${requestScope['javax.servlet.forward.request_uri']}',
                                         '${Parameters.NAME_OF_TEST_PARAMETER}')"

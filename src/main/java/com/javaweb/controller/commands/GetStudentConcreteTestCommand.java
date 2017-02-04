@@ -19,7 +19,7 @@ import java.util.List;
 import static com.javaweb.controller.CommandRegexAndPatterns.LETTERS_BEFORE_INDEX_REGEX;
 import static com.javaweb.util.Attributes.CONCRETE_TEST;
 import static com.javaweb.util.Attributes.TASKS;
-import static com.javaweb.util.Pages.CONCRETE_TEST_PAGE;
+import static com.javaweb.util.Pages.CONCRETE_STUDENT_TEST_PAGE;
 
 /**
  * @author Andrii Chernysh on 26-Jan-17. E-Mail : itcherry97@gmail.com
@@ -41,7 +41,7 @@ public class GetStudentConcreteTestCommand implements Command {
         request.getSession().setAttribute(TASKS, tasks);
         test.setDurationTimeInMinutes(getTimeDurationInSeconds(test));
         request.getSession().setAttribute(CONCRETE_TEST, test);
-        return CONCRETE_TEST_PAGE;
+        return CONCRETE_STUDENT_TEST_PAGE;
     }
 
     private List<Task> getTasksWithAnswersForTest(Test test) {

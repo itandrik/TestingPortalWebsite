@@ -4,6 +4,7 @@ public class Test {
     private int id;
     private String nameOfTest;
     private int durationTimeInMinutes;
+    private int subjectId;
 
     public int getId() {
         return id;
@@ -15,6 +16,14 @@ public class Test {
 
     public int getDurationTimeInMinutes() {
         return durationTimeInMinutes;
+    }
+
+    public int getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(int subjectId) {
+        this.subjectId = subjectId;
     }
 
     public void setId(int id) {
@@ -38,14 +47,16 @@ public class Test {
 
         if (id != test.id) return false;
         if (durationTimeInMinutes != test.durationTimeInMinutes) return false;
-        return nameOfTest != null ? nameOfTest.equals(test.nameOfTest) : test.nameOfTest == null;
+        if (subjectId != test.subjectId) return false;
+        return nameOfTest.equals(test.nameOfTest);
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (nameOfTest != null ? nameOfTest.hashCode() : 0);
+        result = 31 * result + nameOfTest.hashCode();
         result = 31 * result + durationTimeInMinutes;
+        result = 31 * result + subjectId;
         return result;
     }
 
@@ -59,6 +70,11 @@ public class Test {
 
         public Builder setName(String name) {
             test.setNameOfTest(name);
+            return this;
+        }
+
+        public Builder setSubjectId(int subjectId) {
+            test.setSubjectId(subjectId);
             return this;
         }
 

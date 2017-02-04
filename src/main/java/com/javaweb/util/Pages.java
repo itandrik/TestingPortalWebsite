@@ -11,7 +11,9 @@ public final class Pages {
     public static final String HOME_PAGE = PATH + "/home" + JSP;
     public static final String SUBJECTS_PAGE = PATH + "/subjects" + JSP;
     public static final String TESTS_PAGE = PATH + "/tests" + JSP;
-    public static final String CONCRETE_TEST_PAGE = PATH + "/concrete_test" + JSP;
+    public static final String CONCRETE_STUDENT_TEST_PAGE = PATH + "/concrete_student_test" + JSP;
+    public static final String CONCRETE_TUTOR_TEST_PAGE = PATH + "/concrete_tutor_test" + JSP;
+
     public static final String TEST_RESULTS_PAGE = PATH + "/test_results" + JSP;
     public static final String ADD_TEST_PAGE = PATH + "/test_add" + JSP;
 
@@ -25,5 +27,5 @@ public final class Pages {
     public static final String TESTS_PAGE_WITH_PATH =
             PATH + TESTS_PAGE + JSP;
     public static final String CONCRETE_TEST_PAGE_WITH_PATH =
-            PATH + CONCRETE_TEST_PAGE + JSP;*/
+            PATH + CONCRETE_STUDENT_TEST_PAGE + JSP;*/
 }
