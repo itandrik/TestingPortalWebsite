@@ -112,8 +112,8 @@
                 <td colspan="2">
                     <div class="text-center">
                         <button id="add-button"
-                                onclick="addEntity('${requestScope['javax.servlet.forward.request_uri']}',
-                                        '${Parameters.NAME_OF_TEST_PARAMETER}')"
+                                onclick="addTest('${requestScope['javax.servlet.forward.request_uri']}',
+                                        '${Parameters.NAME_OF_TEST_PARAMETER}','${Parameters.DURATION_TIME_PARAMETER}')"
                                 class="btn btn-lg btn-primary">
                             <span class="glyphicon glyphicon-plus"></span>
                             Add new test

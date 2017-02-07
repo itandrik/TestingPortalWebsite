@@ -1,7 +1,12 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
 body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
     background: #EDEEF0;
 }
-
 div.jumbotron {
     background-color: #2196F3 !important;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -115,9 +120,9 @@ div.jumbotron {
 }
 
 .bottom-footer {
-    position: fixed;
+    position: absolute;
     background-color: #1976D2;
-    min-height: 30px;
+    height: 30px;
     color: #FFFFFF;
     text-align: center;
     width: 100%;
@@ -158,4 +163,8 @@ nav li:hover {
 }
 .correct-answer {
     background-color: #AAFFAA;
+}
+
+.answer-input{
+    width:80%;
 }

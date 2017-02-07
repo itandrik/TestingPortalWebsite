@@ -37,6 +37,7 @@ public class PostAddTestCommand implements Command{
         String testName = request.getParameter(Parameters.NAME_OF_TEST_PARAMETER);
         String requestedURI = request.getRequestURI();
         int subjectId = Integer.parseInt(requestedURI.replaceAll(LETTERS_BEFORE_INDEX_REGEX, ""));
+        int durationTimeInMinutes = Integer.parseInt(request.getParameter(Parameters.DURATION_TIME_PARAMETER));
 
         if(!isValidNameField(request, testName)){
             setTestsToRequest(subjectId, request);
@@ -45,8 +46,8 @@ public class PostAddTestCommand implements Command{
         Test test = new Test.Builder()
                 .setName(testName)
                 .setSubjectId(subjectId)
+                .setDurationTimeInMinutes(durationTimeInMinutes)
                 .build();
-        //TODO додати введення часу, за який проходитиметься тест
 
         testService.addTest(test);
         response.sendRedirect(request.getRequestURI());

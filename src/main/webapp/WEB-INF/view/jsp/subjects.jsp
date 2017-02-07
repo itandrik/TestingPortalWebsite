@@ -64,7 +64,7 @@
                 <td>
                     <div class="text-center">
                         <button id="add-button"
-                                onclick="addEntity('${Paths.ADD_SUBJECT}','${Parameters.NAME_OF_SUBJECT_PARAMETER}')"
+                                onclick="addSubject('${Paths.ADD_SUBJECT}','${Parameters.NAME_OF_SUBJECT_PARAMETER}')"
                                 class="btn btn-lg btn-primary">
                             <span class="glyphicon glyphicon-plus"></span>
                             Add new subject
