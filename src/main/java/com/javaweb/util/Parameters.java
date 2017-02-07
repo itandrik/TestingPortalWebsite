@@ -19,6 +19,7 @@ public final class Parameters {
 
 	public static final String NAME_OF_SUBJECT_PARAMETER = "subject_name";
 	public static final String NAME_OF_TEST_PARAMETER = "test_name";
+	public static final String QUESTION_PARAMETER = "question_parameter";
 	public static final String EXPLANATION_PARAMETER = "explanation";
 
 }

@@ -5,7 +5,7 @@ function addSubject(pathToGo, inputName) {
 
     var tableRow = document.createElement('tr');
     var tableCol = document.createElement('td');
-    tableCol.colSpan=2;
+    tableCol.colSpan = 2;
     var form = document.createElement('form');
 
     form.method = 'post';
@@ -41,7 +41,7 @@ function addTest(pathToGo, inputName, inputDurationTime) {
 
     var tableRow = document.createElement('tr');
     var tableCol = document.createElement('td');
-    tableCol.colSpan=2;
+    tableCol.colSpan = 2;
     var form = document.createElement('form');
 
     form.method = 'post';
@@ -62,7 +62,7 @@ function addTest(pathToGo, inputName, inputDurationTime) {
     durationTimeString.className = "col-lg-2";
     var durationTimeInput = document.createElement('input');
     durationTimeInput.type = "number";
-    durationTimeInput.min='0';
+    durationTimeInput.min = '0';
     durationTimeInput.placeholder = "Duration time";
     durationTimeInput.name = inputDurationTime;
     durationTimeInput.className = "col-lg-2";
@@ -90,20 +90,20 @@ function addAnswer(addButton, answerNameButton, answerNameText, taskId) {
     var label = document.createElement('label');
 
     var inputText = document.createElement('input');
-    inputText.type="text";
-    inputText.name=answerNameText;
+    inputText.type = "text";
+    inputText.name = answerNameText;
 
     var inputButton = document.createElement('input');
-    inputButton.name=answerNameButton;
+    inputButton.name = answerNameButton;
 
     var radioDiv = taskTable.getElementsByClassName("radio");
     var wrapperDiv = document.createElement('div');
-    if(radioDiv.length == 0){ //checkbox
-        inputButton.type="checkbox";
-        wrapperDiv.className="checkbox";
+    if (radioDiv.length == 0) { //checkbox
+        inputButton.type = "checkbox";
+        wrapperDiv.className = "checkbox";
     } else {    //radio
-        inputButton.type="radio";
-        wrapperDiv.className="radio";
+        inputButton.type = "radio";
+        wrapperDiv.className = "radio";
     }
 
     label.appendChild(inputButton);
@@ -114,11 +114,126 @@ function addAnswer(addButton, answerNameButton, answerNameText, taskId) {
     var tbody = taskTable.getElementsByTagName('tbody');
     for (var j = tbody.length; j > 0; j--) {
         var trBefore = addButton.parentNode.parentNode.parentNode;
-        tbody[0].insertBefore(tr,trBefore);
+        tbody[0].insertBefore(tr, trBefore);
     }
-
 }
 
+var msg;
+function getMsg(addAnswerBundle,explanationTextBundle,
+                isOneAnswerBundle,saveAnswerButtonBundle) {
+    msg = {
+        'addAnswer': addAnswerBundle,
+        'explanationText':explanationTextBundle,
+        'isOneAnswer':isOneAnswerBundle,
+        'saveAnswerButton':saveAnswerButtonBundle
+    }
+}
+
+function addTask(action, questionParam, answerButtonParam,
+                 answerTextParam, explanationParam,
+                 answerTypeParam, taskId, btnInsertBefore) {
+    var form = document.createElement('form');
+    form.action=action;
+    form.method="post";
+    var table = document.createElement('table');
+    table.id="task" + taskId;
+    table.className="table table-bordered table-shadow";
+    var thead = document.createElement('thead');
+    thead.className="thead-changed-style";
+    var trHead = document.createElement('tr');
+    var th = document.createElement('th');
+    th.className="tree-header";
+    th.colSpan="2";
+    var taskQuestionInput = document.createElement('input');
+    taskQuestionInput.placeholder = "Enter question here";
+    taskQuestionInput.name = questionParam;
+    th.appendChild(taskQuestionInput);
+    trHead.appendChild(th);
+    thead.appendChild(trHead);
+
+    var tbody = document.createElement('tbody');
+    var trAnswer = document.createElement('tr');
+    var trAddAnswer = document.createElement('tr');
+    var trExplanationAnswerType = document.createElement('tr');
+    var trSave = document.createElement('td');
+
+    var tdAnswer = document.createElement('td');
+    var tdAddAnswer = document.createElement('td');
+    var tdExplanationAnswerType = document.createElement('td');
+    var tdSave = document.createElement('td');
+
+    var divRadio = document.createElement('div');
+    divRadio.className = "radio";
+    var labelAnswer = document.createElement('label');
+    var inputRadioButton = document.createElement('input');
+    inputRadioButton.type = "radio";
+    inputRadioButton.name = answerButtonParam;
+    var inputAnswerText = document.createElement('input');
+    inputAnswerText.name = answerTextParam;
+    labelAnswer.appendChild(inputRadioButton);
+    labelAnswer.appendChild(inputAnswerText);
+    divRadio.appendChild(labelAnswer);
+    tdAnswer.appendChild(divRadio);
+    trAnswer.appendChild(tdAnswer);
+
+    var addAnswerButton = document.createElement('button');
+    addAnswerButton.type = "button";
+    addAnswerButton.className = "btn btn-lg btn-primary";
+    var glyphiconPlusSpan = document.createElement('span');
+    glyphiconPlusSpan.className = "glyphicon glyphicon-plus";
+    addAnswerButton.appendChild(glyphiconPlusSpan);
+    addAnswerButton.innerHTML=msg.addAnswer;
+    tdAddAnswer.appendChild(addAnswerButton);
+    trAddAnswer.appendChild(tdAddAnswer);
+
+    var formGroupExplanationDiv = document.createElement('div');
+    formGroupExplanationDiv.className = "form-group";
+    var explanationLabel = document.createElement('label');
+    explanationLabel.innerHTML = msg.explanationText;
+    var explanationTextArea = document.createElement('textarea');
+    explanationTextArea.class = "form-control";
+    explanationTextArea.rows = "6";
+    explanationTextArea.style.resize = "vertical";
+    explanationTextArea.name = explanationParam;
+    formGroupExplanationDiv.appendChild(explanationLabel);
+    formGroupExplanationDiv.appendChild(explanationTextArea);
+
+    var cbAnswerTypeDiv = document.createElement('div');
+    cbAnswerTypeDiv.className = "checkbox";
+    var labelCheckbox = document.createElement('label');
+    var answerTypeCheckboxInput = document.createElement('input');
+    answerTypeCheckboxInput.type = "checkbox";
+    answerTypeCheckboxInput.name = answerTypeParam;
+    answerTypeCheckboxInput.checked=true;
+    labelCheckbox.appendChild(answerTypeCheckboxInput);
+    labelCheckbox.innerHTML=msg.isOneAnswer;
+    cbAnswerTypeDiv.appendChild(labelCheckbox);
+    tdExplanationAnswerType.appendChild(formGroupExplanationDiv);
+    tdExplanationAnswerType.appendChild(cbAnswerTypeDiv);
+    trExplanationAnswerType.appendChild(tdExplanationAnswerType);
+
+    var submitButtonDiv = document.createElement('div');
+    submitButtonDiv.className="text-right";
+    var buttonSubmit = document.createElement('button');
+    buttonSubmit.type="submit";
+    buttonSubmit.className="btn btn-lg btn-primary";
+    buttonSubmit.innerHTML=msg.saveAnswerButton;
+    submitButtonDiv.appendChild(buttonSubmit);
+    tdSave.appendChild(submitButtonDiv);
+    trSave.appendChild(tdSave);
+
+    tbody.appendChild(trAnswer);
+    tbody.appendChild(trAddAnswer);
+    tbody.appendChild(trExplanationAnswerType);
+    tbody.appendChild(trSave);
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    form.appendChild(table);
+    document.getElementsByClassName('data')[0].insertBefore(form,btnInsertBefore.parentNode);
+    addAnswerButton.onclick = addAnswer(addAnswerButton, answerButtonParam, answerTextParam, taskId);
+    answerTypeCheckboxInput.onchange = handleChange(answerTypeCheckboxInput, taskId);
+}
 
 function getTimeRemaining(endtime) {
     var t = Date.parse(endtime) - Date.parse(new Date());
@@ -160,17 +275,17 @@ function startTimer(seconds) {
     initializeClock(deadline);
 }
 /*function getTimeRemainingInSeconds() {
-    var minutesParagraph = document.getElementById('minutes');
-    var secondsParagraph = document.getElementById('seconds');
+ var minutesParagraph = document.getElementById('minutes');
+ var secondsParagraph = document.getElementById('seconds');
 
-    var minutes = parseInt(minutesParagraph.innerHTML);
-    var seconds = parseInt(secondsParagraph.innerHTML);
+ var minutes = parseInt(minutesParagraph.innerHTML);
+ var seconds = parseInt(secondsParagraph.innerHTML);
 
-    var secondsRemaining = document.getElementById('seconds-remaining');
-    secondsRemaining.value = minutes * 60 + seconds;
+ var secondsRemaining = document.getElementById('seconds-remaining');
+ secondsRemaining.value = minutes * 60 + seconds;
 
-    return minutes * 60 + seconds;
-}*/
+ return minutes * 60 + seconds;
+ }*/
 function makeAllTasksFromListDisabled(tasks) {
     if (tasks != null) {
         tasks.forEach(function (item, i, arr) {
@@ -197,22 +312,22 @@ function makeAllTasksFromListDisabled(tasks) {
 
 function handleChange(checkbox, taskId) {
     var taskTable = document.getElementById('task' + taskId);
-    if(checkbox.checked == true){
+    if (checkbox.checked == true) {
         var rowsCheckbox = taskTable.getElementsByClassName("checkbox");
-        for (var i = 0; i < rowsCheckbox.length-1; i++) {
+        for (var i = 0; i < rowsCheckbox.length - 1; i++) {
             rowsCheckbox[i].firstElementChild.firstElementChild.type = "radio";
         }
-        for(i in rowsCheckbox)
-        for (var i = rowsCheckbox.length-1; i > 0; i--) {
-            rowsCheckbox[0].className="radio";
-        }
-    }else{
+        for (i in rowsCheckbox)
+            for (var i = rowsCheckbox.length - 1; i > 0; i--) {
+                rowsCheckbox[0].className = "radio";
+            }
+    } else {
         var rowsRadio = taskTable.getElementsByClassName("radio");
         for (var j = 0; j < rowsRadio.length; j++) {
             rowsRadio[j].firstElementChild.firstElementChild.type = "checkbox";
         }
         for (var j = rowsRadio.length; j > 0; j--) {
-            rowsRadio[0].className="checkbox";
+            rowsRadio[0].className = "checkbox";
         }
     }
 }

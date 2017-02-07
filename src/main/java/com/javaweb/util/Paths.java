@@ -24,6 +24,7 @@ public final class Paths {
 	public static final String SAVE_TEST_RECORD = REST + "/save_test";
 	public static final String ADD_SUBJECT = SUBJECTS + "/add";
 	public static final String ADD_TEST = TESTS + "/add";
+
 	public static final String REDIRECTED = "redirected";
 
 }

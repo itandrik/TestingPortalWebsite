@@ -48,7 +48,7 @@
             <form method="post" action="${Paths.TESTS}/${test.id}">
                 <c:forEach var="answer" items="${task.answers}">
                     <tr>
-                        <td class="col-lg-12">
+                        <td>
                             <c:choose>
                                 <c:when test="${task.answerType == AnswerType.ONE_ANSWER}">
                                     <div class="radio">
@@ -81,7 +81,7 @@
                 <tr>
                     <td>
                         <div class="text-center">
-                            <button id="add-button" type="button"
+                            <button type="button"
                                     onclick="addAnswer(this, ${Parameters.ANSWER_PARAMETER},
                                             '${Parameters.ANSWER_TEXT_PARAMETER}',${task.id})"
                                     class="btn btn-lg btn-primary">
@@ -122,7 +122,27 @@
             </form>
             </tbody>
         </table>
+        <c:set var="last_task_id" value="${task.id}" scope="page"/>
     </c:forEach>
 
+    <div class="col-lg-12" style="margin:20px 0 20px 0;">
+        <button type="button"
+                onclick="getMsg('<fmt:message key="add.answer" />',
+                        '<fmt:message key="task.explanation" />',
+                        '<fmt:message key="task.is.one.answer" />',
+                        '<fmt:message key="test.button.save.answer" />');
+                addTask('${requestScope['javax.servlet.forward.request_uri']}',
+                        '${Parameters.QUESTION_PARAMETER}',
+                        '${Parameters.ANSWER_PARAMETER}',
+                        '${Parameters.ANSWER_TEXT_PARAMETER}',
+                        '${Parameters.EXPLANATION_PARAMETER}',
+                        '${Parameters.ANSWER_TYPE_PARAMETER}',
+                        '${last_task_id + 1}',
+                        this);"
+                class="btn btn-lg btn-primary">
+            <span class="glyphicon glyphicon-plus"></span>
+            <fmt:message key="add.task" />
+        </button>
+    </div>
 </div>
 <%@ include file="/WEB-INF/view/jsp/template/footer.jsp" %>
