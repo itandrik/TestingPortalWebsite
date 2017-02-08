@@ -41,7 +41,12 @@
         <table class="table table-bordered table-shadow" id="task${task.id}">
             <thead class="thead-changed-style">
             <tr>
-                <th class="tree-header" colspan="2">${task.question}</th>
+                <th class="tree-header" colspan="2">
+                    <div class="form-group col-lg-12">
+                        <textarea class="form-control" rows="3" name="${Parameters.QUESTION_PARAMETER}"
+                                  style="resize:vertical;">${task.question}</textarea>
+                    </div>
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -51,27 +56,37 @@
                         <td>
                             <c:choose>
                                 <c:when test="${task.answerType == AnswerType.ONE_ANSWER}">
-                                    <div class="radio">
-                                        <label class="col-lg-12">
-                                            <input type="radio" name="${Parameters.ANSWER_PARAMETER}"
-                                                   value="answer${answer.id}"
-                                                    <c:if test="${answer.isCorrect}">checked</c:if>/>
-                                            <input type="text" name="${Parameters.ANSWER_TEXT_PARAMETER}"
-                                                    value="${answer.answerText}" />
-                                        </label>
+                                    <div class="rad col-lg-12">
+                                        <div class="input-group">
+                                              <span class="input-group-addon">
+                                                <input type="radio" aria-label="Radio button for following text input"
+                                                       name="${Parameters.ANSWER_PARAMETER}"
+                                                       value="answer${answer.id}"
+                                                       <c:if test="${answer.isCorrect}">checked</c:if>>
+                                              </span>
+                                            <input type="text" class="form-control"
+                                                   aria-label="Text input with radio button"
+                                                   name="${Parameters.ANSWER_TEXT_PARAMETER}"
+                                                   value="${answer.answerText}">
+                                        </div>
                                     </div>
                                 </c:when>
                                 <c:otherwise>
-                                    <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="${Parameters.ANSWER_PARAMETER}"
-                                               value="answer${answer.id}">
-                                        <input type="text"
-                                               name="${Parameters.ANSWER_TEXT_PARAMETER}"
-                                               value="${answer.answerText}"
-                                               <c:if test="${answer.isCorrect}">checked</c:if>>
-                                    </label>
-                                </div>
+                                    <div class="check col-lg-12">
+                                        <div class="input-group">
+                                              <span class="input-group-addon">
+                                                <input type="checkbox"
+                                                       aria-label="Radio button for following text input"
+                                                       name="${Parameters.ANSWER_PARAMETER}"
+                                                       value="answer${answer.id}"
+                                                       <c:if test="${answer.isCorrect}">checked</c:if>>
+                                              </span>
+                                            <input type="text" class="form-control"
+                                                   aria-label="Text input with radio button"
+                                                   name="${Parameters.ANSWER_TEXT_PARAMETER}"
+                                                   value="${answer.answerText}">
+                                        </div>
+                                    </div>
                                 </c:otherwise>
                             </c:choose>
                         </td>
@@ -83,10 +98,12 @@
                         <div class="text-center">
                             <button type="button"
                                     onclick="addAnswer(this, ${Parameters.ANSWER_PARAMETER},
-                                            '${Parameters.ANSWER_TEXT_PARAMETER}',${task.id})"
+                                            '${Parameters.ANSWER_TEXT_PARAMETER}',
+                                            '<fmt:message key="enter.answer.placeholder"/>',
+                                        ${task.id})"
                                     class="btn btn-lg btn-primary">
                                 <span class="glyphicon glyphicon-plus"></span>
-                                <fmt:message key="add.answer" />
+                                <fmt:message key="add.answer"/>
                             </button>
                         </div>
                     </td>
@@ -125,24 +142,29 @@
         <c:set var="last_task_id" value="${task.id}" scope="page"/>
     </c:forEach>
 
-    <div class="col-lg-12" style="margin:20px 0 20px 0;">
-        <button type="button"
-                onclick="getMsg('<fmt:message key="add.answer" />',
-                        '<fmt:message key="task.explanation" />',
-                        '<fmt:message key="task.is.one.answer" />',
-                        '<fmt:message key="test.button.save.answer" />');
-                addTask('${requestScope['javax.servlet.forward.request_uri']}',
-                        '${Parameters.QUESTION_PARAMETER}',
-                        '${Parameters.ANSWER_PARAMETER}',
-                        '${Parameters.ANSWER_TEXT_PARAMETER}',
-                        '${Parameters.EXPLANATION_PARAMETER}',
-                        '${Parameters.ANSWER_TYPE_PARAMETER}',
-                        '${last_task_id + 1}',
-                        this);"
-                class="btn btn-lg btn-primary">
-            <span class="glyphicon glyphicon-plus"></span>
-            <fmt:message key="add.task" />
-        </button>
+    <div class="col-lg-12">
+        <div class="text-center" style="margin:20px 0 100px 0;">
+            <button type="button"
+                    onclick="getMsg('<fmt:message key="add.answer"/>',
+                            '<fmt:message key="task.explanation"/>',
+                            '<fmt:message key="task.is.one.answer"/>',
+                            '<fmt:message key="test.button.save.answer"/>',
+                            '<fmt:message key="enter.question.placeholder"/>',
+                            '<fmt:message key="enter.answer.placeholder"/>',
+                            '<fmt:message key="enter.explanation.placeholder"/>');
+                            addTask('${requestScope['javax.servlet.forward.request_uri']}',
+                            '${Parameters.QUESTION_PARAMETER}',
+                            '${Parameters.ANSWER_PARAMETER}',
+                            '${Parameters.ANSWER_TEXT_PARAMETER}',
+                            '${Parameters.EXPLANATION_PARAMETER}',
+                            '${Parameters.ANSWER_TYPE_PARAMETER}',
+                            '${last_task_id + 1}',
+                            this);"
+                    class="btn btn-primary btn-lg outline" style="width:90%;">
+                <span class="glyphicon glyphicon-plus"></span>
+                <fmt:message key="add.task"/>
+            </button>
+        </div>
     </div>
 </div>
 <%@ include file="/WEB-INF/view/jsp/template/footer.jsp" %>

@@ -67,6 +67,7 @@ div.jumbotron {
 .navbar {
     background-color: #2196F3;
     width: 100%;
+    box-shadow: 0 4px 8px 0 #BDBDBD, 0 6px 20px 0 #BDBDBD;
 }
 
 .navbar-brand {

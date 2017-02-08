@@ -83,34 +83,45 @@ function addTest(pathToGo, inputName, inputDurationTime) {
     table.appendChild(tableRow);
 }
 
-function addAnswer(addButton, answerNameButton, answerNameText, taskId) {
+function addAnswer(addButton, answerNameButton, answerNameText, answerPlaceholder, taskId) {
     var taskTable = document.getElementById('task' + taskId);
     var tr = document.createElement('tr');
     var td = document.createElement('td');
-    var label = document.createElement('label');
 
-    var inputText = document.createElement('input');
-    inputText.type = "text";
-    inputText.name = answerNameText;
+    var divRadio = document.createElement('div');
+    var inputGroupAnswer = document.createElement('div');
+    inputGroupAnswer.className = "input-group";
+    var spanAnswer = document.createElement('span');
+    spanAnswer.className = "input-group-addon";
+    var inputRadioButton = document.createElement('input');
+    inputRadioButton.name = answerNameButton;
+    spanAnswer.appendChild(inputRadioButton);
+    var inputAnswerText = document.createElement('input');
+    inputAnswerText.name = answerNameText;
+    inputAnswerText.className = "form-control";
+    inputAnswerText.placeholder=answerPlaceholder;
+    inputGroupAnswer.appendChild(spanAnswer);
+    inputGroupAnswer.appendChild(inputAnswerText);
+    divRadio.appendChild(inputGroupAnswer);
+    td.appendChild(divRadio);
+    tr.appendChild(td);
 
-    var inputButton = document.createElement('input');
-    inputButton.name = answerNameButton;
+    /*var inputText = document.createElement('input');
+     inputText.type = "text";
+     inputText.name = answerNameText;
 
-    var radioDiv = taskTable.getElementsByClassName("radio");
-    var wrapperDiv = document.createElement('div');
+     var inputButton = document.createElement('input');
+     inputButton.name = answerNameButton;*/
+
+    var radioDiv = taskTable.getElementsByClassName("rad");
     if (radioDiv.length == 0) { //checkbox
-        inputButton.type = "checkbox";
-        wrapperDiv.className = "checkbox";
+        inputRadioButton.type = "checkbox";
+        divRadio.className = "check col-lg-12";
     } else {    //radio
-        inputButton.type = "radio";
-        wrapperDiv.className = "radio";
+        inputRadioButton.type = "radio";
+        divRadio.className = "rad col-lg-12";
     }
 
-    label.appendChild(inputButton);
-    label.appendChild(inputText);
-    wrapperDiv.appendChild(label);
-    td.appendChild(wrapperDiv);
-    tr.appendChild(td);
     var tbody = taskTable.getElementsByTagName('tbody');
     for (var j = tbody.length; j > 0; j--) {
         var trBefore = addButton.parentNode.parentNode.parentNode;
@@ -119,13 +130,18 @@ function addAnswer(addButton, answerNameButton, answerNameText, taskId) {
 }
 
 var msg;
-function getMsg(addAnswerBundle,explanationTextBundle,
-                isOneAnswerBundle,saveAnswerButtonBundle) {
+function getMsg(addAnswerBundle, explanationTextBundle,
+                isOneAnswerBundle, saveAnswerButtonBundle,
+                enterQuestionBundle, enterAnswerBundle,
+                enterCommentaryBundle) {
     msg = {
         'addAnswer': addAnswerBundle,
-        'explanationText':explanationTextBundle,
-        'isOneAnswer':isOneAnswerBundle,
-        'saveAnswerButton':saveAnswerButtonBundle
+        'explanationText': explanationTextBundle,
+        'isOneAnswer': isOneAnswerBundle,
+        'saveAnswerButton': saveAnswerButtonBundle,
+        'enterQuestion': enterQuestionBundle,
+        'enterAnswer': enterAnswerBundle,
+        'enterCommentary': enterCommentaryBundle
     }
 }
 
@@ -133,21 +149,27 @@ function addTask(action, questionParam, answerButtonParam,
                  answerTextParam, explanationParam,
                  answerTypeParam, taskId, btnInsertBefore) {
     var form = document.createElement('form');
-    form.action=action;
-    form.method="post";
+    form.action = action;
+    form.method = "post";
     var table = document.createElement('table');
-    table.id="task" + taskId;
-    table.className="table table-bordered table-shadow";
+    table.id = "task" + taskId;
+    table.className = "table table-bordered table-shadow";
     var thead = document.createElement('thead');
-    thead.className="thead-changed-style";
+    thead.className = "thead-changed-style";
     var trHead = document.createElement('tr');
     var th = document.createElement('th');
-    th.className="tree-header";
-    th.colSpan="2";
-    var taskQuestionInput = document.createElement('input');
-    taskQuestionInput.placeholder = "Enter question here";
+    th.className = "tree-header";
+    th.colSpan = "2";
+    var questionFormGroupDiv = document.createElement('div');
+    questionFormGroupDiv.className = "form-group col-lg-12";
+    var taskQuestionInput = document.createElement('textarea');
+    taskQuestionInput.placeholder = msg.enterQuestion;
     taskQuestionInput.name = questionParam;
-    th.appendChild(taskQuestionInput);
+    taskQuestionInput.className = "form-control";
+    taskQuestionInput.rows = "3";
+    taskQuestionInput.style.resize = "vertical";
+    questionFormGroupDiv.appendChild(taskQuestionInput);
+    th.appendChild(questionFormGroupDiv);
     trHead.appendChild(th);
     thead.appendChild(trHead);
 
@@ -155,7 +177,7 @@ function addTask(action, questionParam, answerButtonParam,
     var trAnswer = document.createElement('tr');
     var trAddAnswer = document.createElement('tr');
     var trExplanationAnswerType = document.createElement('tr');
-    var trSave = document.createElement('td');
+    var trSave = document.createElement('tr');
 
     var tdAnswer = document.createElement('td');
     var tdAddAnswer = document.createElement('td');
@@ -163,27 +185,36 @@ function addTask(action, questionParam, answerButtonParam,
     var tdSave = document.createElement('td');
 
     var divRadio = document.createElement('div');
-    divRadio.className = "radio";
-    var labelAnswer = document.createElement('label');
+    divRadio.className = "rad col-lg-12";
+    var inputGroupAnswer = document.createElement('div');
+    inputGroupAnswer.className = "input-group";
+    var spanAnswer = document.createElement('span');
+    spanAnswer.className = "input-group-addon";
     var inputRadioButton = document.createElement('input');
     inputRadioButton.type = "radio";
     inputRadioButton.name = answerButtonParam;
+    spanAnswer.appendChild(inputRadioButton);
     var inputAnswerText = document.createElement('input');
     inputAnswerText.name = answerTextParam;
-    labelAnswer.appendChild(inputRadioButton);
-    labelAnswer.appendChild(inputAnswerText);
-    divRadio.appendChild(labelAnswer);
+    inputAnswerText.placeholder = msg.enterAnswer;
+    inputAnswerText.className = "form-control";
+    inputGroupAnswer.appendChild(spanAnswer);
+    inputGroupAnswer.appendChild(inputAnswerText);
+    divRadio.appendChild(inputGroupAnswer);
     tdAnswer.appendChild(divRadio);
     trAnswer.appendChild(tdAnswer);
 
+    var addButtonCenterDiv = document.createElement('div');
+    addButtonCenterDiv.className = "text-center";
     var addAnswerButton = document.createElement('button');
     addAnswerButton.type = "button";
     addAnswerButton.className = "btn btn-lg btn-primary";
     var glyphiconPlusSpan = document.createElement('span');
     glyphiconPlusSpan.className = "glyphicon glyphicon-plus";
+    addAnswerButton.innerHTML = msg.addAnswer + "  ";
     addAnswerButton.appendChild(glyphiconPlusSpan);
-    addAnswerButton.innerHTML=msg.addAnswer;
-    tdAddAnswer.appendChild(addAnswerButton);
+    addButtonCenterDiv.appendChild(addAnswerButton);
+    tdAddAnswer.appendChild(addButtonCenterDiv);
     trAddAnswer.appendChild(tdAddAnswer);
 
     var formGroupExplanationDiv = document.createElement('div');
@@ -191,9 +222,10 @@ function addTask(action, questionParam, answerButtonParam,
     var explanationLabel = document.createElement('label');
     explanationLabel.innerHTML = msg.explanationText;
     var explanationTextArea = document.createElement('textarea');
-    explanationTextArea.class = "form-control";
+    explanationTextArea.className = "form-control";
     explanationTextArea.rows = "6";
     explanationTextArea.style.resize = "vertical";
+    explanationTextArea.placeholder = msg.enterCommentary;
     explanationTextArea.name = explanationParam;
     formGroupExplanationDiv.appendChild(explanationLabel);
     formGroupExplanationDiv.appendChild(explanationTextArea);
@@ -204,20 +236,22 @@ function addTask(action, questionParam, answerButtonParam,
     var answerTypeCheckboxInput = document.createElement('input');
     answerTypeCheckboxInput.type = "checkbox";
     answerTypeCheckboxInput.name = answerTypeParam;
-    answerTypeCheckboxInput.checked=true;
+    answerTypeCheckboxInput.checked = true;
     labelCheckbox.appendChild(answerTypeCheckboxInput);
-    labelCheckbox.innerHTML=msg.isOneAnswer;
+    var spanTextTypeAnswer = document.createElement('span');
+    spanTextTypeAnswer.innerHTML = msg.isOneAnswer;
+    labelCheckbox.appendChild(spanTextTypeAnswer);
     cbAnswerTypeDiv.appendChild(labelCheckbox);
     tdExplanationAnswerType.appendChild(formGroupExplanationDiv);
     tdExplanationAnswerType.appendChild(cbAnswerTypeDiv);
     trExplanationAnswerType.appendChild(tdExplanationAnswerType);
 
     var submitButtonDiv = document.createElement('div');
-    submitButtonDiv.className="text-right";
+    submitButtonDiv.className = "text-right";
     var buttonSubmit = document.createElement('button');
-    buttonSubmit.type="submit";
-    buttonSubmit.className="btn btn-lg btn-primary";
-    buttonSubmit.innerHTML=msg.saveAnswerButton;
+    buttonSubmit.type = "submit";
+    buttonSubmit.className = "btn btn-lg btn-primary";
+    buttonSubmit.innerText = msg.saveAnswerButton;
     submitButtonDiv.appendChild(buttonSubmit);
     tdSave.appendChild(submitButtonDiv);
     trSave.appendChild(tdSave);
@@ -230,9 +264,18 @@ function addTask(action, questionParam, answerButtonParam,
     table.appendChild(thead);
     table.appendChild(tbody);
     form.appendChild(table);
-    document.getElementsByClassName('data')[0].insertBefore(form,btnInsertBefore.parentNode);
-    addAnswerButton.onclick = addAnswer(addAnswerButton, answerButtonParam, answerTextParam, taskId);
-    answerTypeCheckboxInput.onchange = handleChange(answerTypeCheckboxInput, taskId);
+
+    document.getElementsByClassName('data')[0].insertBefore(form, btnInsertBefore.parentNode.parentNode);
+    addAnswerButton.addEventListener('click',
+        function () {
+            addAnswer(addAnswerButton, answerButtonParam, answerTextParam, msg.enterAnswer, taskId);
+        },
+        false);
+    answerTypeCheckboxInput.addEventListener('change',
+        function () {
+            handleChange(answerTypeCheckboxInput, taskId);
+        },
+        false);
 }
 
 function getTimeRemaining(endtime) {
@@ -274,18 +317,7 @@ function startTimer(seconds) {
     var deadline = new Date(Date.parse(new Date()) + seconds * 1000);
     initializeClock(deadline);
 }
-/*function getTimeRemainingInSeconds() {
- var minutesParagraph = document.getElementById('minutes');
- var secondsParagraph = document.getElementById('seconds');
 
- var minutes = parseInt(minutesParagraph.innerHTML);
- var seconds = parseInt(secondsParagraph.innerHTML);
-
- var secondsRemaining = document.getElementById('seconds-remaining');
- secondsRemaining.value = minutes * 60 + seconds;
-
- return minutes * 60 + seconds;
- }*/
 function makeAllTasksFromListDisabled(tasks) {
     if (tasks != null) {
         tasks.forEach(function (item, i, arr) {
@@ -313,21 +345,20 @@ function makeAllTasksFromListDisabled(tasks) {
 function handleChange(checkbox, taskId) {
     var taskTable = document.getElementById('task' + taskId);
     if (checkbox.checked == true) {
-        var rowsCheckbox = taskTable.getElementsByClassName("checkbox");
-        for (var i = 0; i < rowsCheckbox.length - 1; i++) {
-            rowsCheckbox[i].firstElementChild.firstElementChild.type = "radio";
+        var rowsCheckbox = taskTable.getElementsByClassName('check');
+        for (var i = 0; i < rowsCheckbox.length; i++) {
+            rowsCheckbox[i].firstElementChild.firstElementChild.firstElementChild.type = "radio";
         }
-        for (i in rowsCheckbox)
-            for (var i = rowsCheckbox.length - 1; i > 0; i--) {
-                rowsCheckbox[0].className = "radio";
-            }
+        for (var i = rowsCheckbox.length; i > 0; i--) {
+            rowsCheckbox[0].className = "rad";
+        }
     } else {
-        var rowsRadio = taskTable.getElementsByClassName("radio");
+        var rowsRadio = taskTable.getElementsByClassName("rad");
         for (var j = 0; j < rowsRadio.length; j++) {
-            rowsRadio[j].firstElementChild.firstElementChild.type = "checkbox";
+            rowsRadio[j].firstElementChild.firstElementChild.firstElementChild.type = "checkbox";
         }
         for (var j = rowsRadio.length; j > 0; j--) {
-            rowsRadio[0].className = "checkbox";
+            rowsRadio[0].className = "check";
         }
     }
 }
