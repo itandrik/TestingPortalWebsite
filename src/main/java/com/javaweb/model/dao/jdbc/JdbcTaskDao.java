@@ -5,10 +5,7 @@ import com.javaweb.model.entity.Test;
 import com.javaweb.model.entity.task.AnswerType;
 import com.javaweb.model.entity.task.Task;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,12 +25,14 @@ public class JdbcTaskDao implements TaskDao{
 	private static final String SELECT_ALL_TASKS =
 			"SELECT task_id, question, answers_type, explanation FROM Task";
 	private static final String INSERT_TASK =
-			"INSERT INTO Test (question, answers_type, explanation) VALUES (?,?,?)";
+			"INSERT INTO Task (question, answers_type, explanation) VALUES (?,?,?)";
 	private static final String UPDATE_TASK_BY_ID =
 			"UPDATE Task SET question = ?, answers_type = ?, explanation = ?" +
 					" WHERE task_id = ?";
 	private static final String DELETE_TASK_BY_ID =
 			"DELETE FROM Task WHERE task_id = ?";
+	private static final String SELECT_LAST_INSERT_ID =
+			"SELECT LAST_INSERT_ID() FROM Task";
 
 	public JdbcTaskDao(java.sql.Connection connection) {
 		this.connection = connection;
@@ -77,8 +76,10 @@ public class JdbcTaskDao implements TaskDao{
 	}
 
 	@Override
-	public void insert(Task task) {
-		try(PreparedStatement statement = connection.prepareStatement(INSERT_TASK)){
+	public int insert(Task task) {
+		int lastInsertId = 0;
+		try(PreparedStatement statement = connection.prepareStatement(
+				INSERT_TASK,PreparedStatement.RETURN_GENERATED_KEYS)){
 			statement.setString(1,task.getQuestion());
 			statement.setString(2,task.getAnswerType().toString());
 			statement.setString(3,task.getExplanation());
@@ -86,9 +87,14 @@ public class JdbcTaskDao implements TaskDao{
 			statement.executeUpdate();
 				/* TODO Check for null*/
 				/* TODO Check is already saved in database */
+			Statement lastInsertIdStatement = connection.createStatement();
+			ResultSet rs = lastInsertIdStatement.executeQuery(SELECT_LAST_INSERT_ID);
+			rs.next();
+			lastInsertId =  rs.getInt(LAST_INSERT_ID);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return lastInsertId;
 	}
 
 	@Override

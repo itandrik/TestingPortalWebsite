@@ -63,7 +63,7 @@
             </tr>
             </thead>
             <tbody>
-            <form method="post" action="${Paths.TESTS}/${test.id}">
+            <form method="post" action="${Paths.TESTS}${Paths.STUDENT}/${test.id}">
                 <c:forEach var="answer" items="${task.answers}">
                     <tr>
                         <td>

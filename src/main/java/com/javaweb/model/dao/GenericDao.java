@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface GenericDao<E> {
 	Optional<E> getById(int id);
     List<E> getAll();
-    void insert(E e);
+    int insert(E e);
     void update(E e);
     void delete(int id);
 }

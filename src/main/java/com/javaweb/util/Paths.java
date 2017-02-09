@@ -24,7 +24,10 @@ public final class Paths {
 	public static final String SAVE_TEST_RECORD = REST + "/save_test";
 	public static final String ADD_SUBJECT = SUBJECTS + "/add";
 	public static final String ADD_TEST = TESTS + "/add";
-
+	public static final String ADD_TASK = "/add_task";
+	public static final String UPDATE_TASK = "/update_task";
+	public static final String ADD_TUTOR_TASK = CONCRETE_TUTOR_TEST + ADD_TASK;
+	public static final String UPDATE_TUTOR_TASK = CONCRETE_TUTOR_TEST + UPDATE_TASK;
 	public static final String REDIRECTED = "redirected";
 
 }

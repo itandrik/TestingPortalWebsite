@@ -44,7 +44,8 @@ public class CommandHolder {
         commands.put(GET + TEST_RESULTS, new TestResultCommand());
         commands.put(POST + CONCRETE_SUBJECT, new PostAddTestCommand());
         commands.put(GET + CONCRETE_TUTOR_TEST, new GetTutorConcreteTestCommand());
-        commands.put(POST + CONCRETE_TUTOR_TEST, new PostAddTaskCommand());
+        commands.put(POST + ADD_TUTOR_TASK, new PostAddTaskCommand());
+        commands.put(POST + UPDATE_TUTOR_TASK, new PostUpdateTaskCommand());
     }
 
     public Command getCommandByKey(String commandKey){

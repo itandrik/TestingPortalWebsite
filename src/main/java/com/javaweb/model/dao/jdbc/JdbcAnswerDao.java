@@ -5,10 +5,7 @@ import com.javaweb.model.entity.Answer;
 import com.javaweb.model.entity.Test;
 import com.javaweb.model.entity.task.Task;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,10 +29,14 @@ public class JdbcAnswerDao implements AnswerDao{
 			"SELECT answer_id, text, is_correct FROM Answer";
 	private static final String INSERT_ANSWER =
 			"INSERT INTO Answer (text, is_correct) VALUES (?,?)";
+	private static final String INSERT_ANSWER_FOR_TASK =
+			"INSERT INTO Answer (text, is_correct, task_id) VALUES (?,?,?)";
 	private static final String UPDATE_ANSWER_BY_ID =
 			"UPDATE Answer SET text = ?, is_correct = ? WHERE answer_id = ?";
 	private static final String DELETE_ANSWER_BY_ID =
 			"DELETE FROM Answer WHERE answer_id = ?";
+	private static final String SELECT_LAST_INSERT_ID =
+			"SELECT LAST_INSERT_ID() FROM Answer";
 
 	public JdbcAnswerDao(Connection connection) {
 		this.connection = connection;
@@ -79,17 +80,23 @@ public class JdbcAnswerDao implements AnswerDao{
 	}
 
 	@Override
-	public void insert(Answer answer) {
+	public int insert(Answer answer) {
+		int lastInsertId = 0;
 		try(PreparedStatement statement = connection.prepareStatement(INSERT_ANSWER)){
 			statement.setString(1,answer.getAnswerText());
 			statement.setBoolean(2,answer.getIsCorrect());
 
 			statement.executeUpdate();
+			Statement lastInsertIdStatement = connection.createStatement();
+			ResultSet rs = lastInsertIdStatement.executeQuery(SELECT_LAST_INSERT_ID);
+			rs.next();
+			lastInsertId =  rs.getInt(LAST_INSERT_ID);
 				/* TODO Check for null*/
 				/* TODO Check is already saved in database */
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return lastInsertId;
 	}
 
 	@Override
@@ -155,7 +162,19 @@ public class JdbcAnswerDao implements AnswerDao{
 		return answers;
 	}
 
+	@Override
+	public void insertAnswerWithTaskId(Answer answer, int taskId) {
+		int lastInsertId = 0;
+		try(PreparedStatement statement = connection.prepareStatement(INSERT_ANSWER_FOR_TASK)){
+			statement.setString(1,answer.getAnswerText());
+			statement.setBoolean(2,answer.getIsCorrect());
+			statement.setInt(3,taskId);
 
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private Answer getAnswerFromResultSet(ResultSet resultSet) throws SQLException {
 		return new Answer.Builder()

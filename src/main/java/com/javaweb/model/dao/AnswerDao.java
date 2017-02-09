@@ -9,4 +9,5 @@ import java.util.List;
 public interface AnswerDao extends GenericDao<Answer> {
 	List<Answer> getListOfAnswersForTask(Task task);
 	List<Answer> getListOfAnswersForTest(Test test);
+	void insertAnswerWithTaskId(Answer answer, int taskId);
 }

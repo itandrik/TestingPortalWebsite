@@ -8,13 +8,13 @@ import com.javaweb.exception.ApplicationException;
  */
 public class DaoException extends ApplicationException{
     @Override
-    protected DaoException addMessage(String message) {
+    public DaoException addMessage(String message) {
         super.addMessage(message);
         return this;
     }
 
     @Override
-    protected DaoException addLogMessage(String logMessage) {
+    public DaoException addLogMessage(String logMessage) {
         super.addLogMessage(logMessage);
         return this;
     }

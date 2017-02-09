@@ -7,10 +7,7 @@ import com.javaweb.model.entity.history.PersonHistory;
 import com.javaweb.model.entity.person.Person;
 import com.javaweb.model.entity.task.Task;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +38,8 @@ public class JdbcPersonTestHistoryDao implements PersonTestHistoryDao {
                     "JOIN Answer USING(answer_id) WHERE task_id = ?";
     private static final String INSERT_ANSWER_FOR_PERSON =
             "INSERT INTO person_has_answer (person_id, answer_id) VALUES(?,?)";
+    private static final String SELECT_LAST_INSERT_ID =
+            "SELECT LAST_INSERT_ID() FROM person_test_history";
 
     public JdbcPersonTestHistoryDao(Connection connection) {
         this.connection = connection;
@@ -61,7 +60,8 @@ public class JdbcPersonTestHistoryDao implements PersonTestHistoryDao {
     }
 
     @Override
-    public void insert(PersonHistory personHistory) {
+    public int insert(PersonHistory personHistory) {
+        int lastInsertId = 0;
         try (PreparedStatement statement =
                      connection.prepareStatement(INSERT_PERSON_TEST_HISTORY)) {
             statement.setInt(1, personHistory.getPerson().getId());
@@ -70,9 +70,14 @@ public class JdbcPersonTestHistoryDao implements PersonTestHistoryDao {
             statement.setDouble(4, personHistory.getGrade().getNumberGrade());
 
             statement.executeUpdate();
+            Statement lastInsertIdStatement = connection.createStatement();
+            ResultSet rs = lastInsertIdStatement.executeQuery(SELECT_LAST_INSERT_ID);
+            rs.next();
+            lastInsertId =  rs.getInt(LAST_INSERT_ID);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return lastInsertId;
     }
 
     @Override

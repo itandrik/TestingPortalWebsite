@@ -11,4 +11,5 @@ import java.util.List;
  */
 public interface TaskService {
     List<Task> getAllTasksForTest(Test test);
+    int addTask(Task task);
 }

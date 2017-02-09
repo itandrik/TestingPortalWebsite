@@ -7,13 +7,13 @@ import com.javaweb.exception.ApplicationException;
  */
 public class ControllerException extends ApplicationException{
     @Override
-    protected ControllerException addMessage(String message) {
+    public ControllerException addMessage(String message) {
         super.addMessage(message);
         return this;
     }
 
     @Override
-    protected ControllerException addLogMessage(String logMessage) {
+    public ControllerException addLogMessage(String logMessage) {
         super.addLogMessage(logMessage);
         return this;
     }

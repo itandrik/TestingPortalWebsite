@@ -37,4 +37,12 @@ public class TaskServiceImpl implements TaskService {
         }
         return result;
     }
+
+    @Override
+    public int addTask(Task task) {
+        try(DaoConnection connection = daoFactory.getConnection()){
+            TaskDao dao = daoFactory.createTaskDao(connection);
+            return dao.insert(task);
+        }
+    }
 }

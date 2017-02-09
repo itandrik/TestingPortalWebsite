@@ -4,10 +4,7 @@ import com.javaweb.model.dao.TestDao;
 import com.javaweb.model.entity.Subject;
 import com.javaweb.model.entity.Test;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +26,8 @@ public class JdbcTestDao implements TestDao{
 			"UPDATE Test SET name = ?, duration_time_in_minutes = ? WHERE test_id = ?";
 	private static final String DELETE_TEST_BY_ID =
 			"DELETE FROM Test WHERE test_id = ?";
+	private static final String SELECT_LAST_INSERT_ID =
+			"SELECT LAST_INSERT_ID() FROM Test";
 
 	public JdbcTestDao(Connection connection) {
 		this.connection = connection;
@@ -72,7 +71,8 @@ public class JdbcTestDao implements TestDao{
 	}
 
 	@Override
-	public void insert(Test test) {
+	public int insert(Test test) {
+		int lastInsertId = 0;
 		try(PreparedStatement statement = connection.prepareStatement(INSERT_TEST)){
 			statement.setString(1,test.getNameOfTest());
 			statement.setInt(2,test.getDurationTimeInMinutes());
@@ -80,9 +80,14 @@ public class JdbcTestDao implements TestDao{
 			statement.executeUpdate();
 				/* TODO Check for null*/
 				/* TODO Check is already saved in database */
+			Statement lastInsertIdStatement = connection.createStatement();
+			ResultSet rs = lastInsertIdStatement.executeQuery(SELECT_LAST_INSERT_ID);
+			rs.next();
+			lastInsertId =  rs.getInt(LAST_INSERT_ID);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return lastInsertId;
 	}
 
 	@Override

@@ -8,7 +8,7 @@ public interface DatabaseContract {
 	String ANSWER_ID_COLUMN_NAME = "answer_id";
 	String ANSWER_TEXT_COLUMN_NAME = "text";
 	String ANSWER_IS_CORRECT_COLUMN_NAME = "is_correct";
-	
+	String LAST_INSERT_ID = "LAST_INSERT_ID()";
 	/* Table name and names of columns for Person_has_answer table */
 	String PERSON_HAS_ANSWER_TABLE_NAME = "Person_has_answer";
 	

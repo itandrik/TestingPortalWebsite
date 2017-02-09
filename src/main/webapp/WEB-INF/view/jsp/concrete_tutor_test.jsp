@@ -61,12 +61,12 @@
                                               <span class="input-group-addon">
                                                 <input type="radio" aria-label="Radio button for following text input"
                                                        name="${Parameters.ANSWER_PARAMETER}"
-                                                       value="answer${answer.id}"
+                                                       value="${Parameters.ANSWER_TEXT_PARAMETER}${answer.id}"
                                                        <c:if test="${answer.isCorrect}">checked</c:if>>
                                               </span>
                                             <input type="text" class="form-control"
                                                    aria-label="Text input with radio button"
-                                                   name="${Parameters.ANSWER_TEXT_PARAMETER}"
+                                                   name="${Parameters.ANSWER_TEXT_PARAMETER}${answer.id}"
                                                    value="${answer.answerText}">
                                         </div>
                                     </div>
@@ -78,7 +78,7 @@
                                                 <input type="checkbox"
                                                        aria-label="Radio button for following text input"
                                                        name="${Parameters.ANSWER_PARAMETER}"
-                                                       value="answer${answer.id}"
+                                                       value="${Parameters.ANSWER_TEXT_PARAMETER}${answer.id}"
                                                        <c:if test="${answer.isCorrect}">checked</c:if>>
                                               </span>
                                             <input type="text" class="form-control"
@@ -92,13 +92,15 @@
                         </td>
                     </tr>
                     <input type="number" hidden="true" name="${Parameters.TASK_PARAMETER}" value="${task.id}"/>
+                    <c:set var="last_answer_id" value="${answer.id}" scope="page"/>
                 </c:forEach>
                 <tr>
                     <td>
                         <div class="text-center">
                             <button type="button"
-                                    onclick="addAnswer(this, ${Parameters.ANSWER_PARAMETER},
-                                            '${Parameters.ANSWER_TEXT_PARAMETER}',
+                                    onclick="<c:set var="last_answer_id" value="${last_answer_id + 1}" scope="page" />
+                                            addAnswer(this, '${Parameters.ANSWER_PARAMETER}',
+                                            '${Parameters.ANSWER_TEXT_PARAMETER}','${last_answer_id}',
                                             '<fmt:message key="enter.answer.placeholder"/>',
                                         ${task.id})"
                                     class="btn btn-lg btn-primary">
@@ -152,10 +154,11 @@
                             '<fmt:message key="enter.question.placeholder"/>',
                             '<fmt:message key="enter.answer.placeholder"/>',
                             '<fmt:message key="enter.explanation.placeholder"/>');
-                            addTask('${requestScope['javax.servlet.forward.request_uri']}',
+                            addTask('${requestScope['javax.servlet.forward.request_uri']}${Paths.ADD_TASK}',
                             '${Parameters.QUESTION_PARAMETER}',
                             '${Parameters.ANSWER_PARAMETER}',
                             '${Parameters.ANSWER_TEXT_PARAMETER}',
+                            '${last_answer_id + 1}',
                             '${Parameters.EXPLANATION_PARAMETER}',
                             '${Parameters.ANSWER_TYPE_PARAMETER}',
                             '${last_task_id + 1}',

@@ -36,4 +36,14 @@ public class AnswerServiceImpl implements AnswerService {
         }
         return result;
     }
+
+    @Override
+    public void addAnswersForTask(List<Answer> answers, int taskId) {
+        try(DaoConnection connection = daoFactory.getConnection()) {
+            AnswerDao answerDao = daoFactory.createAnswerDao(connection);
+            for (Answer answer : answers) {
+                answerDao.insertAnswerWithTaskId(answer, taskId);
+            }
+        }
+    }
 }

@@ -83,7 +83,7 @@ function addTest(pathToGo, inputName, inputDurationTime) {
     table.appendChild(tableRow);
 }
 
-function addAnswer(addButton, answerNameButton, answerNameText, answerPlaceholder, taskId) {
+function addAnswer(addButton, answerNameButton, answerNameText,answerId, answerPlaceholder, taskId) {
     var taskTable = document.getElementById('task' + taskId);
     var tr = document.createElement('tr');
     var td = document.createElement('td');
@@ -95,9 +95,11 @@ function addAnswer(addButton, answerNameButton, answerNameText, answerPlaceholde
     spanAnswer.className = "input-group-addon";
     var inputRadioButton = document.createElement('input');
     inputRadioButton.name = answerNameButton;
+    inputRadioButton.value=answerNameText.concat(answerId);
+    inputRadioButton.checked=true;
     spanAnswer.appendChild(inputRadioButton);
     var inputAnswerText = document.createElement('input');
-    inputAnswerText.name = answerNameText;
+    inputAnswerText.name = answerNameText.concat(answerId);
     inputAnswerText.className = "form-control";
     inputAnswerText.placeholder=answerPlaceholder;
     inputGroupAnswer.appendChild(spanAnswer);
@@ -146,7 +148,7 @@ function getMsg(addAnswerBundle, explanationTextBundle,
 }
 
 function addTask(action, questionParam, answerButtonParam,
-                 answerTextParam, explanationParam,
+                 answerTextParam, answerTextId, explanationParam,
                  answerTypeParam, taskId, btnInsertBefore) {
     var form = document.createElement('form');
     form.action = action;
@@ -193,9 +195,10 @@ function addTask(action, questionParam, answerButtonParam,
     var inputRadioButton = document.createElement('input');
     inputRadioButton.type = "radio";
     inputRadioButton.name = answerButtonParam;
+    inputRadioButton.value = answerTextParam.concat(answerTextId);
     spanAnswer.appendChild(inputRadioButton);
     var inputAnswerText = document.createElement('input');
-    inputAnswerText.name = answerTextParam;
+    inputAnswerText.name = answerTextParam.concat(answerTextId);
     inputAnswerText.placeholder = msg.enterAnswer;
     inputAnswerText.className = "form-control";
     inputGroupAnswer.appendChild(spanAnswer);
@@ -268,7 +271,8 @@ function addTask(action, questionParam, answerButtonParam,
     document.getElementsByClassName('data')[0].insertBefore(form, btnInsertBefore.parentNode.parentNode);
     addAnswerButton.addEventListener('click',
         function () {
-            addAnswer(addAnswerButton, answerButtonParam, answerTextParam, msg.enterAnswer, taskId);
+            answerTextId++;
+            addAnswer(addAnswerButton, answerButtonParam, answerTextParam, answerTextId, msg.enterAnswer, taskId);
         },
         false);
     answerTypeCheckboxInput.addEventListener('change',

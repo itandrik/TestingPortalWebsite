@@ -10,7 +10,7 @@ public final class CommandRegexAndPatterns {
     public static final String LETTERS_BEFORE_INDEX_REGEX = "\\D+";
     public static final String INDEX_ENDING_URI_REGEX = "\\d+$";
     public static final String USER_ACCOUNT_PAGE_REGEX = ".*rest\\/user\\/.+";
-    public static final String ANSWER_BEGINNING_REGEX = "^answer";
+    public static final String PARAMETER_INDEX_ENDING = "(?=.*)\\d+";
     public static final String PATH_BEFORE_REST_REGEX = ".*(?=\\/rest)";
 
     public static final String INDEX_INSIDE_URI_REGEX = "(?=.*\\/)\\d+";
@@ -24,4 +24,6 @@ public final class CommandRegexAndPatterns {
             Pattern.compile(PASSWORD_REGEX);
     public static final Pattern INDEX_INSIDE_URI_PATTERN =
             Pattern.compile(INDEX_INSIDE_URI_REGEX);
+    public static final Pattern PARAMETER_INDEX_ENDING_PATTERN =
+            Pattern.compile(PARAMETER_INDEX_ENDING);
 }

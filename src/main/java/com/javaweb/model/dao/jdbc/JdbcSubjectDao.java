@@ -3,16 +3,12 @@ package com.javaweb.model.dao.jdbc;
 import com.javaweb.model.dao.SubjectDao;
 import com.javaweb.model.entity.Subject;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.javaweb.model.dao.DatabaseContract.SUBJECT_ID_COLUMN_NAME;
-import static com.javaweb.model.dao.DatabaseContract.SUBJECT_NAME_COLUMN_NAME;
+import static com.javaweb.model.dao.DatabaseContract.*;
 
 public class JdbcSubjectDao implements SubjectDao{
 	private Connection connection;
@@ -27,7 +23,8 @@ public class JdbcSubjectDao implements SubjectDao{
 			"UPDATE Subject SET name = ? WHERE subject_id = ?";
 	private static final String DELETE_SUBJECT =
 			"DELETE FROM Subject WHERE subject_id = ?";
-
+	private static final String SELECT_LAST_INSERT_ID =
+			"SELECT LAST_INSERT_ID() FROM Subject";
 
 	public JdbcSubjectDao(java.sql.Connection connection) {
 		this.connection = connection;
@@ -71,16 +68,22 @@ public class JdbcSubjectDao implements SubjectDao{
 	}
 
 	@Override
-	public void insert(Subject subject) {
+	public int insert(Subject subject) {
+		int lastInsertId = 0;
 		try(PreparedStatement statement = connection.prepareStatement(INSERT_SUBJECT)){
 
 			statement.setString(1,subject.getNameOfSubject());
 			statement.executeUpdate();
 				/* TODO Check for null*/
 				/* TODO Check is already saved in database */
+			Statement lastInsertIdStatement = connection.createStatement();
+			ResultSet rs = lastInsertIdStatement.executeQuery(SELECT_LAST_INSERT_ID);
+			rs.next();
+			lastInsertId =  rs.getInt(LAST_INSERT_ID);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return lastInsertId;
 	}
 
 	@Override
