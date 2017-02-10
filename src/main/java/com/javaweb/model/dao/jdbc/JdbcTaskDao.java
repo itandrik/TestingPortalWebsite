@@ -26,6 +26,8 @@ public class JdbcTaskDao implements TaskDao{
 			"SELECT task_id, question, answers_type, explanation FROM Task";
 	private static final String INSERT_TASK =
 			"INSERT INTO Task (question, answers_type, explanation) VALUES (?,?,?)";
+	private static final String ASSIGN_TASK_TO_TEST =
+			"INSERT INTO m2m_tests_tasks  (test_id, task_id) VALUES (?,?)";
 	private static final String UPDATE_TASK_BY_ID =
 			"UPDATE Task SET question = ?, answers_type = ?, explanation = ?" +
 					" WHERE task_id = ?";
@@ -98,20 +100,24 @@ public class JdbcTaskDao implements TaskDao{
 	}
 
 	@Override
-	public void update(Task task) {
+	public int update(Task task) {
+		int lastInsertId = task.getId();
 		try(PreparedStatement statement = connection.prepareStatement(UPDATE_TASK_BY_ID)){
 			statement.setString(1,task.getQuestion());
 			statement.setString(2, task.getAnswerType().toString());
 			statement.setString(3, task.getExplanation());
 			statement.setInt(4, task.getId());
 
-			statement.executeUpdate();
+			if(statement.executeUpdate() == 0){
+				lastInsertId = insert(task);
+			}
 				/* TODO Check for null*/
 				/* TODO Check is already saved in database */
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return lastInsertId;
 	}
 
 	@Override
@@ -142,6 +148,18 @@ public class JdbcTaskDao implements TaskDao{
 			e.printStackTrace();
 		}
 		return tasks;
+	}
+
+	@Override
+	public void assignTaskToTest(int taskId, int testId) {
+		try(PreparedStatement statement = connection.prepareStatement(ASSIGN_TASK_TO_TEST)) {
+			statement.setInt(1,testId);
+			statement.setInt(2,taskId);
+
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private Task getTaskFromResultSet(ResultSet resultSet) throws SQLException {

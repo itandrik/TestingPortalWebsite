@@ -42,8 +42,21 @@ public class AnswerServiceImpl implements AnswerService {
         try(DaoConnection connection = daoFactory.getConnection()) {
             AnswerDao answerDao = daoFactory.createAnswerDao(connection);
             for (Answer answer : answers) {
-                answerDao.insertAnswerWithTaskId(answer, taskId);
+                answer.setTaskId(taskId);
+                answerDao.insert(answer);
             }
         }
+    }
+
+    @Override
+    public int updateAnswers(List<Answer> answers) {
+        int lastInsertId = 0;
+        try(DaoConnection connection = daoFactory.getConnection()){
+            AnswerDao dao = daoFactory.createAnswerDao(connection);
+            for (Answer answer:answers) {
+                lastInsertId = dao.update(answer);
+            }
+        }
+        return lastInsertId;
     }
 }

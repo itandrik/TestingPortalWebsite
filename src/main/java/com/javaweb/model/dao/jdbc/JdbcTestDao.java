@@ -91,17 +91,22 @@ public class JdbcTestDao implements TestDao{
 	}
 
 	@Override
-	public void update(Test test) {
+	public int update(Test test) {
+		int lastInsertId = test.getId();
 		try(PreparedStatement statement = connection.prepareStatement(UPDATE_TEST_BY_ID)){
 			statement.setString(1,test.getNameOfTest());
 			statement.setInt(2,test.getDurationTimeInMinutes());
 			statement.setInt(3,test.getId());
-			statement.executeUpdate();
+
+			if(statement.executeUpdate() == 0){
+				lastInsertId = insert(test);
+			}
 				/* TODO Check for null*/
 				/* TODO Check is already saved in database */
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return lastInsertId;
 	}
 
 	@Override

@@ -11,4 +11,5 @@ import java.util.List;
 public interface AnswerService {
     List<Answer> getListOfAnswersForTask(Task task);
     void addAnswersForTask(List<Answer> answers, int taskId);
+    int updateAnswers(List<Answer> answers);
 }

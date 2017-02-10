@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface TaskDao extends GenericDao<Task> {
 	List<Task> getListOfTasksForTest(Test test);
+	void assignTaskToTest(int taskId, int testId);
 }

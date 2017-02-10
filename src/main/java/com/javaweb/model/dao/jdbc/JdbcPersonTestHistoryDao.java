@@ -81,7 +81,7 @@ public class JdbcPersonTestHistoryDao implements PersonTestHistoryDao {
     }
 
     @Override
-    public void update(PersonHistory personHistory) {
+    public int update(PersonHistory personHistory) {
         throw new UnsupportedOperationException();
     }
 

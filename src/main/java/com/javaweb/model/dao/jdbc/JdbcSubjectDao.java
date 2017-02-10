@@ -87,17 +87,22 @@ public class JdbcSubjectDao implements SubjectDao{
 	}
 
 	@Override
-	public void update(Subject subject) {
+	public int update(Subject subject) {
+		int lastInsertId = subject.getId();
 		try(PreparedStatement statement = connection.prepareStatement(UPDATE_SUBJECT)){
 			statement.setString(1,subject.getNameOfSubject());
 			statement.setInt(2, subject.getId());
-			statement.executeUpdate();
+
+			if(statement.executeUpdate() == 0){
+				lastInsertId = insert(subject);
+			}
 				/* TODO Check for null*/
 				/* TODO Check is already saved in database */
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return lastInsertId;
 	}
 
 	@Override

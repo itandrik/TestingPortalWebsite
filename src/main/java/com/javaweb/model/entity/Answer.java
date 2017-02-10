@@ -4,6 +4,7 @@ public class Answer {
     private int id;
     private String answerText;
     private boolean isCorrect;
+    private int taskId;
 
     public void setId(int id) {
         this.id = id;
@@ -17,6 +18,10 @@ public class Answer {
         this.isCorrect = isCorrect;
     }
 
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
+
     public int getId() {
         return id;
     }
@@ -27,6 +32,10 @@ public class Answer {
 
     public boolean getIsCorrect() {
         return isCorrect;
+    }
+
+    public int getTaskId() {
+        return taskId;
     }
 
     @Override
@@ -66,7 +75,10 @@ public class Answer {
             answer.setIsCorrect(isCorrect);
             return this;
         }
-
+        public Builder setTaskId(int taskId){
+            answer.setTaskId(taskId);
+            return this;
+        }
         public Answer build(){
             return answer;
         }

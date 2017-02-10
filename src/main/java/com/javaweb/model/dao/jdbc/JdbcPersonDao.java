@@ -121,7 +121,8 @@ public class JdbcPersonDao implements PersonDao {
     }
 
     @Override
-    public void update(Person person) {
+    public int update(Person person) {
+        int lastInsertId = person.getId();
         try (PreparedStatement statement = connection.prepareStatement(UPDATE_PERSON)) {
             statement.setString(1, person.getFirstName());
             statement.setString(2, person.getSecondName());
@@ -131,12 +132,15 @@ public class JdbcPersonDao implements PersonDao {
             statement.setString(6, person.getRole().toString());
             statement.setInt(7, person.getId());
 
-            statement.executeUpdate();
+            if(statement.executeUpdate() == 0){
+                lastInsertId = insert(person);
+            }
 				/* TODO Check for null*/
 				/* TODO Check is already saved in database */
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return lastInsertId;
     }
 
     @Override

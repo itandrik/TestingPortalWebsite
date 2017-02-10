@@ -1,5 +1,6 @@
 package com.javaweb.controller.commands;
 
+import com.javaweb.controller.CommandRegexAndPatterns;
 import com.javaweb.model.entity.Answer;
 import com.javaweb.model.entity.task.AnswerType;
 import com.javaweb.model.entity.task.Task;
@@ -8,7 +9,6 @@ import com.javaweb.model.services.TaskService;
 import com.javaweb.model.services.impl.AnswerServiceImpl;
 import com.javaweb.model.services.impl.TaskServiceImpl;
 import com.javaweb.util.Parameters;
-import com.javaweb.util.Paths;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -19,11 +19,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.regex.Matcher;
 
 import static com.javaweb.model.entity.task.AnswerType.MANY_ANSWERS;
 import static com.javaweb.model.entity.task.AnswerType.ONE_ANSWER;
 import static com.javaweb.util.Parameters.*;
-import static com.javaweb.util.Paths.REDIRECTED;
+import static com.javaweb.util.Paths.*;
 
 /**
  * @author Andrii Chernysh on 04-Feb-17.
@@ -38,12 +39,24 @@ public class PostAddTaskCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Task task = extractTaskFromRequest(request);
-
         int taskId = taskService.addTask(task);
+        int testId = extractTestIdFromRequest(request);
+
+        taskService.assignTaskToTest(taskId,testId);
         answerService.addAnswersForTask(task.getAnswers(),taskId);
 
-        response.sendRedirect(request.getRequestURI().replaceAll(Paths.ADD_TASK,""));
+        response.sendRedirect(TESTS + TUTOR + "/" + testId);
         return REDIRECTED;
+    }
+
+    private int extractTestIdFromRequest(HttpServletRequest request) {
+        String requestedURI = request.getRequestURI();
+        int testId = 0;
+        Matcher idMatcher = CommandRegexAndPatterns.INDEX_INSIDE_URI_PATTERN.matcher(requestedURI);
+        if(idMatcher.find()){
+            testId = Integer.parseInt(idMatcher.group(0));
+        }
+        return testId;
     }
 
     private Task extractTaskFromRequest(HttpServletRequest request){

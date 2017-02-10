@@ -7,6 +7,6 @@ public interface GenericDao<E> {
 	Optional<E> getById(int id);
     List<E> getAll();
     int insert(E e);
-    void update(E e);
+    int update(E e);
     void delete(int id);
 }

@@ -9,7 +9,8 @@
 
 <%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
 
-<body>
+<body onunload="unloadP('UniquePageNameHereScroll')"
+      onload="loadP('UniquePageNameHereScroll')">
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-header">
         <a class="navbar-brand" href="${Paths.HOME}">Testing Portal</a>
@@ -29,28 +30,32 @@
         </li>
     </ul>
 </nav>
-
 <c:if test="${not empty requestScope[Attributes.ERROR_MESSAGE]}">
 <div class="col-lg-12 floating-error">
     <%@ include file="/WEB-INF/view/jsp/template/error_messages.jsp" %>
 </div>
 </c:if>
-
+<script type="text/javascript">
+    history.pushState(null, null, location.href);
+    window.onpopstate = function(event) {
+        history.go(1);
+    };
+</script>
 <div class="data col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-8">
     <c:forEach var="task" items="${requestScope[Attributes.TASKS]}">
-        <table class="table table-bordered table-shadow" id="task${task.id}">
-            <thead class="thead-changed-style">
-            <tr>
-                <th class="tree-header" colspan="2">
-                    <div class="form-group col-lg-12">
+        <form method="post" action="${requestScope['javax.servlet.forward.request_uri']}${Paths.UPDATE_TASK}">
+            <table class="table table-bordered table-shadow" id="task${task.id}">
+                <thead class="thead-changed-style">
+                <tr>
+                    <th class="tree-header" colspan="2">
+                        <div class="form-group col-lg-12">
                         <textarea class="form-control" rows="3" name="${Parameters.QUESTION_PARAMETER}"
                                   style="resize:vertical;">${task.question}</textarea>
-                    </div>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <form method="post" action="${Paths.TESTS}/${test.id}">
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
                 <c:forEach var="answer" items="${task.answers}">
                     <tr>
                         <td>
@@ -83,7 +88,7 @@
                                               </span>
                                             <input type="text" class="form-control"
                                                    aria-label="Text input with radio button"
-                                                   name="${Parameters.ANSWER_TEXT_PARAMETER}"
+                                                   name="${Parameters.ANSWER_TEXT_PARAMETER}${answer.id}"
                                                    value="${answer.answerText}">
                                         </div>
                                     </div>
@@ -98,7 +103,8 @@
                     <td>
                         <div class="text-center">
                             <button type="button"
-                                    onclick="<c:set var="last_answer_id" value="${last_answer_id + 1}" scope="page" />
+                                    onclick="
+                                        <c:set var="last_answer_id" value="${last_answer_id + 1}" scope="page"/>
                                             addAnswer(this, '${Parameters.ANSWER_PARAMETER}',
                                             '${Parameters.ANSWER_TEXT_PARAMETER}','${last_answer_id}',
                                             '<fmt:message key="enter.answer.placeholder"/>',
@@ -121,7 +127,7 @@
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox"
-                                       name="${Parameters.ANSWER_TYPE_PARAMETER}${task.id}"
+                                       name="${Parameters.ANSWER_TYPE_PARAMETER}"
                                        onchange="handleChange(this, ${task.id});"
                                        <c:if test="${task.answerType == AnswerType.ONE_ANSWER}">checked</c:if>>
                                 <fmt:message key="task.is.one.answer"/>
@@ -138,9 +144,9 @@
                         </div>
                     </td>
                 </tr>
-            </form>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </form>
         <c:set var="last_task_id" value="${task.id}" scope="page"/>
     </c:forEach>
 
