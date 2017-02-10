@@ -18,6 +18,14 @@
         <!-- TODO insert menu here-->
     </ul>
     <ul class="nav navbar-nav navbar-right">
+        <c:if test="${user.role == PersonRole.TUTOR}">
+            <li>
+                <a class="navbar-brand" href="${Paths.STUDENTS_LIST}">
+                    <span class="glyphicon glyphicon-education"></span>
+                    <fmt:message key="students.info"/>
+                </a>
+            </li>
+        </c:if>
         <li>
             <a class="navbar-brand" data-toggle="modal" data-target="#modal_logout">
                 <span class="glyphicon glyphicon-log-out"></span>

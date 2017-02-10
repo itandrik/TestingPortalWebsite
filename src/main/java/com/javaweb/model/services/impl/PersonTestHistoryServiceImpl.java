@@ -104,6 +104,15 @@ public class PersonTestHistoryServiceImpl implements PersonTestHistoryService {
         }
     }
 
+    @Override
+    public List<Test> getListOfTestsPassedByStudent(Person person) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            PersonTestHistoryDao historyDao =
+                    daoFactory.createPersonTestHistoryDao(connection);
+            return historyDao.getListOfPassedTestsByPerson(person);
+        }
+    }
+
     private PersonHistory createPersonHistory(Test test, Person person) {
         Grade grade = calculateGradeOfTestPassedByPerson(test, person);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());

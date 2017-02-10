@@ -24,9 +24,9 @@ public class JdbcPersonTestHistoryDao implements PersonTestHistoryDao {
             "INSERT INTO person_test_history (person_id, test_id, end_time, grade)" +
                     " VALUES (?,?,?,?)";
     private static final String SELECT_PASSED_TESTS_BY_PERSON =
-            "SELECT test_id,name,subject_id,duration_time_in_minutes FROM" +
+            "SELECT test_id, name, subject_id, duration_time_in_minutes FROM" +
                     " Test JOIN Person_test_history USING (test_id)" +
-                    " WHERE person_id = ?";
+                    " WHERE person_id = ? ORDER BY subject_id DESC";
     private static final String SELECT_ALL_PASSED_ANSWERS_BY_PERSON_FOR_TEST =
             "SELECT answer_id, text, is_correct FROM " +
                     "(SELECT task_id FROM M2m_tests_tasks WHERE test_id = ?) t " +

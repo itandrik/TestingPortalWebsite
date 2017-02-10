@@ -9,6 +9,8 @@ import com.javaweb.model.entity.util.LoginData;
 import com.javaweb.model.services.PersonService;
 import com.javaweb.model.services.exception.ServiceException;
 
+import java.util.List;
+
 public class PersonServiceImpl implements PersonService {
 	private static final String LOGGER_NO_SUCH_LOGIN_OR_PASSWORD =
 			"Login failed : no such login or password in the database" +
@@ -48,6 +50,14 @@ public class PersonServiceImpl implements PersonService {
 			PersonDao personDao = daoFactory.createPersonDao(connection);
 			personDao.insert(person);
 			connection.commit();
+		}
+	}
+
+	@Override
+	public List<Person> getStudents() {
+		try(DaoConnection connection = daoFactory.getConnection()){
+			PersonDao personDao = daoFactory.createPersonDao(connection);
+			return personDao.getAllStudents();
 		}
 	}
 }

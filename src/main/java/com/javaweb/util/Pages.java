@@ -15,5 +15,7 @@ public final class Pages {
     public static final String CONCRETE_TUTOR_TEST_PAGE = PATH + "/concrete_tutor_test" + JSP;
 
     public static final String TEST_RESULTS_PAGE = PATH + "/test_results" + JSP;
-    public static final String ADD_TEST_PAGE = PATH + "/test_add" + JSP;
+    public static final String STUDENTS_LIST_PAGE = PATH + "/students_list" + JSP;
+    public static final String STUDENTS_TESTS_LIST_PAGE = PATH + "/students_tests_list" + JSP;
+
 }

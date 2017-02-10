@@ -13,4 +13,9 @@
         <function-signature>boolean isTestPassed(com.javaweb.model.entity.Test,com.javaweb.model.entity.person.Person)
         </function-signature>
     </function>
+    <function>
+        <name>containsSubject</name>
+        <function-class>com.javaweb.view.tags.ContainsSubjectFunction</function-class>
+        <function-signature>boolean contains(java.util.List,com.javaweb.model.entity.Subject)</function-signature>
+    </function>
 </taglib>

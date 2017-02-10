@@ -4,11 +4,9 @@
 
 <%@ page import="com.javaweb.util.Paths" %>
 <%@ page import="com.javaweb.util.Attributes" %>
-<%@ page import="com.javaweb.util.Parameters" %>
 <%@ page import="com.javaweb.model.entity.person.PersonRole" %>
 
 <%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
-<c:set var="user" value="${sessionScope[Attributes.USER]}"/>
 
 <body>
 <nav class="navbar navbar-fixed-top">
@@ -22,14 +20,6 @@
 
     </ul>
     <ul class="nav navbar-nav navbar-right">
-        <c:if test="${user.role == PersonRole.TUTOR}">
-            <li>
-                <a class="navbar-brand" href="${Paths.STUDENTS_LIST}">
-                    <span class="glyphicon glyphicon-education"></span>
-                    <fmt:message key="students.info"/>
-                </a>
-            </li>
-        </c:if>
         <li>
             <a class="navbar-brand" href="${Paths.USER_INFO}/${user.login}">
                 <span class="glyphicon glyphicon-user"></span>
@@ -45,47 +35,30 @@
     </ul>
 </nav>
 
-<c:if test="${not empty requestScope[Attributes.ERROR_MESSAGE]}">
 <div class="col-lg-12 floating-error">
     <%@ include file="/WEB-INF/view/jsp/template/error_messages.jsp" %>
 </div>
-</c:if>
+
 <div class="data col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-8">
     <table class="table table-hover table-bordered table-shadow">
         <thead class="thead-changed-style">
         <tr>
-            <th>Choose subject :</th>
+            <th> <fmt:message key="students.table.header"/> </th>
         </tr>
         </thead>
         <tbody id="table-with-entities">
-        <c:forEach var="subject" items="${requestScope[Attributes.SUBJECTS]}">
+        <c:forEach var="student" items="${requestScope[Attributes.STUDENTS]}">
             <tr>
                 <td>
-                    <a class="identified" href="${Paths.SUBJECTS}/${subject.id}">
-                        <c:out value="${subject.nameOfSubject}"/>
+                    <a class="identified" href="${Paths.STUDENTS_LIST}/${student.id}${Paths.TEST}">
+                        <c:out value="${student.firstName} ${student.secondName} [${student.login}]"/>
                     </a>
                 </td>
             </tr>
         </c:forEach>
-        <c:if test="${sessionScope[Attributes.USER].role == PersonRole.TUTOR}">
-            <tr>
-                <td>
-                    <div class="text-center">
-                        <button id="add-button"
-                                onclick="addSubject('${Paths.ADD_SUBJECT}','${Parameters.NAME_OF_SUBJECT_PARAMETER}')"
-                                class="btn btn-lg btn-primary">
-                            <span class="glyphicon glyphicon-plus"></span>
-                            Add new subject
-                        </button>
-                    </div>
-                </td>
-            </tr>
-        </c:if>
-
         </tbody>
     </table>
 </div>
-<%--</c:otherwise>
-</c:choose>--%>
+
 <%@ include file="/WEB-INF/view/jsp/template/footer.jsp" %>
-<c:import url="/WEB-INF/view/jsp/template/logout_modal.jsp"/>
+<%@ include file="/WEB-INF/view/jsp/template/logout_modal.jsp" %>

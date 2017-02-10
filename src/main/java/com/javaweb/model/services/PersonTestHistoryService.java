@@ -15,4 +15,5 @@ public interface PersonTestHistoryService {
     void insertAnswerForPersonHistory(int answerId, int personId);
     void insertTestHistoryPassedByPerson(Test test, Person person);
     List<Answer> getListOfAnswersByPersonForTask(Person person, Task task);
+    List<Test> getListOfTestsPassedByStudent(Person person);
 }

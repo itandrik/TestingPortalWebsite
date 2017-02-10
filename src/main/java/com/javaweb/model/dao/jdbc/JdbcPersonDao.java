@@ -23,8 +23,8 @@ public class JdbcPersonDao implements PersonDao {
             + "first_name, second_name, gender, login, password,"
             + " role FROM Person";
     private static final String SELECT_ALL_STUDENTS =
-            "SELECT person_id,first_name, second_name, gender," +
-                    " login, password FROM Person WHERE role = ?";
+            "SELECT person_id, first_name, second_name, gender," +
+                    " login, password, role FROM Person WHERE role = ?";
     private static final String INSERT_PERSON =
             "INSERT INTO Person (first_name, second_name, gender," +
                     " login, password, role) VALUES (?,?,?,?,?,?)";

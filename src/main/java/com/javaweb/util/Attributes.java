@@ -14,4 +14,6 @@ public final class Attributes {
 	public static final String DISABLED_TASKS = "disabled_tasks";
 	public static final String MESSAGE = "message";
 	public static final String SET_TAG = "set_tag";
+	public static final String STUDENTS = "students";
+	public static final String TESTS_PASSED_BY_STUDENT = "tests_passed_by_student";
 }
