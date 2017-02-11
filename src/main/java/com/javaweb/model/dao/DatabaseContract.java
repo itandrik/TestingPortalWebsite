@@ -45,6 +45,7 @@ public interface DatabaseContract {
 	String TEST_ID_COLUMN_NAME = "test_id";
 	String TEST_NAME_COLUMN_NAME = "name";
 	String TEST_DURATION_TIME_COLUMN_NAME = "duration_time_in_minutes";
+	String TEST_SUBJECT_ID_NAME = "subject_id";
 
 	/* Table name and names of columns for Person_test_history table */
 	String PERSON_HISTORY_TABLE_NAME = "Person_test_history";

@@ -45,22 +45,35 @@
         <table class="table table-hover table-bordered table-shadow">
             <thead class="thead-changed-style">
             <tr>
-                <th><c:out value="${subject.nameOfSubject}"/></th>
+                <th class="text-center"><c:out value="${subject.nameOfSubject}"/></th>
             </tr>
             </thead>
             <tbody id="table-with-entities">
-            <c:forEach var="test" items="${requestScope[Attributes.TESTS_PASSED_BY_STUDENT]}">
-                <tr>
-                    <td>
-                            <%--
-                                TODO якщо тест по тому предмету, що й subject.id то написати його
-                            --%>
-                        <a class="identified" href="${Paths.STUDENTS_LIST}/${student.id}${Paths.TEST}">
-                            <c:out value="${subject.nameOfSubject}"/>
-                        </a>
-                    </td>
-                </tr>
-            </c:forEach>
+            <c:choose>
+                <c:when test="${not subj:containsSubject(requestScope[Attributes.TESTS_PASSED_BY_STUDENT],subject)}">
+                    <tr>
+                        <td>
+                            <div class="col-lg-12 text-center">
+                                <fmt:message key="test.no.tests.for.subject"/>
+                            </div> 
+                        </td>
+                    </tr>
+                </c:when>
+                <c:otherwise>
+                    <c:forEach var="test" items="${requestScope[Attributes.TESTS_PASSED_BY_STUDENT]}">
+                        <tr>
+                            <td>
+                                <c:if test="${subject.id == test.subjectId}">
+                                    <!-- TODO зробити нормальний виклик сторінки з результатами тесту-->
+                                    <a class="identified" href="${Paths.STUDENTS_LIST}/${student.id}${Paths.TEST}">
+                                        <c:out value="${test.nameOfTest}"/>
+                                    </a>
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
             </tbody>
         </table>
     </c:forEach>

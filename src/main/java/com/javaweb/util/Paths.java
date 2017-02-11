@@ -16,7 +16,7 @@ public final class Paths {
 	public static final String CONCRETE_TUTOR_TEST = TESTS + TUTOR + "/id";
 
 	public static final String RESULTS = "/results";
-	public static final String TEST_RESULTS = CONCRETE_STUDENT_TEST + RESULTS;
+	public static final String TEST_RESULTS = CONCRETE_STUDENT_TEST + RESULTS + "/id";
 
 	public static final String ADD_ANSWER_TO_HISTORY = REST + "/add_answer";
 	public static final String USER_INFO = REST + "/user";

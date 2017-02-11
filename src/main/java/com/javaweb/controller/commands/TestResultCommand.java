@@ -1,17 +1,13 @@
 package com.javaweb.controller.commands;
 
+import com.javaweb.controller.exception.ControllerException;
+import com.javaweb.i18n.ErrorMessageKeys;
 import com.javaweb.model.entity.Answer;
 import com.javaweb.model.entity.Test;
 import com.javaweb.model.entity.person.Person;
 import com.javaweb.model.entity.task.Task;
-import com.javaweb.model.services.AnswerService;
-import com.javaweb.model.services.PersonTestHistoryService;
-import com.javaweb.model.services.TaskService;
-import com.javaweb.model.services.TestService;
-import com.javaweb.model.services.impl.AnswerServiceImpl;
-import com.javaweb.model.services.impl.PersonTestHistoryServiceImpl;
-import com.javaweb.model.services.impl.TaskServiceImpl;
-import com.javaweb.model.services.impl.TestServiceImpl;
+import com.javaweb.model.services.*;
+import com.javaweb.model.services.impl.*;
 import com.javaweb.util.Attributes;
 import com.javaweb.util.Pages;
 
@@ -24,7 +20,6 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 
 import static com.javaweb.controller.CommandRegexAndPatterns.INDEX_INSIDE_URI_PATTERN;
-import static com.javaweb.util.Attributes.USER;
 
 /**
  * @author Andrii Chernysh on 01-Feb-17. E-Mail : itcherry97@gmail.com
@@ -35,13 +30,20 @@ public class TestResultCommand implements Command {
     private AnswerService answerService = AnswerServiceImpl.getInstance();
     private PersonTestHistoryService personTestHistoryService =
             PersonTestHistoryServiceImpl.getInstance();
+    private PersonService personService = PersonServiceImpl.getInstance();
+    private static final String LOGGER_INCORRECT_URI =
+            "URI %s is incorrect[" + TestResultCommand.class.getName() + "]";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int testId = getTestIdFromURI(request);
+        String requestURI = request.getRequestURI();
+        Matcher idMatcher = INDEX_INSIDE_URI_PATTERN.matcher(requestURI);
+        int testId = extractIdFromRequest(idMatcher,requestURI);
+        int personId= extractIdFromRequest(idMatcher,requestURI);
+
         Test test = testService.getTestById(testId);
-        Person person = (Person) request.getSession().getAttribute(USER);
+        Person person = personService.getPersonById(personId);
 
         List<Task> tasksWithAllAnswers = getAllTasksWithAnswersForTest(
                 test, task -> answerService.getListOfAnswersForTask(task));
@@ -55,14 +57,16 @@ public class TestResultCommand implements Command {
         return Pages.TEST_RESULTS_PAGE;
     }
 
-    private int getTestIdFromURI(HttpServletRequest request) {
-        int testId = 0;
-        String requestURI = request.getRequestURI();
-        Matcher idMatcher = INDEX_INSIDE_URI_PATTERN.matcher(requestURI);
-        if(idMatcher.find()) {
-            testId = Integer.parseInt(idMatcher.group(0));
+    private int extractIdFromRequest(Matcher matcher, String requestURI){
+        int result;
+        if(matcher.find()) {
+            result = Integer.parseInt(matcher.group(0));
+        } else {
+            throw new ControllerException()
+                    .addMessage(ErrorMessageKeys.ERROR_INCORRECT_URI)
+                    .addLogMessage(String.format(LOGGER_INCORRECT_URI,requestURI));
         }
-        return testId;
+        return result;
     }
 
     private List<Task> getAllTasksWithAnswersForTest(

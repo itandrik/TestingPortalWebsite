@@ -14,12 +14,12 @@ import static com.javaweb.model.dao.DatabaseContract.*;
 public class JdbcTestDao implements TestDao{
 	private Connection connection;
 	private static final String SELECT_LIST_OF_TEST_FOR_SUBJECT =
-			"SELECT test_id, name, duration_time_in_minutes FROM Test" +
+			"SELECT test_id, name, duration_time_in_minutes, subject_id FROM Test" +
 					" WHERE subject_id = ?";
 	private static final String SELECT_TEST_BY_ID =
-			"SELECT test_id, name, duration_time_in_minutes FROM Test WHERE test_id = ?";
+			"SELECT test_id, name, duration_time_in_minutes, subject_id FROM Test WHERE test_id = ?";
 	private static final String SELECT_ALL_TESTS =
-			"SELECT test_id, name, duration_time_in_minutes FROM Test";
+			"SELECT test_id, name, duration_time_in_minutes, subject_id FROM Test";
 	private static final String INSERT_TEST =
 			"INSERT INTO Test (name, duration_time_in_minutes, subject_id) VALUES (?,?,?)";
 	private static final String UPDATE_TEST_BY_ID =
@@ -145,6 +145,7 @@ public class JdbcTestDao implements TestDao{
 				.setName(resultSet.getString(TEST_NAME_COLUMN_NAME))
 				.setDurationTimeInMinutes(
 						resultSet.getInt(TEST_DURATION_TIME_COLUMN_NAME))
+				.setSubjectId(resultSet.getInt(TEST_SUBJECT_ID_NAME))
 				.build();
 	}
 }

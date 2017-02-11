@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<%@ taglib prefix="test" uri="/WEB-INF/view/taglib/test.tld" %>
+<%@ taglib prefix="test" uri="/WEB-INF/view/taglib/subjects.tld" %>
 
 <%@ page import="com.javaweb.util.Paths" %>
 <%@ page import="com.javaweb.util.Attributes" %>

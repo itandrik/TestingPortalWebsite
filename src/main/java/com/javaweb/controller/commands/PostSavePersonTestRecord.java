@@ -31,7 +31,8 @@ public class PostSavePersonTestRecord implements Command {
         Test test = (Test) request.getSession().getAttribute(CONCRETE_TEST);
         personTestHistoryService.insertTestHistoryPassedByPerson(test,person);
 
-        response.sendRedirect(Paths.TESTS + Paths.STUDENT + "/" + test.getId() + Paths.RESULTS);
+        response.sendRedirect(Paths.TESTS + Paths.STUDENT + "/" +
+                test.getId() + Paths.RESULTS + "/" + person.getId());
         setAllAttributesInSessionNull(request);
         return REDIRECTED;
     }

@@ -114,6 +114,7 @@ public class JdbcPersonTestHistoryDao implements PersonTestHistoryDao {
                 .setName(resultSet.getString(TEST_NAME_COLUMN_NAME))
                 .setDurationTimeInMinutes(
                         resultSet.getInt(TEST_DURATION_TIME_COLUMN_NAME))
+                .setSubjectId(resultSet.getInt(TEST_SUBJECT_ID_NAME))
                 .build();
     }
 

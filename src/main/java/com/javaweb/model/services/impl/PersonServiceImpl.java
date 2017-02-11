@@ -15,6 +15,9 @@ public class PersonServiceImpl implements PersonService {
 	private static final String LOGGER_NO_SUCH_LOGIN_OR_PASSWORD =
 			"Login failed : no such login or password in the database" +
 					" - LOGIN : %s, PASSWORD : %s";
+	private static final String LOGGER_NO_SUCH_PERSON =
+			"No such person with id : %d";
+
 	private DaoFactory daoFactory = DaoFactory.getInstance();
 
 	private static class Holder {
@@ -58,6 +61,17 @@ public class PersonServiceImpl implements PersonService {
 		try(DaoConnection connection = daoFactory.getConnection()){
 			PersonDao personDao = daoFactory.createPersonDao(connection);
 			return personDao.getAllStudents();
+		}
+	}
+
+	@Override
+	public Person getPersonById(int personId) {
+		try(DaoConnection connection = daoFactory.getConnection()){
+			PersonDao personDao = daoFactory.createPersonDao(connection);
+			return personDao.getById(personId)
+					.orElseThrow(() -> new ServiceException()
+							.addMessage(ErrorMessageKeys.ERROR_NO_SUCH_PERSON)
+							.addLogMessage(String.format(LOGGER_NO_SUCH_PERSON,personId)));
 		}
 	}
 }

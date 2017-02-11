@@ -9,4 +9,5 @@ public interface PersonService {
 	Person authenticate(LoginData loginData);
 	void register(Person person);
 	List<Person> getStudents();
+	Person getPersonById(int personId);
 }
