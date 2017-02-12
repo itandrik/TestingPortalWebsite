@@ -25,12 +25,12 @@ public class ApplicationException extends RuntimeException {
         this.logMessage = new StringBuffer();
     }
 
-    protected ApplicationException addMessage(String message) {
+    public ApplicationException addMessage(String message) {
         this.message.append(message);
         return this;
     }
 
-    protected ApplicationException addLogMessage(String logMessage) {
+    public ApplicationException addLogMessage(String logMessage) {
         this.logMessage.append(logMessage);
         return this;
     }

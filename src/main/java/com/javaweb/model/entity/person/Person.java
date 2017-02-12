@@ -143,7 +143,7 @@ public class Person {
 			person.setPassword(password);
 			return this;
 		}
-		
+
 		public Builder setRole(PersonRole role){
 			person.setRole(role);
 			return this;

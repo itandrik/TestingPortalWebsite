@@ -1,6 +1,7 @@
 package com.javaweb.controller.commands.register;
 
 import com.javaweb.controller.commands.Command;
+import com.javaweb.model.security.BCryptEncryptor;
 import com.javaweb.util.Paths;
 import com.javaweb.model.entity.person.Gender;
 import com.javaweb.model.entity.person.Person;
@@ -32,10 +33,11 @@ public class RegisterSubmitCommand implements Command {
     }
 
     private Person createPersonFromRequest(HttpServletRequest request) {
+        BCryptEncryptor encryptor = new BCryptEncryptor();
         String firstName = request.getParameter(FIRST_NAME_PARAMETER);
         String secondName = request.getParameter(SECOND_NAME_PARAMETER);
         String login = request.getParameter(LOGIN_PARAMETER);
-        String password = request.getParameter(PASSWORD_PARAMETER);
+        String password = encryptor.encryptPassword(request.getParameter(PASSWORD_PARAMETER));
         Gender gender = Gender.getGenderFromString(request.getParameter(GENDER_PARAMETER))
                 .orElseThrow(RuntimeException::new);
         PersonRole role = PersonRole.getRoleFromString(request.getParameter(PERSON_ROLE_PARAMETER))
