@@ -8,7 +8,6 @@ import com.javaweb.model.services.PersonTestHistoryService;
 import com.javaweb.model.services.SubjectService;
 import com.javaweb.model.services.impl.PersonTestHistoryServiceImpl;
 import com.javaweb.model.services.impl.SubjectServiceImpl;
-import com.javaweb.util.Attributes;
 import com.javaweb.util.Pages;
 
 import javax.servlet.ServletException;
@@ -17,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
+
+import static com.javaweb.util.Attributes.*;
 
 /**
  * @author Andrii Chernysh on 10-Feb-17. E-Mail : itcherry97@gmail.com
@@ -37,8 +38,9 @@ public class GetStudentTestsCommand implements Command {
                 personTestHistoryService.getListOfTestsPassedByStudent(student);
         List<Subject> subjects = subjectService.getAll();
 
-        request.setAttribute(Attributes.TESTS_PASSED_BY_STUDENT, testsPassedByStudent);
-        request.setAttribute(Attributes.SUBJECTS, subjects);
+        request.setAttribute(TESTS_PASSED_BY_STUDENT, testsPassedByStudent);
+        request.setAttribute(SUBJECTS, subjects);
+        request.setAttribute(CONCRETE_STUDENT, student);
         return Pages.STUDENTS_TESTS_LIST_PAGE;
     }
 

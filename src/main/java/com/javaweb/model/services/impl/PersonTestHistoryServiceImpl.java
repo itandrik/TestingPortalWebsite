@@ -17,6 +17,8 @@ import com.javaweb.model.services.exception.ServiceException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import static com.javaweb.i18n.ErrorMessageKeys.ERROR_NO_SUCH_HISTORY;
+
 /**
  * @author Andrii Chernysh on 01-Feb-17. E-Mail : itcherry97@gmail.com
  */
@@ -24,6 +26,7 @@ public class PersonTestHistoryServiceImpl implements PersonTestHistoryService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
     private static final int MAX_GRADE = 100;
     private static final String NO_SUCH_GRADE_ERROR_LOG = "No such grade :%f";
+    private static final String NO_SUCH_HISTORY_ERROR_LOG = "No such grade :%f";
 
     private static final class Holder {
         static final PersonTestHistoryServiceImpl INSTANCE = new PersonTestHistoryServiceImpl();
@@ -37,8 +40,18 @@ public class PersonTestHistoryServiceImpl implements PersonTestHistoryService {
     }
 
     @Override
-    public boolean isTestPassedByPerson(Test test, Person person) {
+    public PersonHistory getPersonHistoryForTest(Person person, Test test) {
+        try (DaoConnection connection = daoFactory.getConnection()) {
+            PersonTestHistoryDao dao = daoFactory.createPersonTestHistoryDao(connection);
+            return dao.getPersonHistoryForTest(person, test)
+                    .orElseThrow(() -> new ServiceException()
+                            .addLogMessage(NO_SUCH_HISTORY_ERROR_LOG)
+                            .addMessage(ERROR_NO_SUCH_HISTORY));
+        }
+    }
 
+    @Override
+    public boolean isTestPassedByPerson(Test test, Person person) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             PersonTestHistoryDao dao = daoFactory.createPersonTestHistoryDao(connection);
             List<Test> passedAnswers = dao.getListOfPassedTestsByPerson(person);
@@ -55,20 +68,21 @@ public class PersonTestHistoryServiceImpl implements PersonTestHistoryService {
             List<Answer> passedAnswersInTest = historyDao.getAllPassedAnswersByPersonForTest(test, person);
             List<Answer> allAnswersForTest = answerDao.getListOfAnswersForTest(test);
 
-            int countOfCorrectAnswers = getCountOfCorrectAnswers(passedAnswersInTest);
-            int countAllAnswers = allAnswersForTest.size();
+            int countOfPassedCorrectAnswers = getCountOfCorrectAnswers(passedAnswersInTest);
+            int countAllCorrectAnswers = getCountOfCorrectAnswers(allAnswersForTest);
 
-            double gradeInMaxGradeFormat = countOfCorrectAnswers / (double) countAllAnswers * (double) MAX_GRADE;
-            return Grade.getECTSGrade(gradeInMaxGradeFormat)
+            double gradeInMaxGradeFormat = countOfPassedCorrectAnswers /
+                    (double) countAllCorrectAnswers * (double) MAX_GRADE;
+            return Grade.getECTSGrade(gradeInMaxGradeFormat, countAllCorrectAnswers, countOfPassedCorrectAnswers)
                     .orElseThrow(() -> new ServiceException()
-                            .addMessage(ErrorMessageKeys.ERROR_NO_SUCH_GRADE)
+                            .addMessage(ErrorMessageKeys.ERROR_INCORRECT_GRADE)
                             .addLogMessage(String.format(NO_SUCH_GRADE_ERROR_LOG, gradeInMaxGradeFormat)));
         }
     }
 
-    private int getCountOfCorrectAnswers(List<Answer> passedAnswersInTest) {
+    private int getCountOfCorrectAnswers(List<Answer> allAnswers) {
         int countOfCorrectAnswers = 0;
-        for (Answer answer : passedAnswersInTest) {
+        for (Answer answer : allAnswers) {
             if (answer.getIsCorrect()) {
                 countOfCorrectAnswers++;
             }

@@ -16,4 +16,6 @@ public final class Attributes {
 	public static final String SET_TAG = "set_tag";
 	public static final String STUDENTS = "students";
 	public static final String TESTS_PASSED_BY_STUDENT = "tests_passed_by_student";
+	public static final String PERSON_HISTORY = "person_history";
+	public static final String CONCRETE_STUDENT = "student";
 }

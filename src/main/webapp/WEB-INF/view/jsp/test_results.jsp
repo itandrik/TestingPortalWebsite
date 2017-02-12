@@ -9,7 +9,7 @@
 <%@ page import="com.javaweb.util.Parameters" %>
 
 <%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
-<script type="text/javascript" src="<c:url value="/resources/js/test_result.js" />"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/test_result1.js" />"></script>
 
 <c:set var="tutor_tasks" value="${requestScope[Attributes.TASKS]}"/>
 <c:set var="student_tasks" value="${requestScope[Attributes.STUDENT_TASKS]}"/>
@@ -34,7 +34,53 @@
         </li>
     </ul>
 </nav>
-<div class="data col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-8">
+
+<c:set var="person_history" value="${requestScope[Attributes.PERSON_HISTORY]}"/>
+<div class="history-container col-lg-3 col-md-3 col-sm-3 col-xs-3">
+    <div class="row">
+        <div class="col-lg-12 text-center" style="font-size: 20px">
+            <strong><fmt:message key="history.header" /></strong>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+            <u><fmt:message key="history.student.text" /></u>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8">
+            ${person_history.person.firstName} ${person_history.person.secondName} [${person_history.person.login}]
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+            <u><fmt:message key="history.test.text" /></u>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8">
+            ${person_history.test.nameOfTest}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+            <u><fmt:message key="history.end.time.text" /></u>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8">
+            ${person_history.endTime}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+            <u><fmt:message key="history.grade.text" /></u>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8">
+            ${person_history.grade.numberGrade} - <strong>${person_history.grade.toString()}</strong>
+            (<i>${person_history.grade.countOfPassedCorrectAnswers} / ${person_history.grade.countOfAllCorrectAnswers}
+            <fmt:message key="history.answers.passed" /></i>)
+        </div>
+    </div>
+    <script type="text/javascript">
+        performColorForHistory(${person_history.grade.numberGrade});
+    </script>
+</div>
+<div class="data col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-3 col-lg-8 col-md-8 col-sm-8 col-xs-8">
     <c:forEach var="task" items="${tutor_tasks}" varStatus="status">
         <testResult:setCountOfCorrectAnswers var="count_of_all_correct_answers" value="${task}"/>
         <testResult:setCountOfCorrectAnswers var="count_of_student_answers" value="${student_tasks[status.index]}"/>

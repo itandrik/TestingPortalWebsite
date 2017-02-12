@@ -4,6 +4,7 @@ import com.javaweb.controller.exception.ControllerException;
 import com.javaweb.i18n.ErrorMessageKeys;
 import com.javaweb.model.entity.Answer;
 import com.javaweb.model.entity.Test;
+import com.javaweb.model.entity.history.PersonHistory;
 import com.javaweb.model.entity.person.Person;
 import com.javaweb.model.entity.task.Task;
 import com.javaweb.model.services.*;
@@ -40,7 +41,7 @@ public class TestResultCommand implements Command {
         String requestURI = request.getRequestURI();
         Matcher idMatcher = INDEX_INSIDE_URI_PATTERN.matcher(requestURI);
         int testId = extractIdFromRequest(idMatcher,requestURI);
-        int personId= extractIdFromRequest(idMatcher,requestURI);
+        int personId = extractIdFromRequest(idMatcher,requestURI);
 
         Test test = testService.getTestById(testId);
         Person person = personService.getPersonById(personId);
@@ -50,7 +51,9 @@ public class TestResultCommand implements Command {
 
         List<Task> studentTaskAnswersForTest = getAllTasksWithAnswersForTest(
                 test, task -> personTestHistoryService.getListOfAnswersByPersonForTask(person, task));
+        PersonHistory personHistory = personTestHistoryService.getPersonHistoryForTest(person,test);
 
+        request.setAttribute(Attributes.PERSON_HISTORY,personHistory);
         request.setAttribute(Attributes.TASKS, tasksWithAllAnswers);
         request.setAttribute(Attributes.STUDENT_TASKS, studentTaskAnswersForTest);
 

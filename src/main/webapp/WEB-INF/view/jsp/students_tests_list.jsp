@@ -64,8 +64,8 @@
                         <tr>
                             <td>
                                 <c:if test="${subject.id == test.subjectId}">
-                                    <!-- TODO зробити нормальний виклик сторінки з результатами тесту-->
-                                    <a class="identified" href="${Paths.STUDENTS_LIST}/${student.id}${Paths.TEST}">
+                                    <a class="identified"
+                                       href="${Paths.TESTS}${Paths.STUDENT}/${test.id}${Paths.RESULTS}/${requestScope[Attributes.CONCRETE_STUDENT].id}">
                                         <c:out value="${test.nameOfTest}"/>
                                     </a>
                                 </c:if>

@@ -49,7 +49,8 @@ public interface DatabaseContract {
 
 	/* Table name and names of columns for Person_test_history table */
 	String PERSON_HISTORY_TABLE_NAME = "Person_test_history";
-	String END_TIME_COLUMN_NAME = "end_time";
-	String GRADE_COLUMN_NAME = "grade";
-
+	String PERSON_HISTORY_END_TIME_COLUMN_NAME = "end_time";
+	String PERSON_HISTORY_GRADE_COLUMN_NAME = "grade";
+	String PERSON_HISTORY_COUNT_OF_PASSED_ANSWERS = "count_of_passed_answers";
+	String PERSON_HISTORY_COUNT_OF_ALL_CORRECT_ANSWERS = "count_of_all_correct_answers";
 }

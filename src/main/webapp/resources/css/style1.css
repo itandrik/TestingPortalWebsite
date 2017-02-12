@@ -169,3 +169,15 @@ nav li:hover {
 .answer-input{
     width:80%;
 }
+
+.history-container {
+    position: fixed;
+    height: auto;
+    left: 5px;
+    top: 75px;
+    box-shadow: 0 2px 2px 0 #BDBDBD, 0 2px 2px 0 #BDBDBD;
+    border: 3px groove #2196F3;
+    border-radius: 10px;
+    background: rgba(33, 150, 243, .2);
+    font-size: 16px;
+}

@@ -30,3 +30,16 @@ function performColorForAnswer(answerId, isIncorrectStudentAnswer, isCorrectTuto
         tableRow.firstElementChild.appendChild(glyphicon);
     }
 }
+
+function performColorForHistory(grade){
+    var historyContainer = document.getElementsByClassName('history-container');
+    for(var i = 0; i < historyContainer.length; i++){
+        if(grade >= 90) {
+            historyContainer[i].style.background="rgba(8,136,8,.2)";
+        } else if(grade >= 60){
+            historyContainer[i].style.background="rgba(255,255,0,.2)";
+        } else if(grade >= 0){
+            historyContainer[i].style.background="rgba(255,0,0,.2)";
+        }
+    }
+}

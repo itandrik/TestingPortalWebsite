@@ -16,18 +16,36 @@ public enum Grade {
     private int lowBound;
     private int highBound;
     private double numberGrade;
+    private int countOfAllCorrectAnswers;
+    private int countOfPassedCorrectAnswers;
 
     Grade(int lowBound, int highBound) {
         this.lowBound = lowBound;
         this.highBound = highBound;
     }
 
-    public void setNumberGrade(double numberGrade) {
+    private void setNumberGrade(double numberGrade) {
         this.numberGrade = numberGrade;
     }
 
     public double getNumberGrade() {
         return numberGrade;
+    }
+
+    public int getCountOfAllCorrectAnswers() {
+        return countOfAllCorrectAnswers;
+    }
+
+    public void setCountOfAllCorrectAnswers(int countOfAllCorrectAnswers) {
+        this.countOfAllCorrectAnswers = countOfAllCorrectAnswers;
+    }
+
+    public int getCountOfPassedCorrectAnswers() {
+        return countOfPassedCorrectAnswers;
+    }
+
+    public void setCountOfPassedCorrectAnswers(int countOfPassedCorrectAnswers) {
+        this.countOfPassedCorrectAnswers = countOfPassedCorrectAnswers;
     }
 
     public static Optional<Grade> getECTSGrade(double numberGrade) {
@@ -38,8 +56,20 @@ public enum Grade {
                     (numberGrade <= grade.highBound)) {
                 grade.setNumberGrade(numberGrade);
                 result =  Optional.of(grade);
+                break;
             }
         }
         return result;
+    }
+
+    public static Optional<Grade> getECTSGrade(double numberGrade,
+                                               int countOfAllCorrectAnswers,
+                                               int countOfPassedCorrectAnswers) {
+        Optional<Grade> grade = getECTSGrade(numberGrade);
+        return grade.map(innerGrade -> {
+            innerGrade.setCountOfPassedCorrectAnswers(countOfPassedCorrectAnswers);
+            innerGrade.setCountOfAllCorrectAnswers(countOfAllCorrectAnswers);
+            return innerGrade;
+        });
     }
 }
