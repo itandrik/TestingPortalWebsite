@@ -310,6 +310,9 @@ function initializeClock(endtime) {
 
         if (t.total <= 0) {
             clearInterval(timeInterval);
+            $("#modal_time_over_finish_test")
+                .modal({backdrop: 'static', keyboard: false})
+                .modal("show");
         }
     }
 
@@ -344,6 +347,12 @@ function makeAllTasksFromListDisabled(tasks) {
             }
         });
     }
+}
+
+function startModalFinishTestAllPassed(){
+    $("#modal_finish_test_all_passed")
+        .modal({backdrop: 'static', keyboard: false})
+        .modal("show");
 }
 
 function handleChange(checkbox, taskId) {

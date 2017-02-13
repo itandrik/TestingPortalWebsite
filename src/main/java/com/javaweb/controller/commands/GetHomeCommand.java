@@ -1,7 +1,5 @@
 package com.javaweb.controller.commands;
 
-import com.javaweb.util.Pages;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +12,6 @@ public class GetHomeCommand implements Command{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        return Pages.HOME_PAGE;
+        return "sdfsdf.jsp"/*Pages.HOME_PAGE*/;
     }
 }

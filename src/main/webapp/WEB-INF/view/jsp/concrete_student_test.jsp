@@ -14,6 +14,34 @@
       onload="startTimer(${test.durationTimeInMinutes});
               makeAllTasksFromListDisabled(${sessionScope[Attributes.DISABLED_TASKS]});
               loadP('UniquePageNameHereScroll')">
+<c:if test="${fn:length(sessionScope[Attributes.DISABLED_TASKS]) ==
+                fn:length(sessionScope[Attributes.TASKS])}">
+    <!-- MODAL -->
+    <div class="modal fade" id="modal_finish_test_all_passed" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><fmt:message key="modal.finish.the.test.header"/></h4>
+                </div>
+                <div class="modal-body">
+                    <p><fmt:message key="modal.finish.all.tasks.passed.text"/></p>
+                </div>
+                <div class="modal-footer">
+                    <form action="${Paths.SAVE_TEST_RECORD}" method="post">
+                        <button type="submit" class="btn btn-default">
+                            <p><fmt:message key="modal.button.ok"/></p>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        startModalFinishTestAllPassed();
+    </script>
+</c:if>
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-header">
         <a class="navbar-brand" href="${Paths.HOME}">Testing Portal</a>
@@ -50,9 +78,9 @@
     </div>
 </div>
 <c:if test="${not empty requestScope[Attributes.ERROR_MESSAGE]}">
-    <div class="col-lg-12 floating-error">
-        <%@ include file="/WEB-INF/view/jsp/template/error_messages.jsp" %>
-    </div>
+<div class="col-lg-12 floating-error">
+    <%@ include file="/WEB-INF/view/jsp/template/error_messages.jsp" %>
+</div>
 </c:if>
 <div class="data col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-lg-8 col-md-8 col-sm-8 col-xs-8">
     <c:forEach var="task" items="${sessionScope[Attributes.TASKS]}">
@@ -87,7 +115,7 @@
                     </tr>
                     <input type="number" hidden="true" name="${Parameters.TASK_PARAMETER}" value="${task.id}"/>
                 </c:forEach>
-                <input id="seconds-remaining" type="number" hidden="true" name="${Parameters.TIME_REMAINING}" />
+                <input id="seconds-remaining" type="number" hidden="true" name="${Parameters.TIME_REMAINING}"/>
                 <tr>
                     <td>
                         <div class="text-right">
@@ -121,6 +149,28 @@
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         <p><fmt:message key="modal.button.no"/></p>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL -->
+<div class="modal fade" id="modal_time_over_finish_test" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><fmt:message key="modal.finish.the.test.header"/></h4>
+            </div>
+            <div class="modal-body">
+                <p><fmt:message key="modal.time.is.over.text"/></p>
+            </div>
+            <div class="modal-footer">
+                <form action="${Paths.SAVE_TEST_RECORD}" method="post">
+                    <button type="submit" class="btn btn-default">
+                        <p><fmt:message key="modal.button.ok"/></p>
                     </button>
                 </form>
             </div>

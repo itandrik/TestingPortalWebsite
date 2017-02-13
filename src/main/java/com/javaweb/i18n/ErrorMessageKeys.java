@@ -15,6 +15,6 @@ public class ErrorMessageKeys {
     public static final String ERROR_NO_SUCH_PERSON = "error.no.such.person";
     public static final String ERROR_INCORRECT_URI = "error.uri.incorrect";
     public static final String ERROR_INCORRECT_GRADE = "error.grade.incorrect";
-    public static final String ERROR_NO_SUCH_HISTORY = "error.no.such-person.history";
+    public static final String ERROR_NO_SUCH_HISTORY = "error.no.such.person.history";
     public static final String ERROR_ILLEGAL_PASSWORD_DECRYPTED = "error.invalid.password.decrypted";
 }
