@@ -1,6 +1,7 @@
-package com.javaweb.controller.commands;
+package com.javaweb.controller.commands.post;
 
 import com.javaweb.controller.CommandRegexAndPatterns;
+import com.javaweb.controller.commands.Command;
 import com.javaweb.model.entity.Answer;
 import com.javaweb.model.entity.task.AnswerType;
 import com.javaweb.model.entity.task.Task;

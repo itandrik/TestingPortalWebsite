@@ -1,5 +1,6 @@
-package com.javaweb.controller.commands;
+package com.javaweb.controller.commands.post;
 
+import com.javaweb.controller.commands.Command;
 import com.javaweb.model.entity.Subject;
 import com.javaweb.model.services.SubjectService;
 import com.javaweb.model.services.impl.SubjectServiceImpl;

@@ -1,5 +1,6 @@
-package com.javaweb.controller.commands;
+package com.javaweb.controller.commands.get;
 
+import com.javaweb.controller.commands.Command;
 import com.javaweb.model.entity.Answer;
 import com.javaweb.model.entity.Test;
 import com.javaweb.model.entity.task.Task;
@@ -9,8 +10,6 @@ import com.javaweb.model.services.TestService;
 import com.javaweb.model.services.impl.AnswerServiceImpl;
 import com.javaweb.model.services.impl.TaskServiceImpl;
 import com.javaweb.model.services.impl.TestServiceImpl;
-import com.javaweb.util.Attributes;
-import com.javaweb.util.Pages;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,14 +18,17 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.javaweb.controller.CommandRegexAndPatterns.LETTERS_BEFORE_INDEX_REGEX;
+import static com.javaweb.util.Attributes.CONCRETE_TEST;
+import static com.javaweb.util.Attributes.TASKS;
+import static com.javaweb.util.Pages.CONCRETE_STUDENT_TEST_PAGE;
 
 /**
- * @author Andrii Chernysh on 04-Feb-17. E-Mail : itcherry97@gmail.com
+ * @author Andrii Chernysh on 26-Jan-17. E-Mail : itcherry97@gmail.com
  */
-public class GetTutorConcreteTestCommand implements Command {
-    private TestService testService = TestServiceImpl.getInstance();
-    private TaskService taskService = TaskServiceImpl.getInstance();
-    private AnswerService answerService = AnswerServiceImpl.getInstance();
+public class GetStudentConcreteTestCommand implements Command {
+    private final TestService testService = TestServiceImpl.getInstance();
+    private final TaskService taskService = TaskServiceImpl.getInstance();
+    private final AnswerService answerService = AnswerServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
@@ -34,11 +36,13 @@ public class GetTutorConcreteTestCommand implements Command {
         String requestedURI = request.getRequestURI();
 
         int testId = Integer.parseInt(requestedURI.replaceAll(LETTERS_BEFORE_INDEX_REGEX, ""));
-        Test test = new Test.Builder().setId(testId).build();
+        Test test = testService.getTestById(testId);
         List<Task> tasks = getTasksWithAnswersForTest(test);
-        request.setAttribute(Attributes.TASKS, tasks);
 
-        return Pages.CONCRETE_TUTOR_TEST_PAGE;
+        request.getSession().setAttribute(TASKS, tasks);
+        test.setDurationTimeInMinutes(getTimeDurationInSeconds(test));
+        request.getSession().setAttribute(CONCRETE_TEST, test);
+        return CONCRETE_STUDENT_TEST_PAGE;
     }
 
     private List<Task> getTasksWithAnswersForTest(Test test) {
@@ -48,5 +52,9 @@ public class GetTutorConcreteTestCommand implements Command {
             task.setAnswers(answers);
         }
         return tasks;
+    }
+
+    private int getTimeDurationInSeconds(Test test) {
+        return test.getDurationTimeInMinutes() * 60;
     }
 }

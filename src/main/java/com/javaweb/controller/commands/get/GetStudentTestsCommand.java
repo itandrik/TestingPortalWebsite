@@ -1,6 +1,7 @@
-package com.javaweb.controller.commands;
+package com.javaweb.controller.commands.get;
 
 import com.javaweb.controller.CommandRegexAndPatterns;
+import com.javaweb.controller.commands.Command;
 import com.javaweb.model.entity.Subject;
 import com.javaweb.model.entity.Test;
 import com.javaweb.model.entity.person.Person;

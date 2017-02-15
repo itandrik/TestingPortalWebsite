@@ -12,8 +12,7 @@ import com.javaweb.model.services.exception.ServiceException;
 import java.util.List;
 
 /**
- * @author Andrii Chernysh on 26-Jan-17.
- *         E-Mail : itcherry97@gmail.com
+ * @author Andrii Chernysh on 26-Jan-17. E-Mail : itcherry97@gmail.com
  */
 public class TestServiceImpl implements TestService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
@@ -56,7 +55,8 @@ public class TestServiceImpl implements TestService {
             return testDao.getById(id)
                     .orElseThrow(() -> new ServiceException()
                             .addMessage(ErrorMessageKeys.ERROR_NO_SUCH_TEST)
-                            .addLogMessage(String.format(NO_SUCH_TEST_LOG, id)));
+                            .addLogMessage(String.format(NO_SUCH_TEST_LOG, id))
+                            .setClassThrowsException(TestServiceImpl.class));
 
         }
     }

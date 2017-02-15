@@ -15,7 +15,7 @@ import java.util.List;
 public class PersonServiceImpl implements PersonService {
     private static final String LOGGER_NO_SUCH_LOGIN_OR_PASSWORD =
             "Login failed : no such login or password in the database" +
-                    " - LOGIN : %s, PASSWORD : %s";
+                    " - LOGIN : %s";
     private static final String LOGGER_NO_SUCH_PERSON =
             "No such person with id : %d";
 
@@ -42,7 +42,8 @@ public class PersonServiceImpl implements PersonService {
                     .filter(person -> encryptor.checkPassword(loginData.getPassword(), person.getPassword()))
                     .orElseThrow(() -> new ServiceException()
                             .addMessage(ErrorMessageKeys.ERROR_INCORRECT_LOGIN_DATA)
-                            .addLogMessage(LOGGER_NO_SUCH_LOGIN_OR_PASSWORD));
+                            .addLogMessage(String.format(LOGGER_NO_SUCH_LOGIN_OR_PASSWORD,loginData.getLogin()))
+                            .setClassThrowsException(PersonServiceImpl.class));
         }
         return result;
     }
@@ -72,7 +73,8 @@ public class PersonServiceImpl implements PersonService {
             return personDao.getById(personId)
                     .orElseThrow(() -> new ServiceException()
                             .addMessage(ErrorMessageKeys.ERROR_NO_SUCH_PERSON)
-                            .addLogMessage(String.format(LOGGER_NO_SUCH_PERSON, personId)));
+                            .addLogMessage(String.format(LOGGER_NO_SUCH_PERSON, personId))
+                            .setClassThrowsException(PersonServiceImpl.class));
         }
     }
 }

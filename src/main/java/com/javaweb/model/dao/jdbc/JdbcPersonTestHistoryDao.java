@@ -129,7 +129,8 @@ public class JdbcPersonTestHistoryDao implements PersonTestHistoryDao {
                 resultSet.getDouble(PERSON_HISTORY_GRADE_COLUMN_NAME))
                 .orElseThrow(() -> new DaoException()
                         .addMessage(ErrorMessageKeys.ERROR_INCORRECT_GRADE)
-                        .addLogMessage(LOGGER_ERROR_GRADE));
+                        .addLogMessage(LOGGER_ERROR_GRADE)
+                        .setClassThrowsException(JdbcPersonTestHistoryDao.class));
         personGrade.setCountOfPassedCorrectAnswers(
                 resultSet.getInt(PERSON_HISTORY_COUNT_OF_PASSED_ANSWERS));
         personGrade.setCountOfAllCorrectAnswers(

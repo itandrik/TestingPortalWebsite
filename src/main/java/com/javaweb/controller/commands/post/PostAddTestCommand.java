@@ -1,5 +1,6 @@
-package com.javaweb.controller.commands;
+package com.javaweb.controller.commands.post;
 
+import com.javaweb.controller.commands.Command;
 import com.javaweb.controller.validator.NullChecker;
 import com.javaweb.model.entity.Test;
 import com.javaweb.model.services.TestService;
@@ -23,7 +24,7 @@ import static com.javaweb.util.Paths.REDIRECTED;
 /**
  * @author Andrii Chernysh on 04-Feb-17. E-Mail : itcherry97@gmail.com
  */
-public class PostAddTestCommand implements Command{
+public class PostAddTestCommand implements Command {
     private Logger logger = Logger.getLogger(PostAddTestCommand.class);
     private TestService testService = TestServiceImpl.getInstance();
     private NullChecker<String> nullChecker =

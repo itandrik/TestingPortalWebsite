@@ -7,6 +7,7 @@ package com.javaweb.exception;
 public class ApplicationException extends RuntimeException {
     private StringBuffer message;
     private StringBuffer logMessage;
+    private Class classThrowsException;
 
     public ApplicationException() {
         this.message = new StringBuffer();
@@ -32,6 +33,15 @@ public class ApplicationException extends RuntimeException {
 
     public ApplicationException addLogMessage(String logMessage) {
         this.logMessage.append(logMessage);
+        return this;
+    }
+
+    public Class getClassThrowsException() {
+        return classThrowsException;
+    }
+
+    public ApplicationException setClassThrowsException(Class classThrowsException) {
+        this.classThrowsException = classThrowsException;
         return this;
     }
 

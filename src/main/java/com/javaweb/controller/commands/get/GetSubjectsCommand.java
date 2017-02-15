@@ -1,5 +1,6 @@
-package com.javaweb.controller.commands;
+package com.javaweb.controller.commands.get;
 
+import com.javaweb.controller.commands.Command;
 import com.javaweb.util.Attributes;
 import com.javaweb.util.Pages;
 import com.javaweb.model.entity.Subject;

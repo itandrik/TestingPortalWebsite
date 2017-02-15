@@ -2,11 +2,13 @@ html {
     position: relative;
     min-height: 100%;
 }
+
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
     background: #EDEEF0;
 }
+
 div.jumbotron {
     background-color: #2196F3 !important;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -28,7 +30,7 @@ div.jumbotron {
 
 .home-description {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background-color: rgba(255,255,255,.7);
+    background-color: rgba(255, 255, 255, .7);
     border: 4px groove #2196F3;
 
 }
@@ -162,12 +164,13 @@ nav li:hover {
 .false-answer {
     background-color: #F2DEDE;
 }
+
 .correct-answer {
     background-color: #AAFFAA;
 }
 
-.answer-input{
-    width:80%;
+.answer-input {
+    width: 80%;
 }
 
 .history-container {
@@ -182,54 +185,45 @@ nav li:hover {
     font-size: 16px;
 }
 
-.not-found-body{
-    background: url('/resources/img/404_page.jpg');
-    -webkit-filter: blur(5px);
-    -moz-filter: blur(5px);
-    -o-filter: blur(5px);
-    -ms-filter: blur(5px);
-    filter: blur(5px);
-    z-index: 99;
-}
-
-.not-found-container{
-    background: rgba(255, 127, 0, .2);
-    border: 3px groove #2196F3;
-    border-radius: 7px;
-    color:#ffffff;
-    z-index: 100;
-}
-
-.wrapper{
+.error-wrapper {
     position: absolute;
     width: 100%;
     height: 100%;
     margin: 0 auto;
 }
 
-.blur {
+.error-blur {
     height: 100%;
-    width:100%;
+    width: 100%;
     z-index: 99; /* изображение размыто */
-    background: url('/resources/img/404_page.jpg') no-repeat;
-    background-size: 100% auto;
     -webkit-filter: blur(1px);
     -moz-filter: blur(1px);
     filter: blur(1px);
     filter: url('/resources/img/blur.svg#blur'); /* путь к svg */
-
 }
 
-.inner-wrapper {
+.not-found-blur{
+    background: url('/resources/img/404_page.jpg') no-repeat;
+    background-size: 100% auto;
+}
+.in-server-blur{
+    background: url('/resources/img/500_page.jpg') no-repeat;
+    background-size: 100% auto;
+}
+.error-inner-wrapper {
     position: absolute;
-    top : 40%;
-    left: 40%;
+    top: 25%;
     padding: 25px;
     z-index: 100; /* текст не размыт */
-    background: rgba(255, 127, 0, .6);
+    background: rgba(255, 127, 0, .5);
     border: 3px groove #ffffff;
     border-radius: 7px;
-    color:#ffffff;
+    color: #ffffff;
     text-align: center;
-    text-shadow: 0 0 5px rgba(0,0,0,.5);
+    text-shadow: 0 0 5px rgba(0, 0, 0, .5);
+}
+
+.error-inner-wrapper > h1 {
+    color: red;
+    text-align: center;
 }

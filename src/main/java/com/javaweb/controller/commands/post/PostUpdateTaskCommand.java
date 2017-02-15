@@ -1,6 +1,7 @@
-package com.javaweb.controller.commands;
+package com.javaweb.controller.commands.post;
 
 import com.javaweb.controller.CommandRegexAndPatterns;
+import com.javaweb.controller.commands.Command;
 import com.javaweb.model.entity.Answer;
 import com.javaweb.model.entity.task.AnswerType;
 import com.javaweb.model.entity.task.Task;
@@ -30,7 +31,7 @@ import static com.javaweb.util.Paths.TUTOR;
 /**
  * @author Andrii Chernysh on 08-Feb-17. E-Mail : itcherry97@gmail.com
  */
-public class PostUpdateTaskCommand implements Command{
+public class PostUpdateTaskCommand implements Command {
     private TaskService taskService = TaskServiceImpl.getInstance();
     private AnswerService answerService = AnswerServiceImpl.getInstance();
 

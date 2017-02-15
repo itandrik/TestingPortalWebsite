@@ -46,7 +46,8 @@ public class PersonTestHistoryServiceImpl implements PersonTestHistoryService {
             return dao.getPersonHistoryForTest(person, test)
                     .orElseThrow(() -> new ServiceException()
                             .addLogMessage(NO_SUCH_HISTORY_ERROR_LOG)
-                            .addMessage(ERROR_NO_SUCH_HISTORY));
+                            .addMessage(ERROR_NO_SUCH_HISTORY)
+                            .setClassThrowsException(PersonTestHistoryServiceImpl.class));
         }
     }
 
@@ -76,7 +77,8 @@ public class PersonTestHistoryServiceImpl implements PersonTestHistoryService {
             return Grade.getECTSGrade(gradeInMaxGradeFormat, countAllCorrectAnswers, countOfPassedCorrectAnswers)
                     .orElseThrow(() -> new ServiceException()
                             .addMessage(ErrorMessageKeys.ERROR_INCORRECT_GRADE)
-                            .addLogMessage(String.format(NO_SUCH_GRADE_ERROR_LOG, gradeInMaxGradeFormat)));
+                            .addLogMessage(String.format(NO_SUCH_GRADE_ERROR_LOG, gradeInMaxGradeFormat))
+                            .setClassThrowsException(PersonTestHistoryServiceImpl.class));
         }
     }
 

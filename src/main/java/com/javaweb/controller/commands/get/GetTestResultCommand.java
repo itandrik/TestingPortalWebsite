@@ -1,5 +1,6 @@
-package com.javaweb.controller.commands;
+package com.javaweb.controller.commands.get;
 
+import com.javaweb.controller.commands.Command;
 import com.javaweb.controller.exception.ControllerException;
 import com.javaweb.i18n.ErrorMessageKeys;
 import com.javaweb.model.entity.Answer;
@@ -25,7 +26,7 @@ import static com.javaweb.controller.CommandRegexAndPatterns.INDEX_INSIDE_URI_PA
 /**
  * @author Andrii Chernysh on 01-Feb-17. E-Mail : itcherry97@gmail.com
  */
-public class TestResultCommand implements Command {
+public class GetTestResultCommand implements Command {
     private TestService testService = TestServiceImpl.getInstance();
     private TaskService taskService = TaskServiceImpl.getInstance();
     private AnswerService answerService = AnswerServiceImpl.getInstance();
@@ -33,7 +34,7 @@ public class TestResultCommand implements Command {
             PersonTestHistoryServiceImpl.getInstance();
     private PersonService personService = PersonServiceImpl.getInstance();
     private static final String LOGGER_INCORRECT_URI =
-            "URI %s is incorrect[" + TestResultCommand.class.getName() + "]";
+            "URI %s is incorrect[" + GetTestResultCommand.class.getName() + "]";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)

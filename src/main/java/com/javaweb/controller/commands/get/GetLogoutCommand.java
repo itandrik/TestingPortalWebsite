@@ -1,4 +1,6 @@
-package com.javaweb.controller.commands;
+package com.javaweb.controller.commands.get;
+
+import com.javaweb.controller.commands.Command;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +14,7 @@ import static com.javaweb.util.Paths.REDIRECTED;
 /**
  * @author Andrii Chernysh on 29-Jan-17. E-Mail : itcherry97@gmail.com
  */
-public class LogoutCommand implements Command {
+public class GetLogoutCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

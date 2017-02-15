@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
  *         E-Mail : itcherry97@gmail.com
  */
 public class RequestAttributeWriter {
-    MessageWriter<RequestAttributeData,HttpServletRequest> requestWriter;
-    MessageWriter<RequestAttributeData,HttpServletRequest> sessionWriter;
+    private MessageWriter<RequestAttributeData,HttpServletRequest> requestWriter;
+    private MessageWriter<RequestAttributeData,HttpServletRequest> sessionWriter;
     private HttpServletRequest request;
 
     @FunctionalInterface

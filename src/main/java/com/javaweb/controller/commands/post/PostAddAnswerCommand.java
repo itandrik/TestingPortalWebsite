@@ -1,5 +1,6 @@
-package com.javaweb.controller.commands;
+package com.javaweb.controller.commands.post;
 
+import com.javaweb.controller.commands.Command;
 import com.javaweb.controller.validator.NullChecker;
 import com.javaweb.model.entity.Test;
 import com.javaweb.model.entity.person.Person;
