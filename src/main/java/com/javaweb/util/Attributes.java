@@ -2,6 +2,7 @@ package com.javaweb.util;
 
 public final class Attributes {
 	public static final String USER = "user";
+	public static final String PREVIOUS_PERSON = "previous_person";
 	public static final String LOGIN_DATA = "login_data";
 	public static final String SUBJECTS = "subjects";
 	public static final String TESTS = "tests";

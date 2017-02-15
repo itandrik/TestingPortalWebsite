@@ -1,6 +1,6 @@
 package com.javaweb.controller.commands.login;
 
-import com.javaweb.controller.commands.Command;
+import com.javaweb.controller.commands.AbstractCommandWrapper;
 import com.javaweb.controller.validator.AuthValidator;
 import com.javaweb.controller.validator.Validator;
 import com.javaweb.controller.writer.RequestAttributeWriter;
@@ -16,49 +16,54 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.javaweb.util.Attributes.*;
-import static com.javaweb.util.Pages.*;
+import static com.javaweb.util.Pages.LOGIN_PAGE;
 import static com.javaweb.util.Parameters.LOGIN_PARAMETER;
 import static com.javaweb.util.Parameters.PASSWORD_PARAMETER;
-import static com.javaweb.util.Paths.*;
+import static com.javaweb.util.Paths.REDIRECTED;
 import static com.javaweb.util.Paths.SUBJECTS;
 
-public class LoginSubmitCommand implements Command {
-    private Logger logger = Logger.getLogger(LoginSubmitCommand.class);
+public class LoginSubmitCommand extends AbstractCommandWrapper<LoginData> {
+    private static final Logger LOGGER = Logger.getLogger(LoginSubmitCommand.class);
     private static final String USER_LOGGED_IN = "User %s logged in!";
     private PersonServiceImpl personService = PersonServiceImpl.getInstance();
 
     private Validator<LoginData> authValidator = new AuthValidator();
     private RequestAttributeWriter attributeWriter;
 
-    @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        attributeWriter = new RequestAttributeWriter(request);
-        LoginData loginData = getLoginDataFromRequest(request);
+    public LoginSubmitCommand() {
+        super(LOGIN_PAGE);
+    }
 
-        if (isNotValidLoginData(loginData)) return LOGIN_PAGE;
+    @Override
+    protected String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        attributeWriter = new RequestAttributeWriter(request);
+        LoginData loginData = getDataFromRequest(request);
+        writePreviousDataToRequest(request,loginData);
+
+        if (!authValidator.isValid(loginData)) {
+            extractAndWriteErrorMessages();
+            return LOGIN_PAGE;
+        }
 
         Person person = personService.authenticate(loginData);
         attributeWriter.writeToSession(USER, person);
-        response.sendRedirect(SUBJECTS);
+        LOGGER.info(String.format(USER_LOGGED_IN, person.getLogin()));
 
-        logger.info(String.format(USER_LOGGED_IN, person.getLogin()));
+        response.sendRedirect(SUBJECTS);
         return REDIRECTED;
     }
 
-    private LoginData getLoginDataFromRequest(HttpServletRequest request) {
+    @Override
+    protected LoginData getDataFromRequest(HttpServletRequest request) {
         String login = request.getParameter(LOGIN_PARAMETER);
         String password = request.getParameter(PASSWORD_PARAMETER);
         return new LoginData(login, password);
     }
 
-    private boolean isNotValidLoginData(LoginData loginData) {
-        if (!authValidator.isValid(loginData)) {
-            extractAndWriteErrorMessages();
-            attributeWriter.writeToRequest(LOGIN_DATA,loginData);
-            return true;
-        }
-        return false;
+    @Override
+    protected void writePreviousDataToRequest(HttpServletRequest request, LoginData data) {
+        attributeWriter.writeToRequest(LOGIN_DATA, data);
+
     }
 
     private void extractAndWriteErrorMessages() {
