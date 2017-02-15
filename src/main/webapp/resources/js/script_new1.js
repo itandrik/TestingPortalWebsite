@@ -335,9 +335,9 @@ function makeAllTasksFromListDisabled(tasks) {
                 tHead[someVariable].style.background = "#388e3c";
             }
 
-            var elements = table.getElementsByTagName("label");
+            var elements = table.getElementsByTagName("input");
             for (var j = 0; j < elements.length; j++) {
-                elements[j].firstChild.disabled = true;
+                elements[j].disabled = true;
             }
 
             var submitButton = table.getElementsByTagName('button');

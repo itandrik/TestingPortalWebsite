@@ -28,12 +28,12 @@ public abstract class AbstractCommandWrapper<E> implements Command {
     protected abstract void writePreviousDataToRequest(HttpServletRequest request, E data);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         try {
             return performExecute(request, response);
         } catch (ApplicationException e) {
             processApplicationError(request, e);
-        } catch (IOException | ServletException e) {
+        } catch (Exception e) {
             processUnknownException(request, e);
         }
 

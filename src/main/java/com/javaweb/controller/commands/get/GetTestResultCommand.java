@@ -33,7 +33,7 @@ public class GetTestResultCommand implements Command {
     private PersonTestHistoryService personTestHistoryService =
             PersonTestHistoryServiceImpl.getInstance();
     private PersonService personService = PersonServiceImpl.getInstance();
-    private static final String LOGGER_INCORRECT_URI =
+    private static final String INCORRECT_URI_LOG_MSG =
             "URI %s is incorrect[" + GetTestResultCommand.class.getName() + "]";
 
     @Override
@@ -68,7 +68,7 @@ public class GetTestResultCommand implements Command {
         } else {
             throw new ControllerException()
                     .addMessage(ErrorMessageKeys.ERROR_INCORRECT_URI)
-                    .addLogMessage(String.format(LOGGER_INCORRECT_URI,requestURI));
+                    .addLogMessage(String.format(INCORRECT_URI_LOG_MSG,requestURI));
         }
         return result;
     }

@@ -12,6 +12,7 @@ public final class Attributes {
 	public static final String CONCRETE_TEST = "concrete_test";
 	public static final String ERROR_MESSAGE = "error_message";
 	public static final String ERROR_VALIDATION_MESSAGE = "error_validation_message";
+	public static final String SAVED_ANSWERS = "saved_answers";
 	public static final String DISABLED_TASKS = "disabled_tasks";
 	public static final String MESSAGE = "message";
 	public static final String SET_TAG = "set_tag";

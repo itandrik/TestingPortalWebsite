@@ -5,9 +5,10 @@ import com.javaweb.controller.commands.Command;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Enumeration;
 
-import static com.javaweb.util.Attributes.USER;
 import static com.javaweb.util.Paths.HOME;
 import static com.javaweb.util.Paths.REDIRECTED;
 
@@ -18,9 +19,17 @@ public class GetLogoutCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().setAttribute(USER,null);
+        clearAllSessionAttributes(request);
 
         response.sendRedirect(HOME);
         return REDIRECTED;
+    }
+
+    private void clearAllSessionAttributes(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Enumeration<String> sessionAttributes = session.getAttributeNames();
+        while(sessionAttributes.hasMoreElements()){
+            session.setAttribute(sessionAttributes.nextElement(),null);
+        }
     }
 }
