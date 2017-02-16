@@ -29,8 +29,4 @@ public class LoginData {
         this.password = password;
         return this;
     }
-
-    public void encryptPassword(){
-
-    }
 }

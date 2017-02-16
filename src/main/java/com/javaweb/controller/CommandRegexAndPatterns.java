@@ -16,6 +16,7 @@ public final class CommandRegexAndPatterns {
     public static final String INDEX_INSIDE_URI_REGEX = "((?!.*\\/)|(?=.*\\/))\\d+";
 
     public static final String LOGIN_REGEX = "^[a-zA-Z0-9_-]{3,15}$";
+    public static final String NAME_REGEX = "^[^0-9,/<>'\"|!@#$%^&*()\\\\ .;\\-_+\t:]{0,50}";
     public static final String PASSWORD_REGEX = "\\S{4,14}";
 
     public static final Pattern LOGIN_PATTERN =
@@ -26,4 +27,6 @@ public final class CommandRegexAndPatterns {
             Pattern.compile(INDEX_INSIDE_URI_REGEX);
     public static final Pattern PARAMETER_INDEX_ENDING_PATTERN =
             Pattern.compile(PARAMETER_INDEX_ENDING);
+    public static final Pattern NAME_PATTERN =
+            Pattern.compile(NAME_REGEX);
 }

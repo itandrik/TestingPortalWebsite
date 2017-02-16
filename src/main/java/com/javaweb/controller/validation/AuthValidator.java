@@ -1,4 +1,4 @@
-package com.javaweb.controller.validator;
+package com.javaweb.controller.validation;
 
 import com.javaweb.model.entity.util.LoginData;
 
@@ -21,14 +21,13 @@ public class AuthValidator implements Validator<LoginData> {
     private boolean isPasswordValid;
 
     private StringExtractorBasedOnBool extractor = (isPositive, msg) -> isPositive ? msg : null;
+    private NullChecker<String> nullChecker = (str) -> str == null || str.isEmpty();
 
     @Override
     public boolean isValid(LoginData loginData) {
-        isLoginNotEmpty = (loginData.getLogin() != null) &&
-                (!loginData.getLogin().isEmpty());
+        isLoginNotEmpty = !nullChecker.isEmpty(loginData.getLogin());
         isLoginValid = LOGIN_PATTERN.matcher(loginData.getLogin()).matches();
-        isPasswordNotEmpty = loginData.getPassword() != null &&
-                (!loginData.getPassword().isEmpty());
+        isPasswordNotEmpty = !nullChecker.isEmpty(loginData.getPassword());
         isPasswordValid = PASSWORD_PATTERN.matcher(loginData.getLogin()).matches();
 
         return isLoginNotEmpty && isLoginValid && isPasswordNotEmpty && isPasswordValid;

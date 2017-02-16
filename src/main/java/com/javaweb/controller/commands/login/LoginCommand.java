@@ -21,7 +21,7 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Person person = (Person) request.getSession().getAttribute(USER);
-        if(person != null){
+        if (person != null) {
             response.sendRedirect(Paths.SUBJECTS);
             return REDIRECTED;
         }

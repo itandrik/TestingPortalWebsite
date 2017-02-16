@@ -66,6 +66,8 @@ function addTest(pathToGo, inputName, inputDurationTime) {
     durationTimeInput.placeholder = "Duration time";
     durationTimeInput.name = inputDurationTime;
     durationTimeInput.className = "col-lg-2";
+    durationTimeInput.pattern="([^\s]*)";
+    durationTimeInput.title="Don't leave empty duration time";
 
     var submitButton = document.createElement('button');
     submitButton.type = "submit";
@@ -335,9 +337,9 @@ function makeAllTasksFromListDisabled(tasks) {
                 tHead[someVariable].style.background = "#388e3c";
             }
 
-            var elements = table.getElementsByTagName("label");
+            var elements = table.getElementsByTagName("input");
             for (var j = 0; j < elements.length; j++) {
-                elements[j].firstChild.disabled = true;
+                elements[j].disabled = true;
             }
 
             var submitButton = table.getElementsByTagName('button');

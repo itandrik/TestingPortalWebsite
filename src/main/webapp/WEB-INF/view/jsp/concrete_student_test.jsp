@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="/WEB-INF/view/taglib/test.tld" prefix="test" %>
 
 <%@ page import="com.javaweb.util.Paths" %>
 <%@ page import="com.javaweb.util.Attributes" %>
@@ -8,7 +9,9 @@
 <%@ page import="com.javaweb.util.Parameters" %>
 
 <%@ include file="/WEB-INF/view/jsp/template/header.jsp" %>
+
 <c:set var="test" value="${sessionScope[Attributes.CONCRETE_TEST]}"/>
+<c:set var="saved_answers" value="${sessionScope[Attributes.SAVED_ANSWERS]}" />
 
 <body onunload="unloadP('UniquePageNameHereScroll')"
       onload="startTimer(${test.durationTimeInMinutes});
@@ -98,16 +101,12 @@
                             <c:choose>
                                 <c:when test="${task.answerType == AnswerType.ONE_ANSWER}">
                                     <div class="radio">
-                                        <label><input type="radio" name="${Parameters.ANSWER_PARAMETER}"
-                                                      value="answer${answer.id}">${answer.answerText}
-                                        </label>
+                                        <label><input type="radio" name="${Parameters.ANSWER_PARAMETER}" value="answer${answer.id}" <c:if test="${test:contains(saved_answers,answer.id)}">checked</c:if>>${answer.answerText}</label>
                                     </div>
                                 </c:when>
                                 <c:otherwise>
                                     <div class="checkbox">
-                                        <label><input type="checkbox" name="${Parameters.ANSWER_PARAMETER}"
-                                                      value="answer${answer.id}">${answer.answerText}
-                                        </label>
+                                        <label><input type="checkbox" name="${Parameters.ANSWER_PARAMETER}" value="answer${answer.id}" <c:if test="${test:contains(saved_answers,answer.id)}">checked</c:if>>${answer.answerText}</label>
                                     </div>
                                 </c:otherwise>
                             </c:choose>
