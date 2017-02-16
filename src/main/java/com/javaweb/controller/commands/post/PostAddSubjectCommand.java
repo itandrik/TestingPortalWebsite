@@ -1,9 +1,10 @@
 package com.javaweb.controller.commands.post;
 
-import com.javaweb.controller.commands.Command;
+import com.javaweb.controller.commands.AbstractCommandWrapper;
 import com.javaweb.model.entity.Subject;
 import com.javaweb.model.services.SubjectService;
 import com.javaweb.model.services.impl.SubjectServiceImpl;
+import com.javaweb.util.Pages;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,22 +17,34 @@ import static com.javaweb.util.Paths.REDIRECTED;
 import static com.javaweb.util.Paths.SUBJECTS;
 
 /**
- * @author Andrii Chernysh on 27-Jan-17.
- *         E-Mail : itcherry97@gmail.com
+ * @author Andrii Chernysh on 27-Jan-17. E-Mail : itcherry97@gmail.com
  */
-public class PostAddSubjectCommand implements Command {
+public class PostAddSubjectCommand extends AbstractCommandWrapper<String> {
     private SubjectService subjectService = SubjectServiceImpl.getInstance();
 
-    @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String nameOfSubject = request.getParameter(NAME_OF_SUBJECT_PARAMETER);
+    public PostAddSubjectCommand() {
+        super(Pages.SUBJECTS_PAGE);
+    }
 
+    @Override
+    protected String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String nameOfSubject = getDataFromRequest(request);
         Objects.requireNonNull(nameOfSubject);
-        Subject subject = new Subject(0,nameOfSubject);
+
+        Subject subject = new Subject(0, nameOfSubject);
         subjectService.addNewSubject(subject);
 
         response.sendRedirect(SUBJECTS);
         return REDIRECTED;
+    }
+
+    @Override
+    protected String getDataFromRequest(HttpServletRequest request) {
+        return request.getParameter(NAME_OF_SUBJECT_PARAMETER);
+    }
+
+    @Override
+    protected void writeSpecificDataToRequest(HttpServletRequest request, String data) {
+        throw new UnsupportedOperationException();
     }
 }

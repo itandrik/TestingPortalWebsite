@@ -43,12 +43,6 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public List<Test> getTestsPassedByStudent(int studentId) {
-        //TODO
-        return null;
-    }
-
-    @Override
     public Test getTestById(int id) {
         try (DaoConnection connection = daoFactory.getConnection()) {
             TestDao testDao = daoFactory.createTestDao(connection);

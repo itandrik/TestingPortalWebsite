@@ -9,7 +9,6 @@ import java.util.List;
  */
 public interface TestService {
     List<Test> getAllTestsForSubjectWithId(int subjectId);
-    List<Test> getTestsPassedByStudent(int studentId);
     Test getTestById(int id);
     void addTest(Test test);
 }

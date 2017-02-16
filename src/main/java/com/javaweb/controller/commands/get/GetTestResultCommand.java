@@ -1,8 +1,7 @@
 package com.javaweb.controller.commands.get;
 
-import com.javaweb.controller.commands.Command;
-import com.javaweb.controller.exception.ControllerException;
-import com.javaweb.i18n.ErrorMessageKeys;
+import com.javaweb.controller.commands.AbstractCommandWrapper;
+import com.javaweb.controller.commands.helper.IndexExtractor;
 import com.javaweb.model.entity.Answer;
 import com.javaweb.model.entity.Test;
 import com.javaweb.model.entity.history.PersonHistory;
@@ -26,23 +25,26 @@ import static com.javaweb.controller.CommandRegexAndPatterns.INDEX_INSIDE_URI_PA
 /**
  * @author Andrii Chernysh on 01-Feb-17. E-Mail : itcherry97@gmail.com
  */
-public class GetTestResultCommand implements Command {
+public class GetTestResultCommand extends AbstractCommandWrapper {
     private TestService testService = TestServiceImpl.getInstance();
     private TaskService taskService = TaskServiceImpl.getInstance();
     private AnswerService answerService = AnswerServiceImpl.getInstance();
     private PersonTestHistoryService personTestHistoryService =
             PersonTestHistoryServiceImpl.getInstance();
     private PersonService personService = PersonServiceImpl.getInstance();
-    private static final String INCORRECT_URI_LOG_MSG =
-            "URI %s is incorrect[" + GetTestResultCommand.class.getName() + "]";
+    private IndexExtractor indexExtractor = IndexExtractor.getInstance();
+
+    public GetTestResultCommand() {
+        super(Pages.INTERNAL_SERVER_ERROR_PAGE);
+    }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response)
+    protected String performExecute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String requestURI = request.getRequestURI();
         Matcher idMatcher = INDEX_INSIDE_URI_PATTERN.matcher(requestURI);
-        int testId = extractIdFromRequest(idMatcher,requestURI);
-        int personId = extractIdFromRequest(idMatcher,requestURI);
+        int testId = indexExtractor.extractIndexFromMatcher(idMatcher,requestURI);
+        int personId = indexExtractor.extractIndexFromMatcher(idMatcher,requestURI);
 
         Test test = testService.getTestById(testId);
         Person person = personService.getPersonById(personId);
@@ -61,18 +63,6 @@ public class GetTestResultCommand implements Command {
         return Pages.TEST_RESULTS_PAGE;
     }
 
-    private int extractIdFromRequest(Matcher matcher, String requestURI){
-        int result;
-        if(matcher.find()) {
-            result = Integer.parseInt(matcher.group(0));
-        } else {
-            throw new ControllerException()
-                    .addMessage(ErrorMessageKeys.ERROR_INCORRECT_URI)
-                    .addLogMessage(String.format(INCORRECT_URI_LOG_MSG,requestURI));
-        }
-        return result;
-    }
-
     private List<Task> getAllTasksWithAnswersForTest(
             Test test, Function<Task, List<Answer>> getAnswersFunction) {
         List<Task> tasks = taskService.getAllTasksForTest(test);
@@ -84,4 +74,13 @@ public class GetTestResultCommand implements Command {
         return tasks;
     }
 
+    @Override
+    protected Object getDataFromRequest(HttpServletRequest request) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void writeSpecificDataToRequest(HttpServletRequest request, Object data) {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -1,6 +1,7 @@
 package com.javaweb.controller.commands.get;
 
-import com.javaweb.controller.commands.Command;
+import com.javaweb.controller.commands.AbstractCommandWrapper;
+import com.javaweb.controller.commands.helper.IndexExtractor;
 import com.javaweb.model.entity.Answer;
 import com.javaweb.model.entity.Test;
 import com.javaweb.model.entity.task.Task;
@@ -17,32 +18,48 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static com.javaweb.controller.CommandRegexAndPatterns.LETTERS_BEFORE_INDEX_REGEX;
 import static com.javaweb.util.Attributes.CONCRETE_TEST;
 import static com.javaweb.util.Attributes.TASKS;
 import static com.javaweb.util.Pages.CONCRETE_STUDENT_TEST_PAGE;
+import static com.javaweb.util.Pages.INTERNAL_SERVER_ERROR_PAGE;
 
 /**
  * @author Andrii Chernysh on 26-Jan-17. E-Mail : itcherry97@gmail.com
  */
-public class GetStudentConcreteTestCommand implements Command {
+public class GetStudentConcreteTestCommand extends AbstractCommandWrapper<Test> {
     private final TestService testService = TestServiceImpl.getInstance();
     private final TaskService taskService = TaskServiceImpl.getInstance();
     private final AnswerService answerService = AnswerServiceImpl.getInstance();
+    private IndexExtractor indexExtractor = IndexExtractor.getInstance();
+
+    public GetStudentConcreteTestCommand() {
+        super(INTERNAL_SERVER_ERROR_PAGE);
+    }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response)
+    protected String performExecute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String requestedURI = request.getRequestURI();
 
-        int testId = Integer.parseInt(requestedURI.replaceAll(LETTERS_BEFORE_INDEX_REGEX, ""));
-        Test test = testService.getTestById(testId);
+        Test test = getDataFromRequest(request);
+
         List<Task> tasks = getTasksWithAnswersForTest(test);
-
         request.getSession().setAttribute(TASKS, tasks);
+
+        writeSpecificDataToRequest(request,test);
+
+        return CONCRETE_STUDENT_TEST_PAGE;
+    }
+
+    @Override
+    protected Test getDataFromRequest(HttpServletRequest request) {
+        int testId = indexExtractor.extractLastPartUriIndexFromRequest(request);
+        return testService.getTestById(testId);
+    }
+
+    @Override
+    protected void writeSpecificDataToRequest(HttpServletRequest request, Test test) {
         test.setDurationTimeInMinutes(getTimeDurationInSeconds(test));
         request.getSession().setAttribute(CONCRETE_TEST, test);
-        return CONCRETE_STUDENT_TEST_PAGE;
     }
 
     private List<Task> getTasksWithAnswersForTest(Test test) {

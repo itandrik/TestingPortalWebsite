@@ -25,10 +25,11 @@ public abstract class AbstractCommandWrapper<E> implements Command {
             throws ServletException, IOException;
 
     protected abstract E getDataFromRequest(HttpServletRequest request);
-    protected abstract void writePreviousDataToRequest(HttpServletRequest request, E data);
+    protected abstract void writeSpecificDataToRequest(HttpServletRequest request, E data);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+    public String execute(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException{
         try {
             return performExecute(request, response);
         } catch (ApplicationException e) {
@@ -50,5 +51,4 @@ public abstract class AbstractCommandWrapper<E> implements Command {
         Logger.getLogger(e.getClassThrowsException())
                 .error(e.getLogMessage());
     }
-
 }

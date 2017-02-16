@@ -4,7 +4,6 @@ import com.javaweb.controller.commands.Command;
 import com.javaweb.model.entity.person.Person;
 import com.javaweb.model.services.PersonService;
 import com.javaweb.model.services.impl.PersonServiceImpl;
-import com.javaweb.util.Attributes;
 import com.javaweb.util.Pages;
 
 import javax.servlet.ServletException;
@@ -13,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static com.javaweb.util.Attributes.STUDENTS;
+
 /**
- * @author Andrii Chernysh on 10-Feb-17. E-Mail : itcherry97@gmail.com
+ * @author Andrii Chernysh on 10-Feb-17.
+ *         E-Mail : itcherry97@gmail.com
  */
 public class GetStudentsCommand implements Command {
     private PersonService personService = PersonServiceImpl.getInstance();
@@ -22,7 +24,7 @@ public class GetStudentsCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Person> students = personService.getStudents();
-        request.setAttribute(Attributes.STUDENTS,students);
+        request.setAttribute(STUDENTS,students);
 
         return Pages.STUDENTS_LIST_PAGE;
     }

@@ -1,8 +1,8 @@
 package com.javaweb.controller.commands.register;
 
 import com.javaweb.controller.commands.AbstractCommandWrapper;
-import com.javaweb.controller.validator.RegistrationValidator;
-import com.javaweb.controller.validator.Validator;
+import com.javaweb.controller.validation.RegistrationValidator;
+import com.javaweb.controller.validation.Validator;
 import com.javaweb.model.entity.person.Gender;
 import com.javaweb.model.entity.person.Person;
 import com.javaweb.model.entity.person.PersonRole;
@@ -41,7 +41,7 @@ public class RegisterSubmitCommand extends AbstractCommandWrapper<Person> {
     protected String performExecute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Person person = getDataFromRequest(request);
-        writePreviousDataToRequest(request,person);
+        writeSpecificDataToRequest(request,person);
 
         if(!validator.isValid(person)){
             extractAndWriteErrorMessagesToRequest(request);
@@ -78,7 +78,7 @@ public class RegisterSubmitCommand extends AbstractCommandWrapper<Person> {
     }
 
     @Override
-    protected void writePreviousDataToRequest(HttpServletRequest request, Person person) {
+    protected void writeSpecificDataToRequest(HttpServletRequest request, Person person) {
         request.setAttribute(PREVIOUS_PERSON, person);
     }
 

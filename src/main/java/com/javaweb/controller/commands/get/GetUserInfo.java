@@ -14,7 +14,6 @@ import static com.javaweb.util.Pages.USER_ACCOUNT_PAGE;
  *         E-Mail : itcherry97@gmail.com
  */
 public class GetUserInfo implements Command {
-
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

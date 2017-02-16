@@ -1,8 +1,8 @@
 package com.javaweb.controller.commands.login;
 
 import com.javaweb.controller.commands.AbstractCommandWrapper;
-import com.javaweb.controller.validator.AuthValidator;
-import com.javaweb.controller.validator.Validator;
+import com.javaweb.controller.validation.AuthValidator;
+import com.javaweb.controller.validation.Validator;
 import com.javaweb.controller.writer.RequestAttributeWriter;
 import com.javaweb.model.entity.person.Person;
 import com.javaweb.model.entity.util.LoginData;
@@ -38,7 +38,7 @@ public class LoginSubmitCommand extends AbstractCommandWrapper<LoginData> {
     protected String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         attributeWriter = new RequestAttributeWriter(request);
         LoginData loginData = getDataFromRequest(request);
-        writePreviousDataToRequest(request,loginData);
+        writeSpecificDataToRequest(request,loginData);
 
         if (!authValidator.isValid(loginData)) {
             extractAndWriteErrorMessages();
@@ -61,7 +61,7 @@ public class LoginSubmitCommand extends AbstractCommandWrapper<LoginData> {
     }
 
     @Override
-    protected void writePreviousDataToRequest(HttpServletRequest request, LoginData data) {
+    protected void writeSpecificDataToRequest(HttpServletRequest request, LoginData data) {
         attributeWriter.writeToRequest(LOGIN_DATA, data);
 
     }

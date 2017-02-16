@@ -66,6 +66,8 @@ function addTest(pathToGo, inputName, inputDurationTime) {
     durationTimeInput.placeholder = "Duration time";
     durationTimeInput.name = inputDurationTime;
     durationTimeInput.className = "col-lg-2";
+    durationTimeInput.pattern="([^\s]*)";
+    durationTimeInput.title="Don't leave empty duration time";
 
     var submitButton = document.createElement('button');
     submitButton.type = "submit";
