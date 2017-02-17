@@ -25,4 +25,5 @@ public class ErrorMessageKeys {
     public static final String ERROR_ILLEGAL_PASSWORD_DECRYPTED = "error.invalid.password.decrypted";
     public static final String ERROR_UNKNOWN_EXCEPTION = "error.unknown.exception";
     public static final String ERROR_INCORRECT_OR_EMPTY_FIELD = "error.incorrect.or.empty.number.field";
+    public static final String ERROR_INCORRECT_PARAMETER_NAME = "error.incorrect.parameter.name";
 }

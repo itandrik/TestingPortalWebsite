@@ -14,7 +14,8 @@ import java.io.IOException;
  */
 public class RegisterCommand implements Command{
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         return Pages.REGISTER_PAGE;
     }
 }

@@ -20,7 +20,8 @@ import java.util.List;
 import static com.javaweb.util.Attributes.*;
 
 /**
- * @author Andrii Chernysh on 10-Feb-17. E-Mail : itcherry97@gmail.com
+ * @author Andrii Chernysh on 10-Feb-17.
+ *         E-Mail : itcherry97@gmail.com
  */
 public class GetStudentTestsCommand extends AbstractCommandWrapper {
     private PersonTestHistoryService personTestHistoryService =

@@ -35,7 +35,7 @@ public class PostAddTestCommand extends AbstractCommandWrapper<Test> {
             "User leave empty name field while adding test";
 
     public PostAddTestCommand() {
-        super(Pages.INTERNAL_SERVER_ERROR_PAGE);
+        super(Pages.TESTS_PAGE);
     }
 
     @Override
@@ -74,5 +74,4 @@ public class PostAddTestCommand extends AbstractCommandWrapper<Test> {
         List<Test> testsList = testService.getAllTestsForSubjectWithId(test.getSubjectId());
         request.setAttribute(Attributes.TESTS, testsList);
     }
-
 }

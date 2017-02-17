@@ -63,7 +63,6 @@ public class LoginSubmitCommand extends AbstractCommandWrapper<LoginData> {
     @Override
     protected void writeSpecificDataToRequest(HttpServletRequest request, LoginData data) {
         attributeWriter.writeToRequest(LOGIN_DATA, data);
-
     }
 
     private void extractAndWriteErrorMessages() {

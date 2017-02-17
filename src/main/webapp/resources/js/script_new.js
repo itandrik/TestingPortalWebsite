@@ -18,6 +18,8 @@ function addSubject(pathToGo, inputName) {
     nameInput.type = "text";
     nameInput.placeholder = "Enter name";
     nameInput.name = inputName;
+    nameInput.required=true;
+    nameInput.title="This field shouldn't be empty";
     nameInput.className = "col-lg-5";
 
     var submitButton = document.createElement('button');
@@ -55,6 +57,7 @@ function addTest(pathToGo, inputName, inputDurationTime) {
     nameInput.type = "text";
     nameInput.placeholder = "Enter name";
     nameInput.name = inputName;
+    nameInput.required=true;
     nameInput.className = "col-lg-5";
 
     var durationTimeString = document.createElement('p');
@@ -63,10 +66,12 @@ function addTest(pathToGo, inputName, inputDurationTime) {
     var durationTimeInput = document.createElement('input');
     durationTimeInput.type = "number";
     durationTimeInput.min = '0';
+    durationTimeInput.value="0";
+    durationTimeInput.required=true;
     durationTimeInput.placeholder = "Duration time";
     durationTimeInput.name = inputDurationTime;
     durationTimeInput.className = "col-lg-2";
-    durationTimeInput.pattern="([^\s]*)";
+    durationTimeInput.pattern="^\d+$";
     durationTimeInput.title="Don't leave empty duration time";
 
     var submitButton = document.createElement('button');
