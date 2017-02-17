@@ -2,6 +2,7 @@ package com.javaweb.controller.commands.post;
 
 import com.javaweb.controller.commands.AbstractCommandWrapper;
 import com.javaweb.controller.commands.helper.IndexExtractor;
+import com.javaweb.controller.exception.ControllerException;
 import com.javaweb.model.entity.Answer;
 import com.javaweb.model.entity.task.AnswerType;
 import com.javaweb.model.entity.task.Task;
@@ -21,6 +22,7 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
+import static com.javaweb.i18n.ErrorMessageKeys.ERROR_DO_NOT_CHECKED_ANSWER;
 import static com.javaweb.model.entity.task.AnswerType.MANY_ANSWERS;
 import static com.javaweb.model.entity.task.AnswerType.ONE_ANSWER;
 import static com.javaweb.util.Parameters.*;
@@ -33,6 +35,7 @@ public class PostAddTaskCommand extends AbstractCommandWrapper<Task> {
     private TaskService taskService = TaskServiceImpl.getInstance();
     private AnswerService answerService = AnswerServiceImpl.getInstance();
     private IndexExtractor indexExtractor = IndexExtractor.getInstance();
+    private String DO_NOT_CHECKED_ANSWER_LOG_MSG = "User didn't chose answer";
 
     public PostAddTaskCommand() {
         super(Pages.INTERNAL_SERVER_ERROR_PAGE);
@@ -71,6 +74,12 @@ public class PostAddTaskCommand extends AbstractCommandWrapper<Task> {
     private List<Answer> extractListOfAnswersFromRequest(HttpServletRequest request) {
         List<Answer> answers = new ArrayList<>();
         Enumeration<String> parameterNames = request.getParameterNames();
+        if(request.getParameterValues(Parameters.ANSWER_PARAMETER) == null){
+            throw new ControllerException()
+                    .addMessage(ERROR_DO_NOT_CHECKED_ANSWER)
+                    .addLogMessage(DO_NOT_CHECKED_ANSWER_LOG_MSG)
+                    .setClassThrowsException(PostAddTaskCommand.class);
+        }
         List<String> correctAnswers = Arrays.asList(request.getParameterValues(Parameters.ANSWER_PARAMETER));
         while (parameterNames.hasMoreElements()) {
             String nextParameter = parameterNames.nextElement();

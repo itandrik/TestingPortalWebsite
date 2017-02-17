@@ -40,7 +40,8 @@ public class PostAddAnswerCommand extends AbstractCommandWrapper<Integer> {
     }
 
     @Override
-    protected String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected String performExecute(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         HttpSession session = request.getSession();
         Person person = (Person) request.getSession().getAttribute(USER);
         String[] parameterValues = request.getParameterValues(ANSWER_PARAMETER);

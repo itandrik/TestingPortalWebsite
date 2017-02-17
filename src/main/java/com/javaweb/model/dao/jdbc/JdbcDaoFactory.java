@@ -1,6 +1,7 @@
 package com.javaweb.model.dao.jdbc;
 
 import com.javaweb.model.dao.*;
+import com.javaweb.model.dao.exception.DaoException;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -9,15 +10,18 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JdbcDaoFactory extends DaoFactory{
-	
 	private DataSource dataSource;
-	
+	private static final String CAN_NOT_GET_CONNECTION = "Can not get connection";
+	private static final String CAN_INIT_DATA_SOURCE_CONNECTION = "Can init data source";
+
 	public JdbcDaoFactory() {
 		try {
 			InitialContext initialContext = new InitialContext();
 			dataSource = (DataSource) initialContext.lookup("java:comp/env/jdbc/testing_portal");
 		} catch (NamingException e) {
-			e.printStackTrace();
+			throw new DaoException()
+					.addLogMessage(CAN_NOT_GET_CONNECTION)
+					.setClassThrowsException(JdbcDaoFactory.class);
 		}
 	}
 
@@ -26,7 +30,9 @@ public class JdbcDaoFactory extends DaoFactory{
 		try {
 			return new JdbcDaoConnection(dataSource.getConnection());
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new DaoException()
+					.addLogMessage(CAN_NOT_GET_CONNECTION)
+					.setClassThrowsException(JdbcDaoFactory.class);
 		}
 	}
 

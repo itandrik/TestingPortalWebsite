@@ -1,20 +1,19 @@
 package com.javaweb.model.dao.jdbc;
 
+import com.javaweb.i18n.ErrorMessageKeys;
 import com.javaweb.model.dao.TaskDao;
 import com.javaweb.model.entity.Test;
 import com.javaweb.model.entity.task.AnswerType;
 import com.javaweb.model.entity.task.Task;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import static com.javaweb.model.dao.DatabaseContract.*;
 
-public class JdbcTaskDao implements TaskDao{
-	private Connection connection;
-
+public class JdbcTaskDao extends AbstractDao<Task> implements TaskDao{
 	private static final String SELECT_LIST_OF_TASKS_FOR_TEST =
 			"SELECT task_id, question, answers_type, explanation" +
 					" FROM Task JOIN M2m_tests_tasks USING (task_id)" +
@@ -35,134 +34,46 @@ public class JdbcTaskDao implements TaskDao{
 			"DELETE FROM Task WHERE task_id = ?";
 	private static final String SELECT_LAST_INSERT_ID =
 			"SELECT LAST_INSERT_ID() FROM Task";
+	private static final String CANNOT_ASSIGN_TASK_TO_TEST_LOG_MSG =
+			"Error while assigning task to test";
 
 	public JdbcTaskDao(java.sql.Connection connection) {
-		this.connection = connection;
-	}
-
-	public void setConnection(Connection connection) {
-		this.connection = connection;
+		super(connection);
 	}
 
 	@Override
-	public Optional<Task> getById(int id) {
-		Optional<Task> result = Optional.empty();
-
-		try(PreparedStatement statement = connection.prepareStatement(SELECT_TASK_BY_ID)){
-			statement.setInt(1,id);
-			ResultSet resultSet = statement.executeQuery();
-			if(resultSet.next()){
-				Task task = getTaskFromResultSet(resultSet);
-				result = Optional.of(task);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
+	protected PreparedStatement getSelectEntityByIdStatement() throws SQLException {
+		return connection.prepareStatement(SELECT_TASK_BY_ID);
 	}
 
 	@Override
-	public List<Task> getAll() {
-		List<Task> tasks = new ArrayList<>();
-
-		try(PreparedStatement statement = connection.prepareStatement(SELECT_ALL_TASKS)){
-			ResultSet resultSet = statement.executeQuery();
-			while(resultSet.next()){
-				Task task = getTaskFromResultSet(resultSet);
-				tasks.add(task);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return tasks;
+	protected PreparedStatement getSelectAllEntitiesStatement() throws SQLException {
+		return connection.prepareStatement(SELECT_ALL_TASKS);
 	}
 
 	@Override
-	public int insert(Task task) {
-		int lastInsertId = 0;
-		try(PreparedStatement statement = connection.prepareStatement(
-				INSERT_TASK,PreparedStatement.RETURN_GENERATED_KEYS)){
-			statement.setString(1,task.getQuestion());
-			statement.setString(2,task.getAnswerType().toString());
-			statement.setString(3,task.getExplanation());
-
-			statement.executeUpdate();
-				/* TODO Check for null*/
-				/* TODO Check is already saved in database */
-			Statement lastInsertIdStatement = connection.createStatement();
-			ResultSet rs = lastInsertIdStatement.executeQuery(SELECT_LAST_INSERT_ID);
-			rs.next();
-			lastInsertId =  rs.getInt(LAST_INSERT_ID);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return lastInsertId;
+	protected PreparedStatement getInsertEntityStatement() throws SQLException {
+		return connection.prepareStatement(
+				INSERT_TASK,PreparedStatement.RETURN_GENERATED_KEYS);
 	}
 
 	@Override
-	public int update(Task task) {
-		int lastInsertId = task.getId();
-		try(PreparedStatement statement = connection.prepareStatement(UPDATE_TASK_BY_ID)){
-			statement.setString(1,task.getQuestion());
-			statement.setString(2, task.getAnswerType().toString());
-			statement.setString(3, task.getExplanation());
-			statement.setInt(4, task.getId());
-
-			if(statement.executeUpdate() == 0){
-				lastInsertId = insert(task);
-			}
-				/* TODO Check for null*/
-				/* TODO Check is already saved in database */
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return lastInsertId;
+	protected PreparedStatement getLastInsertIdStatement() throws SQLException {
+		return connection.prepareStatement(SELECT_LAST_INSERT_ID);
 	}
 
 	@Override
-	public void delete(int id) {
-		try(PreparedStatement statement = connection.prepareStatement(DELETE_TASK_BY_ID)){
-			statement.setInt(1, id);
-			statement.executeUpdate();
-				/* TODO Check for null*/
-				/* TODO Check is already saved in database */
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	protected PreparedStatement getUpdateStatement() throws SQLException {
+		return connection.prepareStatement(UPDATE_TASK_BY_ID);
 	}
 
 	@Override
-	public List<Task> getListOfTasksForTest(Test test) {
-		List<Task> tasks = new ArrayList<>();
-
-		try(PreparedStatement statement = connection.prepareStatement(SELECT_LIST_OF_TASKS_FOR_TEST)){
-			statement.setInt(1,test.getId());
-			ResultSet resultSet = statement.executeQuery();
-			while(resultSet.next()){
-				Task task = getTaskFromResultSet(resultSet);
-				tasks.add(task);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return tasks;
+	protected PreparedStatement getDeleteStatement() throws SQLException {
+		return connection.prepareStatement(DELETE_TASK_BY_ID);
 	}
 
 	@Override
-	public void assignTaskToTest(int taskId, int testId) {
-		try(PreparedStatement statement = connection.prepareStatement(ASSIGN_TASK_TO_TEST)) {
-			statement.setInt(1,testId);
-			statement.setInt(2,taskId);
-
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private Task getTaskFromResultSet(ResultSet resultSet) throws SQLException {
+	protected Task getEntityFromResultSet(ResultSet resultSet) throws SQLException {
 		return new Task.Builder()
 				.setId(resultSet.getInt(TASK_ID_COLUMN_NAME))
 				.setQuestion(resultSet.getString(TASK_QUESTION_COLUMN_NAME))
@@ -173,4 +84,41 @@ public class JdbcTaskDao implements TaskDao{
 				.build();
 	}
 
+	@Override
+	protected int getEntityId(Task entity) {
+		return entity.getId();
+	}
+
+	@Override
+	protected void prepareStatementForUpdate(PreparedStatement statement, Task task) throws SQLException {
+		statement.setString(1,task.getQuestion());
+		statement.setString(2, task.getAnswerType().toString());
+		statement.setString(3, task.getExplanation());
+		statement.setInt(4, task.getId());
+	}
+
+	@Override
+	protected void prepareStatementForInsert(PreparedStatement statement, Task task) throws SQLException {
+		statement.setString(1,task.getQuestion());
+		statement.setString(2,task.getAnswerType().toString());
+		statement.setString(3,task.getExplanation());
+	}
+
+	@Override
+	public List<Task> getListOfTasksForTest(Test test) {
+		return getListOfEntitiesForAnotherEntity(SELECT_LIST_OF_TASKS_FOR_TEST,test.getId());
+	}
+
+	@Override
+	public void assignTaskToTest(int taskId, int testId) {
+		try(PreparedStatement statement = connection.prepareStatement(ASSIGN_TASK_TO_TEST)) {
+			statement.setInt(1,testId);
+			statement.setInt(2,taskId);
+
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			throw generateException(ErrorMessageKeys.ERROR_UNKNOWN_EXCEPTION,
+					CANNOT_ASSIGN_TASK_TO_TEST_LOG_MSG,JdbcTaskDao.class);
+		}
+	}
 }

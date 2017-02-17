@@ -168,31 +168,25 @@ public class JdbcPersonTestHistoryDao implements PersonTestHistoryDao {
 
     @Override
     public List<Answer> getAllPassedAnswersByPersonForTest(Test test, Person person) {
-        List<Answer> answers = new ArrayList<>();
-
-        try (PreparedStatement statement =
-                     connection.prepareStatement(SELECT_ALL_PASSED_ANSWERS_BY_PERSON_FOR_TEST)) {
-            statement.setInt(1, test.getId());
-            statement.setInt(2, person.getId());
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                Answer answer = getAnswerFromResultSet(resultSet);
-                answers.add(answer);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return answers;
+        return getAnswersUsingTwoEntities(
+                SELECT_ALL_PASSED_ANSWERS_BY_PERSON_FOR_TEST,
+                test.getId(), person.getId()
+        );
     }
 
     @Override
     public List<Answer> getListOfAnswersByPersonForTask(Task task, Person person) {
+       return getAnswersUsingTwoEntities(
+               SELECT_ALL_PASSED_ANSWERS_BY_PERSON_FOR_TASK, person.getId(),task.getId());
+    }
+
+    private List<Answer> getAnswersUsingTwoEntities(String query, int firstEntityId, int secondEntityId){
         List<Answer> answers = new ArrayList<>();
 
         try (PreparedStatement statement =
-                     connection.prepareStatement(SELECT_ALL_PASSED_ANSWERS_BY_PERSON_FOR_TASK)) {
-            statement.setInt(1, person.getId());
-            statement.setInt(2, task.getId());
+                     connection.prepareStatement(query)) {
+            statement.setInt(1, firstEntityId);
+            statement.setInt(2, secondEntityId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Answer answer = getAnswerFromResultSet(resultSet);
@@ -219,8 +213,6 @@ public class JdbcPersonTestHistoryDao implements PersonTestHistoryDao {
             statement.setInt(2, answerId);
 
             statement.executeUpdate();
-                /* TODO Check for null*/
-                /* TODO Check is already saved in database */
         } catch (SQLException e) {
             e.printStackTrace();
         }

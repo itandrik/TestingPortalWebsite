@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static com.javaweb.model.dao.DatabaseContract.*;
 
-public class JdbcPersonDao implements PersonDao {
+public class JdbcPersonDao extends AbstractDao<Person> implements PersonDao {
     private static final String SELECT_BY_ID = "SELECT person_id,"
             + "first_name, second_name, gender, login, password,"
             + " role FROM Person WHERE person_id = ?";
@@ -36,34 +36,44 @@ public class JdbcPersonDao implements PersonDao {
             "DELETE FROM Person WHERE person_id = ?";
     private static final String SELECT_LAST_INSERT_ID =
             "SELECT LAST_INSERT_ID() FROM Person";
-    private Connection connection;
 
     public JdbcPersonDao(java.sql.Connection connection) {
-        this.connection = connection;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
+        super(connection);
     }
 
     @Override
-    public Optional<Person> getById(int id) {
-        Optional<Person> result = Optional.empty();
-
-        try (PreparedStatement statement = connection.prepareStatement(SELECT_BY_ID)) {
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                Person person = getPersonFromResultSet(resultSet);
-                result = Optional.of(person);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
+    protected PreparedStatement getSelectEntityByIdStatement() throws SQLException {
+        return connection.prepareStatement(SELECT_BY_ID);
     }
 
-    private Person getPersonFromResultSet(ResultSet resultSet) throws SQLException {
+    @Override
+    protected PreparedStatement getSelectAllEntitiesStatement() throws SQLException {
+        return connection.prepareStatement(SELECT_ALL);
+    }
+
+    @Override
+    protected PreparedStatement getInsertEntityStatement() throws SQLException {
+        return connection.prepareStatement(
+                INSERT_PERSON, PreparedStatement.RETURN_GENERATED_KEYS);
+    }
+
+    @Override
+    protected PreparedStatement getLastInsertIdStatement() throws SQLException {
+        return connection.prepareStatement(SELECT_LAST_INSERT_ID);
+    }
+
+    @Override
+    protected PreparedStatement getUpdateStatement() throws SQLException {
+        return connection.prepareStatement(UPDATE_PERSON);
+    }
+
+    @Override
+    protected PreparedStatement getDeleteStatement() throws SQLException {
+        return connection.prepareStatement(DELETE_PERSON);
+    }
+
+    @Override
+    protected Person getEntityFromResultSet(ResultSet resultSet) throws SQLException {
         return new Person.Builder()
                 .setId(resultSet.getInt(PERSON_ID_COLUMN_NAME))
                 .setFirstName(resultSet.getString(PERSON_FIRST_NAME_COLUMN_NAME))
@@ -78,82 +88,29 @@ public class JdbcPersonDao implements PersonDao {
     }
 
     @Override
-    public List<Person> getAll() {
-        List<Person> persons = new ArrayList<>();
-
-        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL)) {
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                Person person = getPersonFromResultSet(rs);
-                persons.add(person);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return persons;
+    protected int getEntityId(Person entity) {
+        return entity.getId();
     }
 
     @Override
-    public int insert(Person person) {
-        int lastInsertId = 0;
-        try (PreparedStatement statement = connection.prepareStatement(
-                INSERT_PERSON, PreparedStatement.RETURN_GENERATED_KEYS)) {
-
-            statement.setString(1, person.getFirstName());
-            statement.setString(2, person.getSecondName());
-            statement.setString(3, person.getGender().toString());
-            statement.setString(4, person.getLogin());
-            statement.setString(5, person.getPassword());
-            statement.setString(6, person.getRole().toString());
-
-            statement.executeUpdate();
-
-            Statement lastInsertIdStatement = connection.createStatement();
-            ResultSet rs = lastInsertIdStatement.executeQuery(SELECT_LAST_INSERT_ID);
-            rs.next();
-            lastInsertId =  rs.getInt(LAST_INSERT_ID);
-                /* TODO Check for null*/
-				/* TODO Check is already saved in database */
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return lastInsertId;
+    protected void prepareStatementForUpdate(PreparedStatement statement, Person entity) throws SQLException {
+        statement.setString(1, entity.getFirstName());
+        statement.setString(2, entity.getSecondName());
+        statement.setString(3, entity.getGender().toString());
+        statement.setString(4, entity.getLogin());
+        statement.setString(5, entity.getPassword());
+        statement.setString(6, entity.getRole().toString());
+        statement.setInt(7, entity.getId());
     }
 
     @Override
-    public int update(Person person) {
-        int lastInsertId = person.getId();
-        try (PreparedStatement statement = connection.prepareStatement(UPDATE_PERSON)) {
-            statement.setString(1, person.getFirstName());
-            statement.setString(2, person.getSecondName());
-            statement.setString(3, person.getGender().toString());
-            statement.setString(4, person.getLogin());
-            statement.setString(5, person.getPassword());
-            statement.setString(6, person.getRole().toString());
-            statement.setInt(7, person.getId());
-
-            if(statement.executeUpdate() == 0){
-                lastInsertId = insert(person);
-            }
-				/* TODO Check for null*/
-				/* TODO Check is already saved in database */
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return lastInsertId;
-    }
-
-    @Override
-    public void delete(int id) {
-        try (PreparedStatement statement = connection.prepareStatement(DELETE_PERSON)) {
-            statement.setInt(1, id);
-            statement.executeUpdate();
-				/* TODO Check for null*/
-				/* TODO Check is already saved in database */
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    protected void prepareStatementForInsert(PreparedStatement statement, Person entity) throws SQLException {
+        statement.setString(1, entity.getFirstName());
+        statement.setString(2, entity.getSecondName());
+        statement.setString(3, entity.getGender().toString());
+        statement.setString(4, entity.getLogin());
+        statement.setString(5, entity.getPassword());
+        statement.setString(6, entity.getRole().toString());
     }
 
     @Override
@@ -164,7 +121,7 @@ public class JdbcPersonDao implements PersonDao {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                Person person = getPersonFromResultSet(resultSet);
+                Person person = getEntityFromResultSet(resultSet);
                 result = Optional.of(person);
             }
         } catch (SQLException e) {
@@ -181,7 +138,7 @@ public class JdbcPersonDao implements PersonDao {
             statement.setString(1, PersonRole.STUDENT.toString());
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Person student = getPersonFromResultSet(resultSet);
+                Person student = getEntityFromResultSet(resultSet);
                 students.add(student);
             }
         } catch (SQLException e) {

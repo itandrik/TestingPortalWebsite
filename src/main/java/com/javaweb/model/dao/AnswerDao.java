@@ -6,7 +6,7 @@ import com.javaweb.model.entity.task.Task;
 
 import java.util.List;
 
-public interface AnswerDao extends GenericDao<Answer> {
+public interface AnswerDao extends GenericDao<Answer>{
 	List<Answer> getListOfAnswersForTask(Task task);
 	List<Answer> getListOfAnswersForTest(Test test);
 }

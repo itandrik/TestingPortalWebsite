@@ -81,9 +81,9 @@ public class IndexExtractor {
         }
     }
 
-    public Integer extractIndexParameterFromRequest(HttpServletRequest request, String parameterName) {
+    public int extractIndexParameterFromRequest(HttpServletRequest request, String parameterName) {
         try {
-            return Integer.parseInt(parameterName);
+            return Integer.parseInt(request.getParameter(parameterName));
         } catch (NumberFormatException e) {
             throw errorIncorrectIndexParameter(request.getParameter(parameterName));
         }

@@ -26,4 +26,10 @@ public class ErrorMessageKeys {
     public static final String ERROR_UNKNOWN_EXCEPTION = "error.unknown.exception";
     public static final String ERROR_INCORRECT_OR_EMPTY_FIELD = "error.incorrect.or.empty.number.field";
     public static final String ERROR_INCORRECT_PARAMETER_NAME = "error.incorrect.parameter.name";
+    public static final String ERROR_GETTING_ALL_ROWS_FROM_DATABASE = "error.getting.all.rows.from.database";
+    public static final String ERROR_GETTING_ROW_FROM_DATABASE = "error.getting.row.from.database";
+    public static final String ERROR_INSERT_ROW_TO_DATABASE = "error.insert.row.to.database";
+    public static final String ERROR_UPDATE_ROW_TO_DATABASE = "error.update.row.to.database";
+    public static final String ERROR_DELETE_ROW_FROM_DATABASE = "error.delete.row.from.database";
+    public static final String ERROR_DO_NOT_CHECKED_ANSWER = "error.do.not.checked.answer";
 }

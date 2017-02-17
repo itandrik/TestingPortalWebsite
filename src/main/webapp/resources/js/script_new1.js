@@ -202,6 +202,7 @@ function addTask(action, questionParam, answerButtonParam,
     var inputRadioButton = document.createElement('input');
     inputRadioButton.type = "radio";
     inputRadioButton.name = answerButtonParam;
+    inputRadioButton.required=true;
     inputRadioButton.value = answerTextParam.concat(answerTextId);
     spanAnswer.appendChild(inputRadioButton);
     var inputAnswerText = document.createElement('input');
