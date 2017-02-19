@@ -47,7 +47,7 @@
 </c:if>
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-header">
-        <a class="navbar-brand" href="${Paths.HOME}">Testing Portal</a>
+        <a class="navbar-brand" href="${Paths.HOME}"><fmt:message key="navbar.title.text" /></a>
         <img src="<c:url value="/resources/img/testing-icon.png" />"
              class="img-circle img-resposive" alt="Test your skill"
              width="50" height="50"/>
@@ -59,14 +59,14 @@
         <li>
             <a class="navbar-brand" href="${Paths.LOGOUT}">
                 <span class="glyphicon glyphicon-log-out"></span>
-                Logout
+                <fmt:message key="navbar.logout.text" />
             </a>
         </li>
     </ul>
 </nav>
 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 time-and-submit">
     <div class=row">
-        <h1 class="text-center">Time</h1>
+        <h1 class="text-center"><fmt:message key="concrete.test.time.text" /></h1>
     </div>
     <div class="row text-center">
         <p id="minutes" class="col-lg-5 timer text-right"></p>

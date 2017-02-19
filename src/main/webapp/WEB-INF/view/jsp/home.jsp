@@ -9,12 +9,12 @@
 
 <div id="home" class="jumbotron">
     <div class="row ">
-        <h1 class="col-lg-12 col-md-12 col-sm-12 col-xs-12 centered-text">Testing portal</h1>
+        <h1 class="col-lg-12 col-md-12 col-sm-12 col-xs-12 centered-text"> <fmt:message key="jumbotron.title.text"/> </h1>
     </div>
     <div class="row">
         <form action="${Paths.LOGIN}" method="get">
             <div class="col-md-12 col-lg-12 col-sm-12 text-center">
-                <button type="submit" class="btn btn-lg btn-default">Get started </button>
+                <button type="submit" class="btn btn-lg btn-default"><fmt:message key="jumbotron.get.started.button" /></button>
             </div>
         </form>
     </div>

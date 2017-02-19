@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Testing portal</title>
+    <title><fmt:message key="testing.portal" /> </title>
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet"
           type="text/css"/>
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"

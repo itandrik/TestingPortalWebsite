@@ -13,7 +13,7 @@
       onload="loadP('UniquePageNameHereScroll')">
 <nav class="navbar navbar-fixed-top">
     <div class="navbar-header">
-        <a class="navbar-brand" href="${Paths.HOME}">Testing Portal</a>
+        <a class="navbar-brand" href="${Paths.HOME}"><fmt:message key="navbar.title.text" /> </a>
         <img src="<c:url value="/resources/img/testing-icon.png" />"
              class="img-circle img-resposive" alt="Test your skill"
              width="50" height="50"/>
@@ -39,7 +39,7 @@
         <li>
             <a class="navbar-brand" href="${Paths.LOGOUT}">
                 <span class="glyphicon glyphicon-log-out"></span>
-                Logout
+                <fmt:message key="logout"/>
             </a>
         </li>
     </ul>
